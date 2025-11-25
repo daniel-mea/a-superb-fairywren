@@ -3,122 +3,133 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact – A Superb Fairywren</title>
+<title>A Superb Fairywren</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 
 <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Fraunces', serif;
-    overflow: hidden;
-    background-color: #fff1a9;
-  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Fraunces', serif;
+    overflow: hidden;
+    background-color: #fff1a9; 
+  }
 
-  body {
-    position: relative;
-  }
+  a.bg-link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
 
-  .scale-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100vw;
-    height: 150vh;
-    transform-origin: center center;
-    z-index: 1;
-  }
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* UPDATED PATH for background image */
+    background: url('https://github.com/daniel-mea/a-superb-fairywren/raw/main/website_assets/fairywrenGIF_large-compressed200.gif') center 40% / cover no-repeat;
+    position: relative;
+  }
 
-  .scale-container img.bg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
+  .header, .footer {
+    text-align: center;
+    color: #FFE555;
+    position: relative;
+    z-index: 2;
+  }
 
-  .header {
-    position: absolute;
-    top: 15px;
-    width: 100%;
-    text-align: center;
-    z-index: 2;
-    color: #FFE555;
-  }
+  .header {
+    padding-top: 15px;
+  }
 
-  .header img {
-    width: 60px;
-    border-radius: 50%;
-  }
+  .header img {
+    width: 60px;
+    border-radius: 50%;
+  }
 
-  .header h1 {
-    color: #FFE555;
-    font-weight: 500;
-    text-decoration: line-through;
-    text-transform: uppercase;
-    margin: 10px 0 0 0;
-    font-size: 1.5em;
-  }
+  .header h1 {
+    color: #FFE555;
+    font-weight: 500;
+    text-decoration: line-through;
+    text-transform: uppercase;
+    margin: 10px 0 0 0;
+    font-size: 1.5em;
+  }
 
-  .hotspot {
-    position: absolute;
-    z-index: 3;
-    display: block;
-    cursor: pointer;
-    background: rgba(255,0,0,0.0);
-  }
+  .footer {
+    padding-bottom: 15px;
+  }
 
-  /* DEBUG hotspots visible */
-  .debug {
-    background: rgba(255,0,0,0.0);
-  }
+  .footer p {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 69px;
+    line-height: 1.3em;
+    max-width: 850px;
+    margin: 0 auto 20px auto;
+    word-wrap: break-word;
+  }
 
-  @media (max-width: 480px) {
-    .header img {
-      width: 50px;
-    }
-  }
+  .social a img {
+    width: 33px;
+    vertical-align: middle;
+  }
+
+  @media (max-width: 1200px) {
+    .footer p {
+      max-width: 700px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .footer p {
+      font-size: 55px;
+      max-width: 90%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer p {
+      font-size: 45px;
+    }
+
+    .header img {
+      width: 50px;
+    }
+
+    .social a img {
+      width: 20px;
+    }
+  }
 </style>
 </head>
 <body>
 
-<div class="scale-container" id="container">
-  <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/Website/Nokiaaaa-large2.jpg" class="bg" alt="Contact Image">
-
-  <!-- Existing Hotspots -->
-  <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" style="top: 36.5%; left: 50%; width: 16%; height: 3%; transform: translate(-50%, -50%);"></a>
-  <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" style="top: 40%; left: 50%; width: 5%; height: 3%; transform: translate(-50%, -50%);"></a>
-
-  <!-- New Hotspots for testing/adjustment -->
-  <!-- 1. Back to previous page -->
-  <a href="javascript:history.back()" class="hotspot debug" style="top: 52%; left: 57%; width: 3%; height: 2%; transform: translate(-50%, -50%);"></a>
-
-  <!-- 2. Dummy visible hotspot for testing -->
-  <a class="hotspot debug" style="top: 52%; left: 44.1%; width: 4.8%; height: 2%; transform: translate(-50%, -50%);"></a>
-
-</div>
+<a class="bg-link" href="main.html"></a>
 
 <div class="header">
-  <a href="main.html">
-    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/Website/site_logo-small.jpg" alt="Site Logo">
-  </a>
-  <a href="main.html" style="text-decoration:none;">
-    <h1>A SUPERB FAIRYWREN</h1>
-  </a>
+  <a href="main.html">
+        <img src="https://github.com/daniel-mea/a-superb-fairywren/raw/main/website_assets/site_logo-small.jpg" alt="Site Logo">
+  </a>
+
+  <a href="main.html" style="text-decoration:none;">
+    <h1>A SUPERB FAIRYWREN</h1>
+  </a>
 </div>
 
-<script>
-  function scaleContainer() {
-    const container = document.getElementById('container');
-    const scale = 1.4;
-    const translateY = 30;
-    container.style.transform = 'translate(-50%, -50%) translateY(' + translateY + 'vh) scale(' + scale + ')';
-  }
+<div class="footer">
+  <a href="main.html" style="text-decoration:none; color:#FFE555;">
+    <p>“WE ARE ALL AT WAR WITH OURSELVES.”</p>
+  </a>
 
-  window.addEventListener('resize', scaleContainer);
-  window.addEventListener('load', scaleContainer);
-</script>
+  <div class="social">
+    <a href="contact.html">
+            <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/website_assets/icon_email.svg" alt="Email">
+    </a>
+  </div>
+</div>
 
 </body>
 </html>
