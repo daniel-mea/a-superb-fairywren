@@ -20,8 +20,12 @@ body {
 display: flex;
 flex-direction: column;
 justify-content: space-between;
-/* UPDATED IMAGE PATH */
-background: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg') center center / cover no-repeat;
+
+/* --- DEFAULT: Portrait/General Configuration (Standard Cover) --- */
+background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg');
+background-position: center center;
+background-size: cover; /* Best for portrait, covers screen width */
+background-repeat: no-repeat;
 }
 .header, .footer {
 text-align: center;
@@ -183,6 +187,18 @@ padding-bottom: 15px;
     }
     .writing-projects {
         left: 49%;
+    }
+}
+
+/* --- CRITICAL FIX FOR LANDSCAPE MOBILE ORIENTATION --- */
+/* If the screen is wider than it is tall (landscape orientation on a mobile device), 
+   we force the background size to be based on the height (100vh) rather than cover/width. 
+   This ensures the narrow dimension is filled, preventing horizontal clipping. */
+@media (orientation: landscape) and (max-height: 500px) {
+    body {
+        /* Sets the image height to 100% of the viewport height (100vh) and 
+           sets the width to auto, ensuring it scales correctly and covers the screen height. */
+        background-size: auto 100vh; 
     }
 }
 </style>
