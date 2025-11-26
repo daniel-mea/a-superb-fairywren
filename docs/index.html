@@ -18,27 +18,9 @@
   }
 
   /* ------------------------------------------- */
-  /* *** GUARANTEED FULL-FILL & POSITIONING *** */
+  /* REMOVING THE GIF LAYER STRUCTURE */
   /* ------------------------------------------- */
-  .gif-layer {
-    /* Guarantees the container covers the ENTIRE viewport */
-    position: fixed; 
-    inset: 0; 
-    z-index: 0; 
-    overflow: hidden;
-  }
-  .gif-layer img {
-    /* 1. SIZE: Make the image slightly larger than the viewport to create overlap */
-    width: 106%; 
-    height: 106%;
-    object-fit: cover; 
-    display: block;
-
-    /* 2. SHIFT: Use transform to move the oversized image content */
-    /* Moves the content (3% left, 5% up) and hides the excess on the bottom/right */
-    transform: translate(-3%, -5%); 
-  }
-  /* ------------------------------------------- */
+  /* Deleted .gif-layer and .gif-layer img CSS */
 
   a.bg-link {
     position: absolute;
@@ -50,6 +32,15 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    
+    /* *** ROBUST BACKGROUND SETUP RESTORED *** */
+    background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/fairywrenGIF_new-compressed.gif');
+    background-size: cover; /* GUARANTEES FULL SCREEN FILL (no oversizing) */
+    background-repeat: no-repeat;
+    
+    /* GIF POSITION: 3% left (47%) and 5% up (45%) from center (50%) */
+    background-position: 47% 45%; 
+    
     position: relative;
   }
 
@@ -76,6 +67,7 @@
     text-transform: uppercase;
     margin: 10px 0 0 0;
     font-size: 1.5em;
+    /* REMOVED: text-shadow */
   }
 
   .footer {
@@ -91,12 +83,8 @@
     max-width: 850px;
     margin: 0 auto 20px auto;
     word-wrap: break-word;
+    /* REMOVED: text-shadow */
   }
-
-  /*
-  The .social a img rule is no longer necessary as the image has been removed.
-  I've kept the media queries below for future use, but the mail-related styles are gone.
-  */
 
   @media (max-width: 1200px) {
     .footer p {
@@ -119,16 +107,10 @@
     .header img {
       width: 50px;
     }
-    
-    /* Removed .social a img rule */
   }
 </style>
 </head>
 <body>
-
-<div class="gif-layer">
-    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/fairywrenGIF_large-compressed200_CROP2-compressed200.gif" alt="Superb Fairywren GIF">
-</div>
 
 <a class="bg-link" href="/home/"></a>
 
@@ -146,8 +128,7 @@
   <a href="/home/" style="text-decoration:none; color:#FFE555;">
     <p>“WE ARE ALL AT WAR WITH OURSELVES.”</p>
   </a>
-
-  </div>
+</div>
 
 </body>
 </html>
