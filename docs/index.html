@@ -17,6 +17,29 @@
     background-color: #fff1a9; 
   }
 
+  /* ------------------------------------------- */
+  /* *** GUARANTEED FULL-FILL & POSITIONING *** */
+  /* ------------------------------------------- */
+  .gif-layer {
+    /* Guarantees the container covers the ENTIRE viewport */
+    position: fixed; 
+    inset: 0; 
+    z-index: 0; 
+    overflow: hidden;
+  }
+  .gif-layer img {
+    /* 1. SIZE: Make the image slightly larger than the viewport to create overlap */
+    width: 106%; 
+    height: 106%;
+    object-fit: cover; 
+    display: block;
+
+    /* 2. SHIFT: Use transform to move the oversized image content */
+    /* Moves the content (3% left, 5% up) and hides the excess on the bottom/right */
+    transform: translate(-3%, -5%); 
+  }
+  /* ------------------------------------------- */
+
   a.bg-link {
     position: absolute;
     inset: 0;
@@ -27,8 +50,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* BACKGROUND POSITION: 47% horizontally, 35% vertically */
-    background: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/fairywrenGIF_large-compressed200.gif') 47% 35% / cover no-repeat;
     position: relative;
   }
 
@@ -73,7 +94,7 @@
   }
 
   .social a img {
-    width: 33px; /* BASE SIZE for large screens */
+    width: 33px; /* Base size for large screens */
     vertical-align: middle;
   }
 
@@ -100,13 +121,17 @@
     }
 
     .social a img {
-      /* CALCULATED 10% INCREASE: 33px * 1.10 = 36.3px */
+      /* Calculated 10% increase on original 33px */
       width: 36.3px;
     }
   }
 </style>
 </head>
 <body>
+
+<div class="gif-layer">
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/fairywrenGIF_large-compressed200_CROP2-compressed200.gif" alt="Superb Fairywren GIF">
+</div>
 
 <a class="bg-link" href="/home/"></a>
 
