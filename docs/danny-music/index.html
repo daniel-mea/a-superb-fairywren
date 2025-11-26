@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daniel – A Superb Fairywren</title>
-<!-- Existing Fraunces Font Link -->
+<title>Daniel Music – A Superb Fairywren</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 <style>
 /* Standard CSS from previous versions */
@@ -21,7 +20,8 @@ body {
 display: flex;
 flex-direction: column;
 justify-content: space-between;
-background: url('https://github.com/daniel-mea/a-superb-fairywren/raw/main/Website/newspaper_dark.jpg') center center / cover no-repeat;
+/* UPDATED IMAGE PATH */
+background: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg') center center / cover no-repeat;
 }
 .header, .footer {
 text-align: center;
@@ -52,8 +52,10 @@ margin-top: 17.5px;
 }
 .menu-link.daniel {
     transform: translateX(-7px);
-    color: white; 
-    pointer-events: none;
+    /* This page is for Daniel, setting link color to white */
+    color: #FFE555; 
+    /* The current page is Danny Music, so the main Danny link is NOT the current page */
+    pointer-events: auto; 
 }
 .menu-link.tala {
     transform: translateX(5px);
@@ -189,17 +191,17 @@ padding-bottom: 15px;
 </head>
 <body>
 <div class="header">
-    <a href="main.html">
-        <img src="https://github.com/daniel-mea/a-superb-fairywren/raw/main/Website/site_logo-small.jpg" alt="Site Logo">
+    <a href="/home/">
+        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo">
     </a>
-    <a href="main.html" style="text-decoration:none;">
+    <a href="/home/" style="text-decoration:none;">
         <h1>A SUPERB FAIRYWREN</h1>
     </a>
     <div class="menu-row">
-        <a href="daniel.html" class="menu-link daniel">DANIEL
+        <a href="/danny/" class="menu-link daniel">DANIEL
             <span class="underline"></span>
         </a>
-        <a href="tala.html" class="menu-link tala">TALA
+        <a href="/tala/" class="menu-link tala">TALA
             <span class="underline"></span>
         </a>
     </div>
@@ -207,15 +209,13 @@ padding-bottom: 15px;
 
 <div class="main-content">
     
-    <!-- Music Projects Icon -->
-    <a href="music_danny.html" class="project-item music-projects">
-        <img src="https://github.com/daniel-mea/a-superb-fairywren/raw/main/Website/icon_musicprojects.png" alt="Music Projects">
+    <a href="/danny-music/" class="project-item music-projects">
+        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/icon_musicprojects.png" alt="Music Projects">
         <span class="project-label">music</span>
     </a>
 
-    <!-- Writing Projects Icon -->
-    <a href="writing_danny.html" class="project-item writing-projects">
-        <img src="https://github.com/daniel-mea/a-superb-fairywren/raw/main/Website/icon_writingprojects.png" alt="Writing Projects">
+    <a href="/danny-writing/" class="project-item writing-projects">
+        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/icon_writingprojects.png" alt="Writing Projects">
         <span class="project-label">writing</span>
     </a>
 
@@ -223,17 +223,14 @@ padding-bottom: 15px;
 
 <div class="footer">
     <div class="social">
-        <!-- 1. IG Icon (Left) -->
         <a href="https://instagram.com/danny__mea" target="_blank">
-            <img src="https://github.com/daniel-mea/a-superb-fairywren/raw/main/Website/icon_ig.svg" alt="Instagram">
+            <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_ig.svg" alt="Instagram">
         </a>
-        <!-- 2. Email Icon (Center) -->
-        <a href="contact.html">
-            <img src="https://github.com/daniel-mea/a-superb-fairywren/raw/main/Website/icon_email.svg" alt="Email">
+        <a href="/contact/">
+            <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/2978373eaeac2a4b537306bf46ebce49d3b812c6/docs/website_assets/icon_email.svg" alt="Email">
         </a>
-        <!-- 3. YouTube Icon (Right) -->
         <a href="https://www.youtube.com/@DannyMEA" target="_blank">
-            <img src="https://github.com/daniel-mea/a-superb-fairywren/raw/main/Website/icon_yt.svg" alt="YouTube">
+            <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_yt.svg" alt="YouTube">
         </a>
     </div>
 </div>
