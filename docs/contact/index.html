@@ -4,229 +4,117 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact – A Superb Fairywren</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
-<style>
-html, body {
-margin: 0;
-padding: 0;
-height: 100%;
-font-family: 'Fraunces', serif;
-overflow: hidden;
-background-color: #fff1a9; 
-}
-body {
-position: relative;
-}
 
-/* --- Background Image Container (Scale) --- */
-.scale-container {
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Fraunces', serif;
+    overflow: hidden;
+    background-color: #fff1a9;
+  }
+
+  body {
+    position: relative;
+  }
+
+  .scale-container {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 100%;
-    height: 100%;
-    transform: translate(-50%, -50%); 
+    width: 100vw;
+    height: 150vh;
+    transform-origin: center center;
     z-index: 1;
-}
-.scale-container img.bg {
+  }
+
+  .scale-container img.bg {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-}
-/* ------------------------------------------ */
+  }
 
-.header {
+  .header {
     position: absolute;
+    top: 15px;
     width: 100%;
     text-align: center;
-    color: #FFE555;
     z-index: 2;
-    padding-top: 15px;
-}
-.header img {
+    color: #FFE555;
+  }
+
+  .header img {
     width: 60px;
     border-radius: 50%;
-}
-.header h1 {
+  }
+
+  .header h1 {
     color: #FFE555;
     font-weight: 500;
     text-decoration: line-through;
     text-transform: uppercase;
-    margin: 10px 0 10px 0;
+    margin: 10px 0 0 0;
     font-size: 1.5em;
-}
+  }
 
-/* DANIEL — TALA links row */
-.menu-row {
-    display: flex;
-    justify-content: center;
-    gap: 60px;
-    margin-top: 17.5px;
-}
-
-/* **CRITICAL FIX**: Using transform for stable sub-pixel shifting */
-.menu-link.daniel {
-    transform: translateX(-7px);
-}
-.menu-link.tala {
-    transform: translateX(5px);
-}
-
-.menu-link {
-    position: relative;
-    font-family: 'Fraunces', serif;
-    font-weight: 700;
-    font-style: italic;
-    font-size: 32px;
-    color: #FFE555; 
-    text-decoration: none;
-    transition: color 0.33s ease;
-}
-.menu-link .underline {
+  .hotspot {
     position: absolute;
-    bottom: -1px;
-    left: 0;
-    height: 0px;
-    width: 0;
-    background: #FFE555;
-    transition: width 0.33s ease;
-}
-.menu-link:hover {
-    color: white; 
-}
-.menu-link:hover .underline {
-    width: 100%;
-}
+    z-index: 3;
+    display: block;
+    cursor: pointer;
+    background: rgba(255,0,0,0.0);
+  }
 
-/* --- Contact Content --- */
-.contact-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 600px;
-    text-align: center;
-    z-index: 2;
-}
-.contact-content h2 {
-    font-size: 2em;
-    color: #FFE555;
-    font-weight: 700;
-    font-style: italic;
-    margin-bottom: 20px;
-}
-.contact-content p {
-    font-size: 1.2em;
-    color: white;
-    font-weight: 500;
-    margin-bottom: 30px;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
-}
-.contact-content a {
-    color: #FFE555;
-    font-weight: 700;
-    font-style: italic;
-    text-decoration: underline;
-    font-size: 1.3em;
-    transition: color 0.3s;
-}
-.contact-content a:hover {
-    color: white;
-}
-/* --- Footer Social Icons --- */
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    padding-bottom: 15px;
-    z-index: 2;
-}
-.social {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-.social a img {
-    width: 33px;
-    vertical-align: middle;
-}
-/* --------------------------- */
+  /* DEBUG hotspots visible */
+  .debug {
+    background: rgba(255,0,0,0.0);
+  }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-.menu-link {
-font-size: 28px;
-}
-.contact-content h2 {
-    font-size: 1.8em;
-}
-.contact-content p {
-    font-size: 1.1em;
-}
-}
-@media (max-width: 480px) {
-.menu-link {
-    font-size: 22px;
-}
-.header img {
-    width: 50px;
-}
-.social a img {
-    width: 20px;
-}
-/* Remove micro-adjustment on mobile for cleaner alignment */
-.menu-link.daniel, .menu-link.tala {
-    transform: translateX(0);
-}
-}
+  @media (max-width: 480px) {
+    .header img {
+      width: 50px;
+    }
+  }
 </style>
 </head>
 <body>
 
-<div class="scale-container">
-    <img class="bg" src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg" alt="Background Image">
+<div class="scale-container" id="container">
+  <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg" class="bg" alt="Contact Image">
+
+  <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" style="top: 36.5%; left: 50%; width: 16%; height: 3%; transform: translate(-50%, -50%);"></a>
+  <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" style="top: 40%; left: 50%; width: 5%; height: 3%; transform: translate(-50%, -50%);"></a>
+
+  <a href="javascript:history.back()" class="hotspot debug" style="top: 52%; left: 57%; width: 3%; height: 2%; transform: translate(-50%, -50%);"></a>
+
+  <a class="hotspot debug" style="top: 52%; left: 44.1%; width: 4.8%; height: 2%; transform: translate(-50%, -50%);"></a>
+
 </div>
 
 <div class="header">
-    <a href="/home/">
-        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo">
-    </a>
-    <a href="/home/" style="text-decoration:none;">
-        <h1>A SUPERB FAIRYWREN</h1>
-    </a>
-    <div class="menu-row">
-        <a href="/danny/" class="menu-link daniel">DANIEL
-            <span class="underline"></span>
-        </a>
-        <a href="/tala/" class="menu-link tala">TALA
-            <span class="underline"></span>
-        </a>
-    </div>
+  <a href="/home/">
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo">
+  </a>
+  <a href="/home/" style="text-decoration:none;">
+    <h1>A SUPERB FAIRYWREN</h1>
+  </a>
 </div>
 
-<div class="contact-content">
-    <h2>Contact Us</h2>
-    <p>For press inquiries, brand partnerships, or general questions, please send an email to:</p>
-    <a href="mailto:superb.fairywren@gmail.com">superb.fairywren@gmail.com</a>
-</div>
+<script>
+  function scaleContainer() {
+    const container = document.getElementById('container');
+    const scale = 1.4;
+    const translateY = 30;
+    container.style.transform = 'translate(-50%, -50%) translateY(' + translateY + 'vh) scale(' + scale + ')';
+  }
 
-
-<div class="footer">
-    <div class="social">
-        <a href="https://www.instagram.com/the.real.tala.cruz/" target="_blank">
-            <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_ig.svg" alt="Instagram">
-        </a>
-        <a href="/contact/">
-            <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/2978373eaeac2a4b537306bf46ebce49d3b812c6/docs/website_assets/icon_email.svg" alt="Email">
-        </a>
-        <a href="https://www.fanvue.com/tala.cruz" target="_blank">
-            <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_fv.svg" alt="Fanvue">
-        </a>
-    </div>
-</div>
+  window.addEventListener('resize', scaleContainer);
+  window.addEventListener('load', scaleContainer);
+</script>
 
 </body>
 </html>
