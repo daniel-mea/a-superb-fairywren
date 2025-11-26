@@ -93,10 +93,10 @@
     word-wrap: break-word;
   }
 
-  .social a img {
-    width: 33px; /* Base size for large screens */
-    vertical-align: middle;
-  }
+  /*
+  The .social a img rule is no longer necessary as the image has been removed.
+  I've kept the media queries below for future use, but the mail-related styles are gone.
+  */
 
   @media (max-width: 1200px) {
     .footer p {
@@ -119,11 +119,8 @@
     .header img {
       width: 50px;
     }
-
-    .social a img {
-      /* Calculated 10% increase on original 33px */
-      width: 36.3px;
-    }
+    
+    /* Removed .social a img rule */
   }
 </style>
 </head>
@@ -150,12 +147,7 @@
     <p>“WE ARE ALL AT WAR WITH OURSELVES.”</p>
   </a>
 
-  <div class="social">
-    <a href="/contact/">
-      <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/2978373eaeac2a4b537306bf46ebce49d3b812c6/docs/website_assets/icon_email.svg" alt="Email">
-    </a>
   </div>
-</div>
 
 </body>
 </html>
