@@ -61,33 +61,15 @@
     padding-bottom: 15px;
   }
 
-  /* NEW: Style for the absolutely positioned quote */
-  .quote-overlay {
-    position: absolute; 
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); 
-    width: 100%;
-    text-align: center;
-    z-index: 2; 
-  }
-  
-  /* Applying quote styles to the new overlay element */
-  .quote-overlay a {
-    text-decoration: none; 
-    color: #FFE555;
-    display: block; 
-    margin: 0 auto;
-    max-width: 850px;
-    word-wrap: break-word;
-  }
-  .quote-overlay p {
+  .footer p {
     font-family: 'Fraunces', serif;
     font-style: italic;
     font-weight: 700;
     font-size: 69px;
     line-height: 1.3em;
-    margin: 0; 
+    max-width: 850px;
+    margin: 0 auto 20px auto;
+    word-wrap: break-word;
   }
 
   .social a img {
@@ -96,22 +78,20 @@
   }
 
   @media (max-width: 1200px) {
-    .quote-overlay a {
+    .footer p {
       max-width: 700px;
     }
   }
 
   @media (max-width: 768px) {
-    .quote-overlay p {
+    .footer p {
       font-size: 55px;
-    }
-    .quote-overlay a {
       max-width: 90%;
     }
   }
 
   @media (max-width: 480px) {
-    .quote-overlay p {
+    .footer p {
       font-size: 45px;
     }
 
@@ -139,14 +119,11 @@
   </a>
 </div>
 
-<div class="quote-overlay">
-  <a href="/home/">
+<div class="footer">
+  <a href="/home/" style="text-decoration:none; color:#FFE555;">
     <p>“WE ARE ALL AT WAR WITH OURSELVES.”</p>
   </a>
-</div>
 
-
-<div class="footer">
   <div class="social">
     <a href="/contact/">
       <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/2978373eaeac2a4b537306bf46ebce49d3b812c6/docs/website_assets/icon_email.svg" alt="Email">
