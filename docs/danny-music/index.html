@@ -10,27 +10,18 @@
 html, body {
     margin: 0;
     padding: 0;
+    /* We use 100% here, but JavaScript will override the body's height with a pixel value */
     height: 100%; 
     overflow: hidden; 
     background-color: #fff1a9; 
 }
 
-/* 2. Standard Background Setup (Default for Portrait or Desktop) */
+/* 2. Standard Background Setup */
 body {
     background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg');
     background-position: center center;
-    background-size: cover; /* Standard setting, works well for tall/portrait viewports */
     background-repeat: no-repeat;
-}
-
-/* 3. The Aspect Ratio Fix: Targeting WIDE Viewports (Aspect Ratio > 16:9) */
-/* When the screen is wider than a standard 16:9 (like a phone in landscape), 
-   we prioritize filling the height (100vh) to ensure the landscape-cropped 
-   image covers the entire screen without showing the side bars. */
-@media (min-aspect-ratio: 16/9) {
-    body {
-        background-size: auto 100vh; 
-    }
+    /* background-size is now controlled by JavaScript */
 }
 
 /* Optional: Center some text to verify content is centered and visible */
@@ -52,7 +43,39 @@ body {
     Responsive Background Test Page
 </div>
 
-<!-- Removed all JavaScript. The solution now relies entirely on the CSS min-aspect-ratio query. -->
+<script>
+    /**
+     * FIX: Bypasses the mobile 100vh bug by setting the body's height and background-size 
+     * based on the exact pixel height of the visible viewport (window.innerHeight).
+     */
+    function setFullHeightAndBackgroundSize() {
+        const viewportHeight = window.innerHeight;
+        const viewportWidth = window.innerWidth;
+
+        // FIX 1: Force the body's height to the exact visible pixel height
+        document.body.style.height = `${viewportHeight}px`;
+
+        // FIX 2: Check aspect ratio in JS to decide background size
+        // We use 1.778 (16/9) as the threshold for an "ultra-wide" screen (landscape phone)
+        const aspectRatio = viewportWidth / viewportHeight;
+
+        if (aspectRatio > 1.778) {
+            // Screen is ultra-wide (landscape): Force background to fill height
+            // This prevents horizontal clipping and showing the yellow background.
+            document.body.style.backgroundSize = 'auto 100%'; 
+        } else {
+            // Screen is portrait or desktop: Use standard cover
+            document.body.style.backgroundSize = 'cover';
+        }
+    }
+
+    // Set height on initial load and resize
+    window.addEventListener('load', setFullHeightAndBackgroundSize);
+    window.addEventListener('resize', setFullHeightAndBackgroundSize);
+
+    // Run once immediately to prevent initial flicker
+    setFullHeightAndBackgroundSize();
+</script>
 
 </body>
 </html>
