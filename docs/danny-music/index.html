@@ -1,129 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Responsive Background Test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Viewport Background</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-/* 1. Basic Viewport Setup */
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%; 
-    background-color: #fff1a9; 
-    transition: background-size 0.3s;
-}
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
 
-/* --- SCROLL BUDGE FIX (Removed overflow: hidden) --- */
-body {
-    /* Allow scroll budging/overscroll for pull-to-refresh */
-    overflow-y: scroll; 
-    -webkit-overflow-scrolling: touch; 
-    
-    background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    /* background-size is now controlled by JavaScript */
-}
+        body {
+            background-color: #f4d03f;
+            background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-/* UI Elements for Testing */
-.center-ui {
-    /* Must use min-height 100% to ensure center-ui covers the screen */
-    min-height: 100%; 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 24px;
-    font-family: sans-serif;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
-    gap: 15px;
-}
+        .textbox {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            text-align: center;
+        }
 
-.lock-button {
-    padding: 10px 20px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #fff1a9;
-    background-color: #444;
-    border: 2px solid #fff1a9;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 4px #222;
-    transition: all 0.1s;
-}
+        .textbox h1 {
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
 
-.lock-button:active {
-    box-shadow: 0 0 #222;
-    transform: translateY(4px);
-}
-</style>
+        .textbox p {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
-
-<div class="center-ui">
-    <p>Version 6: JS Height + Fill Width Test</p>
-    <button class="lock-button" onclick="lockToPortrait()">
-        LOCK TO PORTRAIT (TEST)
-    </button>
-</div>
-
-<script>
-    const ASSET_ASPECT_RATIO = 1.778; // 16/9 threshold for ultra-wide screen detection
-    const SCROLL_BUFFER_PX = 1; // Small buffer to ensure scroll budging is enabled
-
-    /**
-     * Handles the mobile viewport height bug and background sizing logic.
-     */
-    function setFullHeightAndBackgroundSize() {
-        const viewportHeight = window.innerHeight;
-        const viewportWidth = window.innerWidth;
-        const screenAspectRatio = viewportWidth / viewportHeight;
-
-        // FIX 1 (Height): Force the body's height to the exact visible pixel height PLUS buffer for overscroll
-        document.body.style.height = `${viewportHeight + SCROLL_BUFFER_PX}px`;
-
-        // FIX 2 (Background Sizing): Check aspect ratio in JS (Testing Fill Width)
-        if (screenAspectRatio > ASSET_ASPECT_RATIO) {
-            // Screen is ultra-wide (landscape): TESTING: Force background to fill width (100% auto)
-            // Expectation: Yellow bars on top/bottom of screen.
-            document.body.style.backgroundSize = '100% auto'; 
-        } else {
-            // Screen is portrait or desktop: Use standard cover
-            document.body.style.backgroundSize = 'cover';
-        }
-    }
-
-    /**
-     * Attempts to lock the screen to portrait mode (requires user interaction).
-     */
-    async function lockToPortrait() {
-        if (!screen.orientation || !screen.orientation.lock) {
-            console.log("Error: Orientation locking is not supported by this browser.");
-            return;
-        }
-
-        try {
-            await document.documentElement.requestFullscreen();
-            await screen.orientation.lock('portrait');
-            console.log("Orientation locked to portrait.");
-
-        } catch (error) {
-            console.error("Failed to lock orientation:", error);
-            console.log("Lock failed. Orientation locking usually requires Fullscreen mode and may be restricted by your device/browser.");
-        }
-    }
-
-
-    // Initialization and Event Listeners
-    window.addEventListener('load', setFullHeightAndBackgroundSize);
-    window.addEventListener('resize', setFullHeightAndBackgroundSize);
-    
-    // Run once immediately to prevent initial flicker
-    setFullHeightAndBackgroundSize();
-</script>
-
+    <div class="textbox">
+        <h1>Version 1.0</h1>
+        <p>Full viewport background with cover sizing - Background image may not show in Claude preview but will work when deployed to GitHub Pages</p>
+    </div>
 </body>
 </html>
