@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Full Viewport Background</title>
     <style>
         * {
@@ -11,45 +11,40 @@
             box-sizing: border-box;
         }
 
-        html, body {
-            width: 100%;
+        html {
             height: 100%;
-            overflow: hidden;
-            position: fixed;
+            width: 100%;
         }
 
         body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            position: fixed;
             background-color: #f4d03f;
         }
 
-        .bg-wrapper {
-            position: fixed;
+        .bg-container {
+            position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .bg-image {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: cover;
+            right: 0;
+            bottom: 0;
+            background-color: #f4d03f;
+            background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
         }
 
         .content {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            right: 0;
+            bottom: 0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -73,58 +68,25 @@
     </style>
 </head>
 <body>
-    <div class="bg-wrapper">
-        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg" alt="" class="bg-image" id="bgImage">
-    </div>
+    <div class="bg-container" id="bgContainer"></div>
     
     <div class="content">
         <div class="textbox">
-            <h1>Width fix v5</h1>
+            <h1>Width fix v6</h1>
         </div>
     </div>
 
     <script>
-        function resizeBackground() {
-            const img = document.getElementById('bgImage');
-            const windowWidth = window.innerWidth;
-            const windowHeight = window.innerHeight;
-            
-            // Force the image to cover the entire viewport
-            const windowRatio = windowWidth / windowHeight;
-            
-            // Get natural image ratio (you can adjust these if you know your image dimensions)
-            img.onload = function() {
-                const imgRatio = this.naturalWidth / this.naturalHeight;
-                
-                if (windowRatio > imgRatio) {
-                    // Window is wider than image ratio
-                    img.style.width = windowWidth + 'px';
-                    img.style.height = 'auto';
-                } else {
-                    // Window is taller than image ratio
-                    img.style.width = 'auto';
-                    img.style.height = windowHeight + 'px';
-                }
-            };
-            
-            // Also run immediately in case image is cached
-            if (img.complete) {
-                const imgRatio = img.naturalWidth / img.naturalHeight;
-                
-                if (windowRatio > imgRatio) {
-                    img.style.width = windowWidth + 'px';
-                    img.style.height = 'auto';
-                } else {
-                    img.style.width = 'auto';
-                    img.style.height = windowHeight + 'px';
-                }
-            }
+        function updateSize() {
+            const container = document.getElementById('bgContainer');
+            container.style.width = window.innerWidth + 'px';
+            container.style.height = window.innerHeight + 'px';
         }
         
-        resizeBackground();
-        window.addEventListener('resize', resizeBackground);
-        window.addEventListener('orientationchange', function() {
-            setTimeout(resizeBackground, 100);
+        updateSize();
+        window.addEventListener('resize', updateSize);
+        window.addEventListener('orientationchange', () => {
+            setTimeout(updateSize, 100);
         });
     </script>
 </body>
