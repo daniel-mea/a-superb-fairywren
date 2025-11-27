@@ -14,8 +14,8 @@
         html, body {
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             overflow: hidden;
             position: fixed;
             background-color: #f4d03f;
@@ -23,14 +23,12 @@
 
         .bg-image {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            min-width: 150%;
-            min-height: 150%;
-            width: 150%;
-            height: 150%;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             object-fit: cover;
+            object-position: center;
             z-index: 1;
         }
 
@@ -38,8 +36,8 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -63,12 +61,36 @@
     </style>
 </head>
 <body>
-    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg" alt="" class="bg-image">
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg" alt="" class="bg-image" id="bgImg">
     
     <div class="content">
         <div class="textbox">
-            <h1>Width fix v8</h1>
+            <h1>Width fix v9</h1>
         </div>
     </div>
+
+    <script>
+        function fixBackground() {
+            const img = document.getElementById('bgImg');
+            const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+            const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+            
+            img.style.width = vw + 'px';
+            img.style.height = vh + 'px';
+        }
+        
+        // Run on load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', fixBackground);
+        } else {
+            fixBackground();
+        }
+        
+        // Run on resize and orientation change
+        window.addEventListener('resize', fixBackground);
+        window.addEventListener('orientationchange', () => {
+            setTimeout(fixBackground, 200);
+        });
+    </script>
 </body>
 </html>
