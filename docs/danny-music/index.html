@@ -23,12 +23,9 @@
 
         .bg-image {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-            object-position: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             z-index: 1;
         }
 
@@ -65,28 +62,43 @@
     
     <div class="content">
         <div class="textbox">
-            <h1>Width fix v9</h1>
+            <h1>Width fix v11</h1>
         </div>
     </div>
 
     <script>
         function fixBackground() {
             const img = document.getElementById('bgImg');
-            const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-            const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const aspectRatio = vw / vh;
             
-            img.style.width = vw + 'px';
-            img.style.height = vh + 'px';
+            // If screen is wider than 1.1:1, fill width
+            if (aspectRatio > 1.1) {
+                img.style.width = vw + 'px';
+                img.style.height = 'auto';
+                img.style.minHeight = vh + 'px';
+            } 
+            // If screen is taller than 1:1.1, fill height
+            else if (aspectRatio < (1 / 1.1)) {
+                img.style.width = 'auto';
+                img.style.height = vh + 'px';
+                img.style.minWidth = vw + 'px';
+            }
+            // In between, use cover behavior
+            else {
+                img.style.width = vw + 'px';
+                img.style.height = 'auto';
+                img.style.minHeight = vh + 'px';
+            }
         }
         
-        // Run on load
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', fixBackground);
         } else {
             fixBackground();
         }
         
-        // Run on resize and orientation change
         window.addEventListener('resize', fixBackground);
         window.addEventListener('orientationchange', () => {
             setTimeout(fixBackground, 200);
