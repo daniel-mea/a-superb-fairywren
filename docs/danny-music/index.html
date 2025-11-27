@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Full Viewport Background</title>
     <style>
         * {
@@ -11,40 +11,35 @@
             box-sizing: border-box;
         }
 
-        html {
-            height: 100%;
-            width: 100%;
-        }
-
-        body {
+        html, body {
             margin: 0;
             padding: 0;
-            height: 100%;
             width: 100%;
+            height: 100%;
             overflow: hidden;
             position: fixed;
             background-color: #f4d03f;
         }
 
-        .bg-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #f4d03f;
-            background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg');
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
+        .bg-image {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 110%;
+            min-height: 110%;
+            width: 110%;
+            height: auto;
+            object-fit: cover;
+            z-index: 1;
         }
 
         .content {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -68,26 +63,12 @@
     </style>
 </head>
 <body>
-    <div class="bg-container" id="bgContainer"></div>
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg" alt="" class="bg-image">
     
     <div class="content">
         <div class="textbox">
-            <h1>Width fix v6</h1>
+            <h1>Width fix v7</h1>
         </div>
     </div>
-
-    <script>
-        function updateSize() {
-            const container = document.getElementById('bgContainer');
-            container.style.width = window.innerWidth + 'px';
-            container.style.height = window.innerHeight + 'px';
-        }
-        
-        updateSize();
-        window.addEventListener('resize', updateSize);
-        window.addEventListener('orientationchange', () => {
-            setTimeout(updateSize, 100);
-        });
-    </script>
 </body>
 </html>
