@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tala Music – A Superb Fairywren</title>
+<title>Tala HMU – A Superb Fairywren</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 <style>
 html, body {
@@ -58,9 +58,9 @@ margin-top: 17.5px;
 }
 .menu-link.tala {
     transform: translateX(5px);
-    /* The current page is Tala Music, so the main Tala link is NOT the current page */
-    color: #FFE555; 
-    pointer-events: auto; 
+    /* TALA is the active page */
+    color: white; 
+    pointer-events: none; /* Make it unclickable */
 }
 
 .menu-link {
@@ -82,7 +82,7 @@ width: 0;
 background: #FFE555;
 transition: width 0.33s ease;
 }
-/* Both DANIEL and TALA should react to hover on this page */
+/* Only DANIEL should react to hover on this page */
 .menu-link:hover {
 color: white; 
 }
