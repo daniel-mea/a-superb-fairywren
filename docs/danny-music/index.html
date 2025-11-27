@@ -16,31 +16,32 @@
             height: 100%;
             overflow: hidden;
             position: fixed;
-            top: 0;
-            left: 0;
         }
 
         body {
             background-color: #f4d03f;
         }
 
-        .bg-image {
+        .bg-wrapper {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            min-width: 100vw;
-            min-height: 100vh;
-            object-fit: cover;
-            object-position: center;
+            overflow: hidden;
             z-index: 1;
         }
 
-        @supports (-webkit-touch-callout: none) {
-            .bg-image {
-                min-height: -webkit-fill-available;
-            }
+        .bg-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: cover;
         }
 
         .content {
@@ -72,26 +73,59 @@
     </style>
 </head>
 <body>
-    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg" alt="" class="bg-image">
+    <div class="bg-wrapper">
+        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg" alt="" class="bg-image" id="bgImage">
+    </div>
     
     <div class="content">
         <div class="textbox">
-            <h1>Width fix v4</h1>
+            <h1>Width fix v5</h1>
         </div>
     </div>
 
     <script>
-        // Force viewport height recalculation on orientation change
-        function setViewportHeight() {
-            const vh = window.innerHeight;
-            const vw = window.innerWidth;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
-            document.documentElement.style.setProperty('--vw', `${vw}px`);
+        function resizeBackground() {
+            const img = document.getElementById('bgImage');
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            
+            // Force the image to cover the entire viewport
+            const windowRatio = windowWidth / windowHeight;
+            
+            // Get natural image ratio (you can adjust these if you know your image dimensions)
+            img.onload = function() {
+                const imgRatio = this.naturalWidth / this.naturalHeight;
+                
+                if (windowRatio > imgRatio) {
+                    // Window is wider than image ratio
+                    img.style.width = windowWidth + 'px';
+                    img.style.height = 'auto';
+                } else {
+                    // Window is taller than image ratio
+                    img.style.width = 'auto';
+                    img.style.height = windowHeight + 'px';
+                }
+            };
+            
+            // Also run immediately in case image is cached
+            if (img.complete) {
+                const imgRatio = img.naturalWidth / img.naturalHeight;
+                
+                if (windowRatio > imgRatio) {
+                    img.style.width = windowWidth + 'px';
+                    img.style.height = 'auto';
+                } else {
+                    img.style.width = 'auto';
+                    img.style.height = windowHeight + 'px';
+                }
+            }
         }
         
-        setViewportHeight();
-        window.addEventListener('resize', setViewportHeight);
-        window.addEventListener('orientationchange', setViewportHeight);
+        resizeBackground();
+        window.addEventListener('resize', resizeBackground);
+        window.addEventListener('orientationchange', function() {
+            setTimeout(resizeBackground, 100);
+        });
     </script>
 </body>
 </html>
