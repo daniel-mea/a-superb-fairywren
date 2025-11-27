@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Full Viewport Background</title>
     <style>
         * {
@@ -15,18 +15,34 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
+            position: fixed;
         }
 
         body {
             background-color: #f4d03f;
-            background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+        }
+
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            object-position: center;
+            z-index: 1;
+        }
+
+        .content {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 10;
         }
 
         .textbox {
@@ -53,9 +69,13 @@
     </style>
 </head>
 <body>
-    <div class="textbox">
-        <h1>Version 1.0</h1>
-        <p>Full viewport background with cover sizing - Background image may not show in Claude preview but will work when deployed to GitHub Pages</p>
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg" alt="" class="bg-image">
+    
+    <div class="content">
+        <div class="textbox">
+            <h1>Version 3.0</h1>
+            <p>Using IMG tag with object-fit cover - completely fixed positioning, no scroll at all</p>
+        </div>
     </div>
 </body>
 </html>
