@@ -14,6 +14,7 @@ html, body {
     height: 100%; 
     overflow: hidden; 
     background-color: #fff1a9; 
+    transition: background-size 0.3s;
 }
 
 /* 2. Standard Background Setup */
@@ -24,44 +25,65 @@ body {
     /* background-size is now controlled by JavaScript */
 }
 
-/* Optional: Center some text to verify content is centered and visible */
-.center-message {
+/* UI Elements for Testing */
+.center-ui {
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     color: white;
     font-size: 24px;
     font-family: sans-serif;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+    gap: 15px;
+}
+
+.lock-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff1a9;
+    background-color: #444;
+    border: 2px solid #fff1a9;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px #222;
+    transition: all 0.1s;
+}
+
+.lock-button:active {
+    box-shadow: 0 0 #222;
+    transform: translateY(4px);
 }
 </style>
 </head>
 <body>
 
-<div class="center-message">
-    Responsive Background Test Page
+<div class="center-ui">
+    <p>Version 4: JS Height Fix Activated</p>
+    <button class="lock-button" onclick="lockToPortrait()">
+        LOCK TO PORTRAIT (TEST)
+    </button>
 </div>
 
 <script>
+    const ASSET_ASPECT_RATIO = 1.778; // 16/9
+
     /**
-     * FIX: Bypasses the mobile 100vh bug by setting the body's height and background-size 
-     * based on the exact pixel height of the visible viewport (window.innerHeight).
+     * Handles the mobile viewport height bug and background sizing logic.
      */
     function setFullHeightAndBackgroundSize() {
         const viewportHeight = window.innerHeight;
         const viewportWidth = window.innerWidth;
+        const screenAspectRatio = viewportWidth / viewportHeight;
 
         // FIX 1: Force the body's height to the exact visible pixel height
         document.body.style.height = `${viewportHeight}px`;
 
-        // FIX 2: Check aspect ratio in JS to decide background size
-        // We use 1.778 (16/9) as the threshold for an "ultra-wide" screen (landscape phone)
-        const aspectRatio = viewportWidth / viewportHeight;
-
-        if (aspectRatio > 1.778) {
+        // FIX 2: Check aspect ratio in JS to decide background size (16/9 threshold)
+        if (screenAspectRatio > ASSET_ASPECT_RATIO) {
             // Screen is ultra-wide (landscape): Force background to fill height
-            // This prevents horizontal clipping and showing the yellow background.
             document.body.style.backgroundSize = 'auto 100%'; 
         } else {
             // Screen is portrait or desktop: Use standard cover
@@ -69,10 +91,38 @@ body {
         }
     }
 
-    // Set height on initial load and resize
+    /**
+     * Attempts to lock the screen to portrait mode. Requires user interaction 
+     * and modern browser support (often only works when in Fullscreen mode).
+     */
+    async function lockToPortrait() {
+        // IMPORTANT: document.documentElement.requestFullscreen() requires a direct user interaction
+        if (!screen.orientation || !screen.orientation.lock) {
+            // Replaced alert() with a console log as per system instructions
+            console.log("Error: Orientation locking is not supported by this browser.");
+            return;
+        }
+
+        try {
+            // 1. Request Fullscreen (REQUIRED by most browsers for lock to work)
+            await document.documentElement.requestFullscreen();
+            
+            // 2. Lock the orientation
+            await screen.orientation.lock('portrait');
+            console.log("Orientation locked to portrait.");
+
+        } catch (error) {
+            console.error("Failed to lock orientation:", error);
+            // Replaced alert() with a console log as per system instructions
+            console.log("Lock failed. Orientation locking usually requires Fullscreen mode and may be restricted by your device/browser.");
+        }
+    }
+
+
+    // Initialization and Event Listeners
     window.addEventListener('load', setFullHeightAndBackgroundSize);
     window.addEventListener('resize', setFullHeightAndBackgroundSize);
-
+    
     // Run once immediately to prevent initial flicker
     setFullHeightAndBackgroundSize();
 </script>
