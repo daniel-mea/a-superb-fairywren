@@ -6,33 +6,29 @@
 <title>Responsive Background Test</title>
 
 <style>
-/* 1. Ensure the HTML and Body fill the entire viewport */
+/* 1. Basic Viewport Setup */
 html, body {
     margin: 0;
     padding: 0;
-    height: 100%;
-    /* Hide scrollbars just in case the background image overflows */
+    height: 100%; 
     overflow: hidden; 
-    background-color: #fff1a9; /* Fallback color, should only appear if the image fails to cover */
+    background-color: #fff1a9; 
 }
 
-/* 2. Standard Background Setup */
+/* 2. Standard Background Setup (Default for Portrait or Desktop) */
 body {
-    /* The provided background properties: center center / cover no-repeat */
     background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg');
     background-position: center center;
-    background-size: cover; 
+    background-size: cover; /* Standard setting, works well for tall/portrait viewports */
     background-repeat: no-repeat;
 }
 
-/* 3. The Responsive Fix for Landscape Orientation */
-/* This media query ensures that when the screen is rotated to landscape (wider than tall), 
-   the background image scales by 100% of the viewport height (100vh) rather than relying 
-   on 'cover', which often causes horizontal cropping and reveals the background-color 
-   on the sides of phones/tablets. */
-@media (orientation: landscape) {
+/* 3. The Aspect Ratio Fix: Targeting WIDE Viewports (Aspect Ratio > 16:9) */
+/* When the screen is wider than a standard 16:9 (like a phone in landscape), 
+   we prioritize filling the height (100vh) to ensure the landscape-cropped 
+   image covers the entire screen without showing the side bars. */
+@media (min-aspect-ratio: 16/9) {
     body {
-        /* Sets height to 100vh and scales width automatically */
         background-size: auto 100vh; 
     }
 }
@@ -55,6 +51,8 @@ body {
 <div class="center-message">
     Responsive Background Test Page
 </div>
+
+<!-- Removed all JavaScript. The solution now relies entirely on the CSS min-aspect-ratio query. -->
 
 </body>
 </html>
