@@ -1,25 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsive Background Test</title>
+
 <style>
+/* 1. Ensure the HTML and Body fill the entire viewport */
 html, body {
     margin: 0;
     padding: 0;
     height: 100%;
+    /* Hide scrollbars just in case the background image overflows */
+    overflow: hidden; 
+    background-color: #fff1a9; /* Fallback color, should only appear if the image fails to cover */
 }
 
+/* 2. Standard Background Setup */
 body {
-    /* FORCE REAL VIEWPORT SIZE */
-    height: 100vh;
-    width: 100vw;
+    /* The provided background properties: center center / cover no-repeat */
+    background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg');
+    background-position: center center;
+    background-size: cover; 
+    background-repeat: no-repeat;
+}
 
-    overflow: hidden;
+/* 3. The Responsive Fix for Landscape Orientation */
+/* This media query ensures that when the screen is rotated to landscape (wider than tall), 
+   the background image scales by 100% of the viewport height (100vh) rather than relying 
+   on 'cover', which often causes horizontal cropping and reveals the background-color 
+   on the sides of phones/tablets. */
+@media (orientation: landscape) {
+    body {
+        /* Sets height to 100vh and scales width automatically */
+        background-size: auto 100vh; 
+    }
+}
 
-    background: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg')
-               center center / cover no-repeat;
+/* Optional: Center some text to verify content is centered and visible */
+.center-message {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    font-family: sans-serif;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
 }
 </style>
 </head>
-<body></body>
+<body>
+
+<div class="center-message">
+    Responsive Background Test Page
+</div>
+
+</body>
 </html>
