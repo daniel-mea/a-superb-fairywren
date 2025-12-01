@@ -21,11 +21,21 @@
             background-color: #f4d03f;
         }
 
-        .bg-image {
+        .bg-wrapper {
             position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .bg-image {
+            position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform-origin: center center;
             z-index: 1;
         }
 
@@ -58,11 +68,13 @@
     </style>
 </head>
 <body>
-    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg" alt="" class="bg-image" id="bgImg">
+    <div class="bg-wrapper">
+        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg" alt="" class="bg-image" id="bgImg">
+    </div>
     
     <div class="content">
         <div class="textbox">
-            <h1>Width fix v13</h1>
+            <h1>Width fix v14</h1>
         </div>
     </div>
 
@@ -71,54 +83,66 @@
             const img = document.getElementById('bgImg');
             const vw = window.innerWidth;
             const vh = window.innerHeight;
-            const aspectRatio = vw / vh;
             
-            console.log('Viewport:', vw, 'x', vh, 'Ratio:', aspectRatio.toFixed(2));
+            img.onload = function() {
+                const imgWidth = this.naturalWidth;
+                const imgHeight = this.naturalHeight;
+                const imgRatio = imgWidth / imgHeight;
+                const viewportRatio = vw / vh;
+                
+                let finalWidth, finalHeight;
+                
+                // If viewport is wider than image ratio, scale to width
+                if (viewportRatio > imgRatio) {
+                    finalWidth = vw;
+                    finalHeight = vw / imgRatio;
+                } else {
+                    // Otherwise scale to height
+                    finalHeight = vh;
+                    finalWidth = vh * imgRatio;
+                }
+                
+                img.style.width = finalWidth + 'px';
+                img.style.height = finalHeight + 'px';
+                img.style.transform = 'translate(-50%, -50%)';
+            };
             
-            // If screen is wider than 1.1:1 (landscape-ish), fill width
-            if (aspectRatio > 1.1) {
-                console.log('Filling WIDTH');
-                img.style.width = vw + 'px';
-                img.style.height = 'auto';
-                img.style.minHeight = vh + 'px';
-                img.style.minWidth = '';
-            } 
-            // If screen is taller than 1:1.1 (portrait-ish), fill height
-            else if (aspectRatio < (1 / 1.1)) {
-                console.log('Filling HEIGHT');
-                img.style.width = 'auto';
-                img.style.height = vh + 'px';
-                img.style.minWidth = vw + 'px';
-                img.style.minHeight = '';
-            }
-            // In between
-            else {
-                console.log('Filling WIDTH (default)');
-                img.style.width = vw + 'px';
-                img.style.height = 'auto';
-                img.style.minHeight = vh + 'px';
-                img.style.minWidth = '';
+            // Also run if image is already loaded
+            if (img.complete && img.naturalWidth > 0) {
+                const imgWidth = img.naturalWidth;
+                const imgHeight = img.naturalHeight;
+                const imgRatio = imgWidth / imgHeight;
+                const viewportRatio = vw / vh;
+                
+                let finalWidth, finalHeight;
+                
+                if (viewportRatio > imgRatio) {
+                    finalWidth = vw;
+                    finalHeight = vw / imgRatio;
+                } else {
+                    finalHeight = vh;
+                    finalWidth = vh * imgRatio;
+                }
+                
+                img.style.width = finalWidth + 'px';
+                img.style.height = finalHeight + 'px';
+                img.style.transform = 'translate(-50%, -50%)';
             }
         }
         
-        // Initial load
         fixBackground();
         
-        // On resize
         window.addEventListener('resize', () => {
             fixBackground();
         });
         
-        // On orientation change - try multiple times
         window.addEventListener('orientationchange', () => {
-            fixBackground();
-            setTimeout(fixBackground, 100);
-            setTimeout(fixBackground, 300);
-            setTimeout(fixBackground, 500);
-            setTimeout(fixBackground, 800);
+            setTimeout(fixBackground, 50);
+            setTimeout(fixBackground, 200);
+            setTimeout(fixBackground, 400);
+            setTimeout(fixBackground, 700);
         });
         
-        // Also try on window load
         window.addEventListener('load', fixBackground);
     </script>
 </body>
