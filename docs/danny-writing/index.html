@@ -1,60 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Responsive Background Test</title>
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Daniel – A Superb Fairywren</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 <style>
-/* 1. Ensure the HTML and Body fill the entire viewport */
+/* base reset */
 html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    /* Hide scrollbars just in case the background image overflows */
-    overflow: hidden; 
-    background-color: #fff1a9; /* Fallback color, should only appear if the image fails to cover */
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Fraunces', serif;
+  background-color: #fff1a9;
 }
 
-/* 2. Standard Background Setup */
+/* bg-layer uses the real viewport height via CSS var --vh */
+.bg-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  /* fallback to 100vh if --vh not set */
+  height: calc(var(--vh, 1vh) * 100);
+  background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* layout above bg */
 body {
-    /* The provided background properties: center center / cover no-repeat */
-    background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg');
-    background-position: center center;
-    background-size: cover; 
-    background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-/* 3. The Responsive Fix for Landscape Orientation */
-/* This media query ensures that when the screen is rotated to landscape (wider than tall), 
-   the background image scales by 100% of the viewport height (100vh) rather than relying 
-   on 'cover', which often causes horizontal cropping and reveals the background-color 
-   on the sides of phones/tablets. */
-@media (orientation: landscape) {
-    body {
-        /* Sets height to 100vh and scales width automatically */
-        background-size: auto 100vh; 
-    }
+/* ensure controls are above the bg */
+.header, .footer, .main-content {
+  position: relative;
+  z-index: 2;
+  color: #FFE555;
 }
 
-/* Optional: Center some text to verify content is centered and visible */
-.center-message {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 24px;
-    font-family: sans-serif;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+/* header */
+.header {
+  padding-top: 15px;
+  text-align: center;
+}
+.header img { width: 60px; border-radius: 50%; }
+.header h1 {
+  color: #FFE555;
+  font-weight: 500;
+  text-decoration: line-through;
+  text-transform: uppercase;
+  margin: 10px 0 10px 0;
+  font-size: 1.5em;
+}
+
+/* menu row */
+.menu-row { display:flex; justify-content:center; gap:60px; margin-top:17.5px; }
+.menu-link { position: relative; font-weight:700; font-style:italic; font-size:32px; color:#FFE555; text-decoration:none; transition: color .33s; }
+.menu-link.daniel { transform: translateX(-7px); color:white; pointer-events:none; }
+.menu-link.tala   { transform: translateX(5px); }
+.menu-link .underline { position:absolute; bottom:-1px; left:0; width:0; height:0; background:#FFE555; transition: width .33s; }
+.menu-link:hover { color:white; }
+.menu-link:hover .underline { width:100%; }
+
+/* social */
+.social { display:flex; justify-content:center; gap:15px; margin-top:20px; }
+.social a img { width:33px; vertical-align:middle; }
+
+/* main content icons */
+.main-content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.project-item { position: absolute; display:flex; flex-direction:column; align-items:center; pointer-events:auto; text-decoration:none; }
+.project-item img { width:55px; height:55px; margin-bottom:3px; }
+.project-label { color:#fff; font-size:14px; text-shadow:0 1px 2.5px rgba(0,0,0,1); }
+
+/* positions */
+.music-projects { left:42%; top:27%; transform: translateX(-50%); }
+.writing-projects { left:49%; top:33%; transform: translateX(-50%); }
+
+/* responsive */
+@media (max-width:768px) {
+  .menu-link { font-size:28px; }
+  .social a img { width:25px; }
+  .project-item img { width:45px; height:45px; }
+  .project-label { font-size:12px; }
+}
+@media (max-width:480px) {
+  .menu-link { font-size:22px; }
+  .header img { width:50px; }
+  .social a img { width:20px; }
+  .menu-link.daniel, .menu-link.tala { transform: translateX(0); }
 }
 </style>
 </head>
 <body>
 
-<div class="center-message">
-    Responsive Background Test Page
+<!-- background layer that always matches the *visible* viewport -->
+<div class="bg-layer" aria-hidden="true"></div>
+
+<div class="header">
+  <a href="/home/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo"></a>
+  <a href="/home/" style="text-decoration:none;"><h1>A SUPERB FAIRYWREN</h1></a>
+  <div class="menu-row">
+    <a href="/danny/" class="menu-link daniel">DANIEL <span class="underline"></span></a>
+    <a href="/tala/" class="menu-link tala">TALA <span class="underline"></span></a>
+  </div>
 </div>
+
+<div class="main-content">
+  <a href="/danny-music/" class="project-item music-projects">
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/icon_musicprojects.png" alt="Music Projects">
+    <span class="project-label">music</span>
+  </a>
+
+  <a href="/danny-writing/" class="project-item writing-projects">
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/icon_writingprojects.png" alt="Writing Projects">
+    <span class="project-label">writing</span>
+  </a>
+</div>
+
+<div class="footer">
+  <div class="social">
+    <a href="https://instagram.com/danny__mea" target="_blank"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_ig.svg" alt="Instagram"></a>
+    <a href="/contact/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/2978373eaeac2a4b537306bf46ebce49d3b812c6/docs/website_assets/icon_email.svg" alt="Email"></a>
+    <a href="https://www.youtube.com/@DannyMEA" target="_blank"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_yt.svg" alt="YouTube"></a>
+  </div>
+</div>
+
+<script>
+/* Set CSS variable --vh to the real viewport height (in px * 0.01). */
+/* This works around mobile browser UI (address bar) resizing issues. */
+(function() {
+  const setVh = () => {
+    // window.innerHeight is the visible viewport height
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', String(vh) + 'px');
+  };
+
+  // initial
+  setVh();
+
+  // update on resize and orientationchange; debounced to avoid thrash
+  let tid = null;
+  const debouncedSet = () => {
+    clearTimeout(tid);
+    tid = setTimeout(setVh, 80);
+  };
+
+  window.addEventListener('resize', debouncedSet);
+  window.addEventListener('orientationchange', debouncedSet);
+})();
+</script>
 
 </body>
 </html>
