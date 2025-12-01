@@ -14,8 +14,8 @@
         html, body {
             margin: 0;
             padding: 0;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
             position: fixed;
             background-color: #f4d03f;
@@ -33,8 +33,8 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -62,7 +62,7 @@
     
     <div class="content">
         <div class="textbox">
-            <h1>Width fix v12</h1>
+            <h1>Width fix v13</h1>
         </div>
     </div>
 
@@ -73,39 +73,53 @@
             const vh = window.innerHeight;
             const aspectRatio = vw / vh;
             
-            // If screen is wider than 1.1:1, fill width
+            console.log('Viewport:', vw, 'x', vh, 'Ratio:', aspectRatio.toFixed(2));
+            
+            // If screen is wider than 1.1:1 (landscape-ish), fill width
             if (aspectRatio > 1.1) {
+                console.log('Filling WIDTH');
                 img.style.width = vw + 'px';
                 img.style.height = 'auto';
                 img.style.minHeight = vh + 'px';
+                img.style.minWidth = '';
             } 
-            // If screen is taller than 1:1.1, fill height
+            // If screen is taller than 1:1.1 (portrait-ish), fill height
             else if (aspectRatio < (1 / 1.1)) {
+                console.log('Filling HEIGHT');
                 img.style.width = 'auto';
                 img.style.height = vh + 'px';
                 img.style.minWidth = vw + 'px';
+                img.style.minHeight = '';
             }
-            // In between, use cover behavior
+            // In between
             else {
+                console.log('Filling WIDTH (default)');
                 img.style.width = vw + 'px';
                 img.style.height = 'auto';
                 img.style.minHeight = vh + 'px';
+                img.style.minWidth = '';
             }
         }
         
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', fixBackground);
-        } else {
-            fixBackground();
-        }
+        // Initial load
+        fixBackground();
         
+        // On resize
         window.addEventListener('resize', () => {
-            setTimeout(fixBackground, 100);
+            fixBackground();
         });
+        
+        // On orientation change - try multiple times
         window.addEventListener('orientationchange', () => {
+            fixBackground();
+            setTimeout(fixBackground, 100);
             setTimeout(fixBackground, 300);
-            setTimeout(fixBackground, 600);
+            setTimeout(fixBackground, 500);
+            setTimeout(fixBackground, 800);
         });
+        
+        // Also try on window load
+        window.addEventListener('load', fixBackground);
     </script>
 </body>
 </html>
