@@ -62,7 +62,7 @@
     
     <div class="content">
         <div class="textbox">
-            <h1>Width fix v11</h1>
+            <h1>Width fix v12</h1>
         </div>
     </div>
 
@@ -99,9 +99,12 @@
             fixBackground();
         }
         
-        window.addEventListener('resize', fixBackground);
+        window.addEventListener('resize', () => {
+            setTimeout(fixBackground, 100);
+        });
         window.addEventListener('orientationchange', () => {
-            setTimeout(fixBackground, 200);
+            setTimeout(fixBackground, 300);
+            setTimeout(fixBackground, 600);
         });
     </script>
 </body>
