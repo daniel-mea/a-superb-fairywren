@@ -35,7 +35,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform-origin: center center;
+            transform: translate(-50%, -50%);
             z-index: 1;
         }
 
@@ -74,7 +74,7 @@
     
     <div class="content">
         <div class="textbox">
-            <h1>Width fix v15</h1>
+            <h1>Width fix v16</h1>
         </div>
     </div>
 
@@ -85,88 +85,49 @@
             const vh = window.innerHeight;
             
             img.onload = function() {
-                const imgWidth = this.naturalWidth;
-                const imgHeight = this.naturalHeight;
-                const imgRatio = imgWidth / imgHeight;
+                const imgRatio = this.naturalWidth / this.naturalHeight;
                 const viewportRatio = vw / vh;
                 
-                let finalWidth, finalHeight;
+                // Calculate sizes for both scenarios
+                const widthBasedHeight = vw / imgRatio;
+                const heightBasedWidth = vh * imgRatio;
                 
-                // Calculate which dimension to base sizing on
-                // If viewport is wider than image, we need MORE width
-                if (viewportRatio > imgRatio) {
-                    // Base on width - make image fill full width
-                    finalWidth = vw;
-                    finalHeight = vw / imgRatio;
-                    
-                    // But if that doesn't fill height, base on height instead
-                    if (finalHeight < vh) {
-                        finalHeight = vh;
-                        finalWidth = vh * imgRatio;
-                    }
+                // Choose whichever gives us MORE coverage (bigger dimensions)
+                if (widthBasedHeight >= vh) {
+                    // Width-based sizing covers everything
+                    img.style.width = vw + 'px';
+                    img.style.height = widthBasedHeight + 'px';
                 } else {
-                    // Base on height
-                    finalHeight = vh;
-                    finalWidth = vh * imgRatio;
-                    
-                    // But if that doesn't fill width, base on width instead
-                    if (finalWidth < vw) {
-                        finalWidth = vw;
-                        finalHeight = vw / imgRatio;
-                    }
+                    // Height-based sizing needed
+                    img.style.width = heightBasedWidth + 'px';
+                    img.style.height = vh + 'px';
                 }
-                
-                img.style.width = finalWidth + 'px';
-                img.style.height = finalHeight + 'px';
-                img.style.transform = 'translate(-50%, -50%)';
             };
             
-            // Also run if image is already loaded
             if (img.complete && img.naturalWidth > 0) {
-                const imgWidth = img.naturalWidth;
-                const imgHeight = img.naturalHeight;
-                const imgRatio = imgWidth / imgHeight;
+                const imgRatio = img.naturalWidth / img.naturalHeight;
                 const viewportRatio = vw / vh;
                 
-                let finalWidth, finalHeight;
+                const widthBasedHeight = vw / imgRatio;
+                const heightBasedWidth = vh * imgRatio;
                 
-                if (viewportRatio > imgRatio) {
-                    finalWidth = vw;
-                    finalHeight = vw / imgRatio;
-                    
-                    if (finalHeight < vh) {
-                        finalHeight = vh;
-                        finalWidth = vh * imgRatio;
-                    }
+                if (widthBasedHeight >= vh) {
+                    img.style.width = vw + 'px';
+                    img.style.height = widthBasedHeight + 'px';
                 } else {
-                    finalHeight = vh;
-                    finalWidth = vh * imgRatio;
-                    
-                    if (finalWidth < vw) {
-                        finalWidth = vw;
-                        finalHeight = vw / imgRatio;
-                    }
+                    img.style.width = heightBasedWidth + 'px';
+                    img.style.height = vh + 'px';
                 }
-                
-                img.style.width = finalWidth + 'px';
-                img.style.height = finalHeight + 'px';
-                img.style.transform = 'translate(-50%, -50%)';
             }
         }
         
         fixBackground();
-        
-        window.addEventListener('resize', () => {
-            fixBackground();
-        });
-        
+        window.addEventListener('resize', fixBackground);
         window.addEventListener('orientationchange', () => {
             setTimeout(fixBackground, 50);
             setTimeout(fixBackground, 200);
-            setTimeout(fixBackground, 400);
-            setTimeout(fixBackground, 700);
+            setTimeout(fixBackground, 500);
         });
-        
         window.addEventListener('load', fixBackground);
     </script>
 </body>
