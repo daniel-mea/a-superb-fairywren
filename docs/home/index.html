@@ -12,14 +12,12 @@ padding: 0;
 height: 100%;
 font-family: 'Fraunces', serif;
 overflow: hidden;
-/* Set fallback background color for loading */
 background-color: #fff1a9; 
 }
 body {
 display: flex;
 flex-direction: column;
 justify-content: space-between;
-/* UPDATED IMAGE PATH AND POSITIONING TO 'center top' */
 background: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/peter_and_wendy-crop2.jpg') center top / cover no-repeat;
 }
 .header, .footer {
@@ -41,15 +39,13 @@ text-transform: uppercase;
 margin: 10px 0 10px 0;
 font-size: 1.5em;
 }
-/* DANIEL — TALA links row */
 .menu-row {
 display: flex;
 justify-content: center;
 gap: 60px;
-margin-top: 17.5px; /* previous 7.5px + 10px */
+margin-top: 17.5px;
 }
 
-/* **CRITICAL FIX**: Using transform for stable sub-pixel shifting */
 .menu-link.daniel {
     transform: translateX(-7px);
 }
@@ -63,7 +59,7 @@ font-family: 'Fraunces', serif;
 font-weight: 700;
 font-style: italic;
 font-size: 32px;
-color: #FFE555; /* initial color is yellow */
+color: #FFE555;
 text-decoration: none;
 transition: color 0.33s ease;
 }
@@ -77,37 +73,33 @@ background: #FFE555;
 transition: width 0.33s ease;
 }
 .menu-link:hover {
-color: white; /* fades from FE555 → white */
+color: white;
 }
 .menu-link:hover .underline {
 width: 100%;
 }
 
-/* --- ADDed SOCIAL STYLES FOR CONSISTENCY --- */
 .social {
     margin-top: 20px;
-    /* KEY CHANGE: Set icon visibility to 0% */
     opacity: 0; 
 }
 .social a img {
     width: 33px;
     vertical-align: middle;
 }
-/* ------------------------------------------- */
 
-/* footer stays empty unless you want something there later */
 .footer {
 padding-bottom: 15px;
 }
-/* Responsive adjustments */
+
 @media (max-width: 768px) {
 .menu-link {
-font-size: 28px;
+font-size: 32px;
 }
 }
 @media (max-width: 480px) {
 .menu-link {
-    font-size: 22px;
+    font-size: 32px;
 }
 .header img {
     width: 50px;
@@ -115,7 +107,6 @@ font-size: 28px;
 .social a img {
     width: 20px;
 }
-/* Remove micro-adjustment on mobile for cleaner alignment */
 .menu-link.daniel, .menu-link.tala {
     transform: translateX(0);
 }
