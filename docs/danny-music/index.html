@@ -2,145 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Full Viewport Background</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Test</title>
     <style>
-        * {
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
+            height: 100vh;
+            width: 100vw;
             overflow: hidden;
-            position: fixed;
-            background-color: #f4d03f;
-            overscroll-behavior: contain;
-        }
-
-        .bg-image {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            max-width: none;
-            max-height: none;
-            z-index: 1;
-        }
-
-        .content {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            background: #f4d03f url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg') no-repeat center center;
+            background-size: cover;
             display: flex;
-            justify-content: center;
             align-items: center;
-            z-index: 10;
-            pointer-events: none;
+            justify-content: center;
         }
 
         .textbox {
-            background-color: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.9);
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            max-width: 90%;
-            text-align: center;
-            pointer-events: auto;
-        }
-
-        .textbox h1 {
-            font-family: Arial, sans-serif;
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .textbox p {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            color: #555555;
         }
     </style>
 </head>
 <body>
-    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg" alt="" class="bg-image" id="bgImg">
-    
-    <div class="content">
-        <div class="textbox">
-            <h1>Width fix v22</h1>
-            <p id="debug"></p>
-        </div>
+    <div class="textbox">
+        <h1>Simple v1</h1>
     </div>
-
-    <script>
-        function fixBackground() {
-            const img = document.getElementById('bgImg');
-            const debug = document.getElementById('debug');
-            const vw = window.innerWidth;
-            const vh = window.innerHeight;
-            
-            debug.textContent = `Viewport: ${vw}x${vh}`;
-            
-            img.onload = function() {
-                const imgRatio = this.naturalWidth / this.naturalHeight;
-                const viewportRatio = vw / vh;
-                
-                debug.textContent = `VP: ${vw}x${vh} | Img: ${this.naturalWidth}x${this.naturalHeight}`;
-                
-                // Calculate sizes for both scenarios
-                const widthBasedHeight = vw / imgRatio;
-                const heightBasedWidth = vh * imgRatio;
-                
-                // Choose whichever gives us MORE coverage, then add 10% extra
-                if (widthBasedHeight >= vh) {
-                    // Width-based sizing covers everything
-                    img.style.width = (vw * 1.1) + 'px';
-                    img.style.height = (widthBasedHeight * 1.1) + 'px';
-                    debug.textContent += ` | Set: ${(vw * 1.1).toFixed(0)}x${(widthBasedHeight * 1.1).toFixed(0)}`;
-                } else {
-                    // Height-based sizing needed
-                    img.style.width = (heightBasedWidth * 1.1) + 'px';
-                    img.style.height = (vh * 1.1) + 'px';
-                    debug.textContent += ` | Set: ${(heightBasedWidth * 1.1).toFixed(0)}x${(vh * 1.1).toFixed(0)}`;
-                }
-            };
-            
-            if (img.complete && img.naturalWidth > 0) {
-                const imgRatio = img.naturalWidth / img.naturalHeight;
-                const viewportRatio = vw / vh;
-                
-                debug.textContent = `VP: ${vw}x${vh} | Img: ${img.naturalWidth}x${img.naturalHeight}`;
-                
-                const widthBasedHeight = vw / imgRatio;
-                const heightBasedWidth = vh * imgRatio;
-                
-                if (widthBasedHeight >= vh) {
-                    img.style.width = (vw * 1.1) + 'px';
-                    img.style.height = (widthBasedHeight * 1.1) + 'px';
-                    debug.textContent += ` | Set: ${(vw * 1.1).toFixed(0)}x${(widthBasedHeight * 1.1).toFixed(0)}`;
-                } else {
-                    img.style.width = (heightBasedWidth * 1.1) + 'px';
-                    img.style.height = (vh * 1.1) + 'px';
-                    debug.textContent += ` | Set: ${(heightBasedWidth * 1.1).toFixed(0)}x${(vh * 1.1).toFixed(0)}`;
-                }
-            }
-        }
-        
-        fixBackground();
-        window.addEventListener('resize', fixBackground);
-        window.addEventListener('orientationchange', () => {
-            setTimeout(fixBackground, 50);
-            setTimeout(fixBackground, 200);
-            setTimeout(fixBackground, 500);
-        });
-        window.addEventListener('load', fixBackground);
-    </script>
 </body>
 </html>
