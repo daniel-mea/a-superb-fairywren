@@ -74,7 +74,7 @@
     
     <div class="content">
         <div class="textbox">
-            <h1>Width fix v14</h1>
+            <h1>Width fix v15</h1>
         </div>
     </div>
 
@@ -92,14 +92,28 @@
                 
                 let finalWidth, finalHeight;
                 
-                // If viewport is wider than image ratio, scale to width
+                // Calculate which dimension to base sizing on
+                // If viewport is wider than image, we need MORE width
                 if (viewportRatio > imgRatio) {
+                    // Base on width - make image fill full width
                     finalWidth = vw;
                     finalHeight = vw / imgRatio;
+                    
+                    // But if that doesn't fill height, base on height instead
+                    if (finalHeight < vh) {
+                        finalHeight = vh;
+                        finalWidth = vh * imgRatio;
+                    }
                 } else {
-                    // Otherwise scale to height
+                    // Base on height
                     finalHeight = vh;
                     finalWidth = vh * imgRatio;
+                    
+                    // But if that doesn't fill width, base on width instead
+                    if (finalWidth < vw) {
+                        finalWidth = vw;
+                        finalHeight = vw / imgRatio;
+                    }
                 }
                 
                 img.style.width = finalWidth + 'px';
@@ -119,9 +133,19 @@
                 if (viewportRatio > imgRatio) {
                     finalWidth = vw;
                     finalHeight = vw / imgRatio;
+                    
+                    if (finalHeight < vh) {
+                        finalHeight = vh;
+                        finalWidth = vh * imgRatio;
+                    }
                 } else {
                     finalHeight = vh;
                     finalWidth = vh * imgRatio;
+                    
+                    if (finalWidth < vw) {
+                        finalWidth = vw;
+                        finalHeight = vw / imgRatio;
+                    }
                 }
                 
                 img.style.width = finalWidth + 'px';
