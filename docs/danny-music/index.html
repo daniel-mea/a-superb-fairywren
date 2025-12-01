@@ -64,6 +64,13 @@
             font-family: Arial, sans-serif;
             font-size: 24px;
             color: #333;
+            margin-bottom: 10px;
+        }
+
+        .textbox p {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #666;
         }
     </style>
 </head>
@@ -74,19 +81,25 @@
     
     <div class="content">
         <div class="textbox">
-            <h1>Width fix v17</h1>
+            <h1>Width fix v18</h1>
+            <p id="debug"></p>
         </div>
     </div>
 
     <script>
         function fixBackground() {
             const img = document.getElementById('bgImg');
+            const debug = document.getElementById('debug');
             const vw = window.innerWidth;
             const vh = window.innerHeight;
+            
+            debug.textContent = `Viewport: ${vw}x${vh}`;
             
             img.onload = function() {
                 const imgRatio = this.naturalWidth / this.naturalHeight;
                 const viewportRatio = vw / vh;
+                
+                debug.textContent = `VP: ${vw}x${vh} | Img: ${this.naturalWidth}x${this.naturalHeight}`;
                 
                 // Calculate sizes for both scenarios
                 const widthBasedHeight = vw / imgRatio;
@@ -97,10 +110,12 @@
                     // Width-based sizing covers everything
                     img.style.width = (vw * 1.1) + 'px';
                     img.style.height = (widthBasedHeight * 1.1) + 'px';
+                    debug.textContent += ` | Set: ${(vw * 1.1).toFixed(0)}x${(widthBasedHeight * 1.1).toFixed(0)}`;
                 } else {
                     // Height-based sizing needed
                     img.style.width = (heightBasedWidth * 1.1) + 'px';
                     img.style.height = (vh * 1.1) + 'px';
+                    debug.textContent += ` | Set: ${(heightBasedWidth * 1.1).toFixed(0)}x${(vh * 1.1).toFixed(0)}`;
                 }
             };
             
@@ -108,15 +123,19 @@
                 const imgRatio = img.naturalWidth / img.naturalHeight;
                 const viewportRatio = vw / vh;
                 
+                debug.textContent = `VP: ${vw}x${vh} | Img: ${img.naturalWidth}x${img.naturalHeight}`;
+                
                 const widthBasedHeight = vw / imgRatio;
                 const heightBasedWidth = vh * imgRatio;
                 
                 if (widthBasedHeight >= vh) {
                     img.style.width = (vw * 1.1) + 'px';
                     img.style.height = (widthBasedHeight * 1.1) + 'px';
+                    debug.textContent += ` | Set: ${(vw * 1.1).toFixed(0)}x${(widthBasedHeight * 1.1).toFixed(0)}`;
                 } else {
                     img.style.width = (heightBasedWidth * 1.1) + 'px';
                     img.style.height = (vh * 1.1) + 'px';
+                    debug.textContent += ` | Set: ${(heightBasedWidth * 1.1).toFixed(0)}x${(vh * 1.1).toFixed(0)}`;
                 }
             }
         }
