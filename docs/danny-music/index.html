@@ -74,7 +74,7 @@
     
     <div class="content">
         <div class="textbox">
-            <h1>Width fix v16</h1>
+            <h1>Width fix v17</h1>
         </div>
     </div>
 
@@ -92,15 +92,15 @@
                 const widthBasedHeight = vw / imgRatio;
                 const heightBasedWidth = vh * imgRatio;
                 
-                // Choose whichever gives us MORE coverage (bigger dimensions)
+                // Choose whichever gives us MORE coverage, then add 10% extra
                 if (widthBasedHeight >= vh) {
                     // Width-based sizing covers everything
-                    img.style.width = vw + 'px';
-                    img.style.height = widthBasedHeight + 'px';
+                    img.style.width = (vw * 1.1) + 'px';
+                    img.style.height = (widthBasedHeight * 1.1) + 'px';
                 } else {
                     // Height-based sizing needed
-                    img.style.width = heightBasedWidth + 'px';
-                    img.style.height = vh + 'px';
+                    img.style.width = (heightBasedWidth * 1.1) + 'px';
+                    img.style.height = (vh * 1.1) + 'px';
                 }
             };
             
@@ -112,11 +112,11 @@
                 const heightBasedWidth = vh * imgRatio;
                 
                 if (widthBasedHeight >= vh) {
-                    img.style.width = vw + 'px';
-                    img.style.height = widthBasedHeight + 'px';
+                    img.style.width = (vw * 1.1) + 'px';
+                    img.style.height = (widthBasedHeight * 1.1) + 'px';
                 } else {
-                    img.style.width = heightBasedWidth + 'px';
-                    img.style.height = vh + 'px';
+                    img.style.width = (heightBasedWidth * 1.1) + 'px';
+                    img.style.height = (vh * 1.1) + 'px';
                 }
             }
         }
