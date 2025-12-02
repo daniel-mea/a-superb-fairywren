@@ -6,6 +6,7 @@
 <title>Tala – A Superb Fairywren</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 <style>
+/* --- CORE LAYOUT SETUP (REVERTED TO SIMPLER STRUCTURE) --- */
 html, body {
 margin: 0;
 padding: 0;
@@ -15,13 +16,21 @@ overflow: hidden;
 background-color: #fff1a9; 
 }
 
-/* bg-layer uses the real viewport height via CSS var --vh */
+/* BODY structure reverted to original flex/space-between for header/footer positioning */
+body {
+display: flex;
+flex-direction: column;
+justify-content: space-between; 
+}
+
+/* --- BACKGROUND FIX (Crucial for 100% height) --- */
 .bg-layer {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-  height: calc(var(--vh, 1vh) * 100);
+  /* Uses the JS-calculated height to fix mobile viewport bugs */
+  height: calc(var(--vh, 1vh) * 100); 
   background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/talas_diary-crop0B.jpg');
   background-size: cover;
   background-position: center 15%;
@@ -30,17 +39,24 @@ background-color: #fff1a9;
   pointer-events: none;
 }
 
-body {
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-}
+/* --- HEADER, FOOTER, MAIN CONTENT --- */
 
-.header, .footer, .main-content {
+.header, .footer {
 position: relative;
 z-index: 2;
 text-align: center;
 color: #FFE555;
+}
+
+/* MAIN CONTENT REVERTED to absolute positioning relative to viewport */
+.main-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 2;
 }
 
 .header {
@@ -116,15 +132,8 @@ width: 100%;
 padding-bottom: 15px;
 }
 
-.main-content {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 2;
-}
+/* --- ICON POSITIONS (Desktop defaults) --- */
+
 .project-item {
     position: absolute;
     display: flex;
@@ -149,34 +158,48 @@ padding-bottom: 15px;
 
 .writing-projects {
     left: 53%; 
-    top: 25%;
+    top: 25%; /* Desktop position */
     transform: translateX(-50%);
 }
 .music-projects {
     left: 50%;
-    top: 40%; 
+    top: 40%; /* Desktop position */
     transform: translateX(-50%);
 }
 .talk-projects {
     left: 57.5%; 
-    top: 55%; 
+    top: 55%; /* Desktop position */
     transform: translateX(-50%);
 }
 
 /* Orientation-based responsive styling */
+/* This block contains generic portrait styles (font sizes, etc.) */
 @media (orientation: portrait) {
   .menu-link.daniel, .menu-link.tala { transform: translateX(0); }
   .header img { width: 50px; }
   .social a img { width: 25px; }
   .project-item img { width: 55px; height: 55px; }
   .project-label { font-size: 12px; }
-  .music-projects { left: 42%; }
-  .writing-projects { left: 49%; }
-  .talk-projects { left: 45.5%; }
+  
+  /* NOTE: Icon positioning moves to the more specific max-width query below */
 }
+
+/* --- PHONE-SPECIFIC POSITIONING FIX (Using max-width and orientation) --- */
+/* This is the key fix for the icons being too high on short phone screens. */
+@media (max-width: 768px) and (orientation: portrait) {
+  /* Using your suggested 'top' values, combined with existing 'left' values */
+  .writing-projects { left: 49%; top: 32%; } 
+  .music-projects { left: 42%; top: 48%; } 
+  .talk-projects { left: 58%; top: 64%; } 
+}
+
 
 @media (orientation: landscape) {
   .social a img { width: 22px; }
+  /* In landscape, the screen is short, so we move the icons closer together */
+  .writing-projects { top: 30%; }
+  .music-projects { top: 45%; }
+  .talk-projects { top: 60%; }
 }
 </style>
 </head>
@@ -236,8 +259,9 @@ padding-bottom: 15px;
 <script>
 (function() {
   const setVh = () => {
+    // This function calculates the actual viewport height (fixing the 100vh bug)
     const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', String(vh) + 'px');
+    document.documentElement.style.setProperty('--vh', vh + 'px');
   };
 
   setVh();
@@ -245,6 +269,7 @@ padding-bottom: 15px;
   let tid = null;
   const debouncedSet = () => {
     clearTimeout(tid);
+    // Debounced for performance on resize/rotation
     tid = setTimeout(setVh, 80);
   };
 
