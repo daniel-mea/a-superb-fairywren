@@ -163,52 +163,20 @@ padding-bottom: 15px;
     transform: translateX(-50%);
 }
 
-@media (max-width: 768px) {
-.menu-link {
-font-size: 32px;
+/* Orientation-based responsive styling */
+@media (orientation: portrait) {
+  .menu-link.daniel, .menu-link.tala { transform: translateX(0); }
+  .header img { width: 50px; }
+  .social a img { width: 25px; }
+  .project-item img { width: 45px; height: 45px; }
+  .project-label { font-size: 12px; }
+  .music-projects { left: 42%; }
+  .writing-projects { left: 49%; }
+  .talk-projects { left: 45.5%; }
 }
-.social a img {
-    width: 25px;
-}
-.project-item img {
-    width: 45px; 
-    height: 45px;
-}
-.project-label {
-    font-size: 12px;
-}
-.music-projects {
-    left: 42%; 
-}
-.writing-projects {
-    left: 49%;
-}
-.talk-projects {
-    left: 45.5%; 
-}
-}
-@media (max-width: 480px) {
-.menu-link {
-font-size: 32px;
-}
-.header img {
-    width: 50px;
-}
-.social a img {
-    width: 20px;
-}
-.menu-link.daniel, .menu-link.tala {
-    transform: translateX(0);
-}
-.music-projects {
-    left: 42%; 
-}
-.writing-projects {
-    left: 49%;
-}
-.talk-projects {
-    left: 45.5%;
-}
+
+@media (orientation: landscape) {
+  .social a img { width: 22px; }
 }
 </style>
 </head>

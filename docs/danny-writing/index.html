@@ -96,18 +96,17 @@ body {
 .music-projects { left:42%; top:27%; transform: translateX(-50%); }
 .writing-projects { left:49%; top:33%; transform: translateX(-50%); }
 
-/* responsive */
-@media (max-width:768px) {
-  .menu-link { font-size:32px; }
-  .social a img { width:15px; }
+/* Orientation-based responsive styling */
+@media (orientation: portrait) {
+  .menu-link.daniel, .menu-link.tala { transform: translateX(0); }
+  .header img { width:50px; }
+  .social a img { width:25px; }
   .project-item img { width:45px; height:45px; }
   .project-label { font-size:12px; }
 }
-@media (max-width:480px) {
-  .menu-link { font-size:32px; }
-  .header img { width:50px; }
-  .social a img { width:25px; }
-  .menu-link.daniel, .menu-link.tala { transform: translateX(0); }
+
+@media (orientation: landscape) {
+  .social a img { width:22px; }
 }
 </style>
 </head>
