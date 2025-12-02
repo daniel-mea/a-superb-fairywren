@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Main – A Superb Fairywren</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 <style>
@@ -14,16 +14,35 @@ font-family: 'Fraunces', serif;
 overflow: hidden;
 background-color: #fff1a9; 
 }
+
+/* bg-layer uses the real viewport height via CSS var --vh */
+.bg-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
+  background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/peter_and_wendy-crop2.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
 body {
 display: flex;
 flex-direction: column;
 justify-content: space-between;
-background: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/peter_and_wendy-crop2.jpg') center top / cover no-repeat;
 }
+
 .header, .footer {
+position: relative;
+z-index: 2;
 text-align: center;
 color: #FFE555;
 }
+
 .header {
 padding-top: 15px;
 }
@@ -114,6 +133,9 @@ font-size: 32px;
 </style>
 </head>
 <body>
+
+<div class="bg-layer" aria-hidden="true"></div>
+
 <div class="header">
 <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo">
 <h1>A SUPERB FAIRYWREN</h1>
@@ -133,5 +155,26 @@ font-size: 32px;
         </a>
     </div>
 </div>
+
+<script>
+(function() {
+  const setVh = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', String(vh) + 'px');
+  };
+
+  setVh();
+
+  let tid = null;
+  const debouncedSet = () => {
+    clearTimeout(tid);
+    tid = setTimeout(setVh, 80);
+  };
+
+  window.addEventListener('resize', debouncedSet);
+  window.addEventListener('orientationchange', debouncedSet);
+})();
+</script>
+
 </body>
 </html>
