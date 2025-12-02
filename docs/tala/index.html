@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Tala – A Superb Fairywren</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 <style>
@@ -11,22 +11,38 @@ margin: 0;
 padding: 0;
 height: 100%;
 font-family: 'Fraunces', serif;
-/* REVERTED: overflow: hidden; is restored as requested */
 overflow: hidden;
-/* Set fallback background color for loading */
 background-color: #fff1a9; 
 }
+
+/* bg-layer uses the real viewport height via CSS var --vh */
+.bg-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
+  background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/talas_diary-crop0B.jpg');
+  background-size: cover;
+  background-position: center 15%;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
 body {
 display: flex;
 flex-direction: column;
 justify-content: space-between;
-/* UPDATED IMAGE PATH */
-background: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/talas_diary-crop0.jpg') center 15% / cover no-repeat;
 }
-.header, .footer {
+
+.header, .footer, .main-content {
+position: relative;
+z-index: 2;
 text-align: center;
 color: #FFE555;
 }
+
 .header {
 padding-top: 15px;
 }
@@ -43,7 +59,6 @@ margin: 10px 0 10px 0;
 font-size: 1.5em;
 }
 
-/* DANIEL — TALA links row */
 .menu-row {
 display: flex;
 justify-content: center;
@@ -51,16 +66,13 @@ gap: 60px;
 margin-top: 17.5px;
 }
 
-/* **CRITICAL FIX**: Using transform for stable sub-pixel shifting */
 .menu-link.daniel {
     transform: translateX(-7px);
-    /* DANIEL is the interactive link on this page */
 }
 .menu-link.tala {
     transform: translateX(5px);
-    /* TALA is the active page */
     color: white; 
-    pointer-events: none; /* Make it unclickable */
+    pointer-events: none;
 }
 
 .menu-link {
@@ -69,7 +81,7 @@ font-family: 'Fraunces', serif;
 font-weight: 700;
 font-style: italic;
 font-size: 32px;
-color: #FFE555; /* initial color is yellow */
+color: #FFE555;
 text-decoration: none;
 transition: color 0.33s ease;
 }
@@ -82,7 +94,6 @@ width: 0;
 background: #FFE555;
 transition: width 0.33s ease;
 }
-/* Only DANIEL should react to hover on this page */
 .menu-link:hover {
 color: white; 
 }
@@ -90,7 +101,6 @@ color: white;
 width: 100%;
 }
 
-/* --- Social Icons Styling --- */
 .social {
     display: flex;
     justify-content: center;
@@ -101,13 +111,11 @@ width: 100%;
     width: 33px;
     vertical-align: middle;
 }
-/* --------------------------- */
 
 .footer {
 padding-bottom: 15px;
 }
 
-/* --- MAIN CONTENT / PROJECT ICONS (COPIED FROM DANIEL) --- */
 .main-content {
     position: absolute;
     width: 100%;
@@ -115,6 +123,7 @@ padding-bottom: 15px;
     top: 0;
     left: 0;
     pointer-events: none;
+    z-index: 2;
 }
 .project-item {
     position: absolute;
@@ -134,35 +143,29 @@ padding-bottom: 15px;
     color: #FFFFFF;
     font-size: 14px;
     font-weight: 400; 
-    /* CORRECTED: Shadow set to 0px offset, 2px blur radius */
     text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
     letter-spacing: 0.5px;
 }
 
-/* --- POSITIONING --- */
-/* Writing Icon Group */
 .writing-projects {
     left: 53%; 
     top: 25%;
     transform: translateX(-50%);
 }
-/* Music Icon Group */
 .music-projects {
     left: 50%;
     top: 40%; 
     transform: translateX(-50%);
 }
-/* NEW: Talk Icon Group - Centered below the first two */
 .talk-projects {
     left: 57.5%; 
     top: 55%; 
     transform: translateX(-50%);
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
 .menu-link {
-font-size: 28px;
+font-size: 32px;
 }
 .social a img {
     width: 25px;
@@ -174,7 +177,6 @@ font-size: 28px;
 .project-label {
     font-size: 12px;
 }
-/* Maintain relative positions */
 .music-projects {
     left: 42%; 
 }
@@ -187,7 +189,7 @@ font-size: 28px;
 }
 @media (max-width: 480px) {
 .menu-link {
-font-size: 22px;
+font-size: 32px;
 }
 .header img {
     width: 50px;
@@ -198,7 +200,6 @@ font-size: 22px;
 .menu-link.daniel, .menu-link.tala {
     transform: translateX(0);
 }
-/* Tweak positions for mobile to maintain visual balance if needed */
 .music-projects {
     left: 42%; 
 }
@@ -212,6 +213,9 @@ font-size: 22px;
 </style>
 </head>
 <body>
+
+<div class="bg-layer" aria-hidden="true"></div>
+
 <div class="header">
     <a href="/home/">
         <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo">
@@ -260,5 +264,26 @@ font-size: 22px;
         </a>
     </div>
 </div>
+
+<script>
+(function() {
+  const setVh = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', String(vh) + 'px');
+  };
+
+  setVh();
+
+  let tid = null;
+  const debouncedSet = () => {
+    clearTimeout(tid);
+    tid = setTimeout(setVh, 80);
+  };
+
+  window.addEventListener('resize', debouncedSet);
+  window.addEventListener('orientationchange', debouncedSet);
+})();
+</script>
+
 </body>
 </html>
