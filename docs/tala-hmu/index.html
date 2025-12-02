@@ -173,21 +173,15 @@ padding-bottom: 15px;
 }
 
 /* Orientation-based responsive styling */
-/* This block contains generic portrait styles (font sizes, etc.) */
 @media (orientation: portrait) {
   .menu-link.daniel, .menu-link.tala { transform: translateX(0); }
   .header img { width: 50px; }
   .social a img { width: 25px; }
   .project-item img { width: 55px; height: 55px; }
-  .project-label { font-size: 12px; }
+  .project-label { font-size:12px; }
   
-  /* NOTE: Icon positioning moves to the more specific max-width query below */
-}
-
-/* --- PHONE-SPECIFIC POSITIONING FIX (Using max-width and orientation) --- */
-/* This is the key fix for the icons being too high on short phone screens. */
-@media (max-width: 768px) and (orientation: portrait) {
-  /* Using your suggested 'top' values, combined with existing 'left' values */
+  /* --- MOBILE/TABLET PORTRAIT POSITIONING (MERGED) --- */
+  /* These rules now apply to ALL portrait screens (phone & tablet) */
   .writing-projects { left: 49%; top: 32%; } 
   .music-projects { left: 42%; top: 48%; } 
   .talk-projects { left: 58%; top: 64%; } 

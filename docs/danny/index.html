@@ -113,15 +113,19 @@ body {
   .social a img { width:25px; }
   .project-item img { width:55px; height:55px; }
   .project-label { font-size:12px; }
+  
+  /* --- MOBILE/TABLET PORTRAIT POSITIONING (MERGED) --- */
+  /* These rules now apply to ALL portrait screens (phone & tablet) */
+  .music-projects { 
+    top: 40%; 
+    left: 35%; 
+  } 
+  .writing-projects { 
+    top: 60%; 
+    left: 42%; 
+  } 
+  /* ---------------------------------------------------- */
 }
-
-/* --- MOBILE PORTRAIT POSITIONING (Aligned with Tala's approach) --- */
-@media (max-width: 768px) and (orientation: portrait) {
-  /* Move icons further down the screen to avoid mobile browser chrome */
-  .music-projects { top: 40%; } 
-  .writing-projects { top: 60%; } 
-}
-/* ----------------------------------------------------------------- */
 
 /* --- LANDSCAPE POSITIONING (Aligned with Tala's approach) --- */
 @media (orientation: landscape) {
