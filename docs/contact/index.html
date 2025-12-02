@@ -2,288 +2,118 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Tala – A Superb Fairywren</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact – A Superb Fairywren</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
+
 <style>
-html, body {
-margin: 0;
-padding: 0;
-height: 100%;
-font-family: 'Fraunces', serif;
-overflow: hidden;
-background-color: #fff1a9; 
-}
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Fraunces', serif;
+    overflow: hidden;
+    background-color: #fff1a9;
+  }
 
-/* bg-layer uses the real viewport height via CSS var --vh */
-.bg-layer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: calc(var(--vh, 1vh) * 100);
-  background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/talas_diary-crop0.jpg');
-  background-size: cover;
-  background-position: center 15%;
-  background-repeat: no-repeat;
-  z-index: 0;
-  pointer-events: none;
-}
+  body {
+    position: relative;
+  }
 
-body {
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-}
-
-.header, .footer, .main-content {
-position: relative;
-z-index: 2;
-color: #FFE555;
-}
-
-.header {
-padding-top: 15px;
-text-align: center;
-}
-.header img {
-width: 60px;
-border-radius: 50%;
-}
-.header h1 {
-color: #FFE555;
-font-weight: 500;
-text-decoration: line-through;
-text-transform: uppercase;
-margin: 10px 0 10px 0;
-font-size: 1.5em;
-}
-
-.menu-row {
-display: flex;
-justify-content: center;
-gap: 60px;
-margin-top: 17.5px;
-}
-
-.menu-link.daniel {
-    transform: translateX(-7px);
-}
-.menu-link.tala {
-    transform: translateX(5px);
-    color: white; 
-    pointer-events: none;
-}
-
-.menu-link {
-position: relative;
-font-family: 'Fraunces', serif;
-font-weight: 700;
-font-style: italic;
-font-size: 32px;
-color: #FFE555;
-text-decoration: none;
-transition: color 0.33s ease;
-}
-.menu-link .underline {
-position: absolute;
-bottom: -1px;
-left: 0;
-height: 0px;
-width: 0;
-background: #FFE555;
-transition: width 0.33s ease;
-}
-.menu-link:hover {
-color: white; 
-}
-.menu-link:hover .underline {
-width: 100%;
-}
-
-.social {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px; 
-}
-.social a img {
-    width: 33px;
-    vertical-align: middle;
-}
-
-.footer {
-padding-bottom: 15px;
-text-align: center;
-}
-
-.main-content {
+  .scale-container {
     position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 150vh;
+    transform-origin: center center;
+    z-index: 1;
+  }
+
+  .scale-container img.bg {
     width: 100%;
     height: 100%;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 2;
-}
-.project-item {
+    object-fit: cover;
+    display: block;
+  }
+
+  .header {
     position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    pointer-events: auto;
-    text-decoration: none; 
-}
-.project-item img {
-    width: 55px;
-    height: 55px;
-    margin-bottom: 3px;
-}
-.project-label {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    color: #FFFFFF;
-    font-size: 14px;
-    font-weight: 400; 
-    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
-    letter-spacing: 0.5px;
-}
+    top: 15px;
+    width: 100%;
+    text-align: center;
+    z-index: 2;
+    color: #FFE555;
+  }
 
-.writing-projects {
-    left: 53%; 
-    top: 25%;
-    transform: translateX(-50%);
-}
-.music-projects {
-    left: 50%;
-    top: 40%; 
-    transform: translateX(-50%);
-}
-.talk-projects {
-    left: 57.5%; 
-    top: 55%; 
-    transform: translateX(-50%);
-}
+  .header img {
+    width: 60px;
+    border-radius: 50%;
+  }
 
-@media (max-width: 768px) {
-.menu-link {
-font-size: 28px;
-}
-.social a img {
-    width: 25px;
-}
-.project-item img {
-    width: 45px; 
-    height: 45px;
-}
-.project-label {
-    font-size: 12px;
-}
-.music-projects {
-    left: 42%; 
-}
-.writing-projects {
-    left: 49%;
-}
-.talk-projects {
-    left: 45.5%; 
-}
-}
-@media (max-width: 480px) {
-.menu-link {
-font-size: 22px;
-}
-.header img {
-    width: 50px;
-}
-.social a img {
-    width: 20px;
-}
-.menu-link.daniel, .menu-link.tala {
-    transform: translateX(0);
-}
-.music-projects {
-    left: 42%; 
-}
-.writing-projects {
-    left: 49%;
-}
-.talk-projects {
-    left: 45.5%;
-}
-}
+  .header h1 {
+    color: #FFE555;
+    font-weight: 500;
+    text-decoration: line-through;
+    text-transform: uppercase;
+    margin: 10px 0 0 0;
+    font-size: 1.5em;
+  }
+
+  .hotspot {
+    position: absolute;
+    z-index: 3;
+    display: block;
+    cursor: pointer;
+    background: rgba(255,0,0,0.0);
+  }
+
+  /* DEBUG hotspots visible */
+  .debug {
+    background: rgba(255,0,0,0.0);
+  }
+
+  @media (max-width: 480px) {
+    .header img {
+      width: 50px;
+    }
+  }
 </style>
 </head>
 <body>
 
-<div class="bg-layer" aria-hidden="true"></div>
+<div class="scale-container" id="container">
+  <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg" class="bg" alt="Contact Image">
+
+  <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" style="top: 36.5%; left: 50%; width: 16%; height: 3%; transform: translate(-50%, -50%);"></a>
+  <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" style="top: 40%; left: 50%; width: 5%; height: 3%; transform: translate(-50%, -50%);"></a>
+
+  <a href="javascript:history.back()" class="hotspot debug" style="top: 52%; left: 57%; width: 3%; height: 2%; transform: translate(-50%, -50%);"></a>
+
+  <a class="hotspot debug" style="top: 52%; left: 44.1%; width: 4.8%; height: 2%; transform: translate(-50%, -50%);"></a>
+
+</div>
 
 <div class="header">
-    <a href="/home/">
-        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo">
-    </a>
-    <a href="/home/" style="text-decoration:none;">
-        <h1>A SUPERB FAIRYWREN</h1>
-    </a>
-    <div class="menu-row">
-        <a href="/danny/" class="menu-link daniel">DANIEL
-            <span class="underline"></span>
-        </a>
-        <a href="/tala/" class="menu-link tala">TALA
-            <span class="underline"></span>
-        </a>
-    </div>
-</div>
-
-<div class="main-content">
-    
-    <a href="/tala-music/" class="project-item music-projects">
-        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/icon_musicprojects.png" alt="Music Projects">
-        <span class="project-label">music</span>
-    </a>
-
-    <a href="/tala-writing/" class="project-item writing-projects">
-        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/icon_writingprojects.png" alt="Writing Projects">
-        <span class="project-label">writing</span>
-    </a>
-
-    <a href="/tala-hmu/" class="project-item talk-projects">
-        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/icon_talkprojects.png" alt="Talk Projects">
-        <span class="project-label">🔥🔥🔥</span>
-    </a>
-
-</div>
-<div class="footer">
-    <div class="social">
-        <a href="https://www.instagram.com/the.real.tala.cruz/" target="_blank">
-            <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_ig.svg" alt="Instagram">
-        </a>
-        <a href="/contact/">
-            <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/2978373eaeac2a4b537306bf46ebce49d3b812c6/docs/website_assets/icon_email.svg" alt="Email">
-        </a>
-        <a href="https://www.fanvue.com/tala.cruz" target="_blank">
-            <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_fv.svg" alt="Fanvue">
-        </a>
-    </div>
+  <a href="/home/">
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo">
+  </a>
+  <a href="/home/" style="text-decoration:none;">
+    <h1>A SUPERB FAIRYWREN</h1>
+  </a>
 </div>
 
 <script>
-(function() {
-  const setVh = () => {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', String(vh) + 'px');
-  };
+  function scaleContainer() {
+    const container = document.getElementById('container');
+    const scale = 1.4;
+    const translateY = 30;
+    container.style.transform = 'translate(-50%, -50%) translateY(' + translateY + 'vh) scale(' + scale + ')';
+  }
 
-  setVh();
-
-  let tid = null;
-  const debouncedSet = () => {
-    clearTimeout(tid);
-    tid = setTimeout(setVh, 80);
-  };
-
-  window.addEventListener('resize', debouncedSet);
-  window.addEventListener('orientationchange', debouncedSet);
-})();
+  window.addEventListener('resize', scaleContainer);
+  window.addEventListener('load', scaleContainer);
 </script>
 
 </body>
