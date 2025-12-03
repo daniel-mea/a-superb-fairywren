@@ -118,5 +118,25 @@
   window.addEventListener('load', scaleContainer);
 </script>
 
+<script>
+  const img = document.querySelector('img[usemap]');
+  const areas = document.querySelectorAll('area');
+  const wrap = img.parentElement;
+
+  areas.forEach(a => {
+    const c = a.coords.split(',').map(Number);
+    const d = document.createElement('div');
+    d.style.position = 'absolute';
+    d.style.left = c[0] + 'px';
+    d.style.top = c[1] + 'px';
+    d.style.width = (c[2]-c[0]) + 'px';
+    d.style.height = (c[3]-c[1]) + 'px';
+    d.style.background = 'rgba(255,0,0,0.3)';
+    d.style.pointerEvents = 'none';
+    d.style.zIndex = '9999';
+    wrap.appendChild(d);
+  });
+</script>
+
 </body>
 </html>
