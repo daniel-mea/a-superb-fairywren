@@ -92,13 +92,14 @@ body {
   .footer p { font-size: 45px; }
 }
 
-/* --- LANDSCAPE MOBILE FOOTER FIX --- */
-@media (max-width: 768px) {
+/* --- LANDSCAPE MOBILE FOOTER FIX (devices < 750px height) --- */
+@media (max-height: 750px) and (orientation: landscape) {
   .footer p {
-    font-size: 25px;
-    max-width: 90%;
+    font-size: 25px;       /* smaller font for landscape phones */
     line-height: 1.2em;
-    white-space: pre-wrap; /* allows manual line break */
+    max-width: 90%;
+    padding-bottom: 15px;  /* float it above bottom edge */
+    margin: 0 auto;
   }
 }
 </style>
