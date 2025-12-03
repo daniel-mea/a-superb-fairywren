@@ -61,34 +61,36 @@
     font-size: 1.5em;
   }
 
+  .hotspot {
+    position: absolute;
+    z-index: 3;
+    display: block;
+    cursor: pointer;
+    background: rgba(255,0,0,0.3);
+    transition: background 0.2s;
+  }
+
+  .hotspot:hover {
+    background: rgba(255,0,0,0.5);
+  }
+
   @media (max-width: 480px) {
     .header img {
       width: 50px;
     }
   }
-
-  /* Debug: visible hotspots */
-  .debug-hotspot {
-    position: absolute;
-    background: rgba(255,0,0,0.3);
-    pointer-events: none;
-    z-index: 9999;
-  }
 </style>
 </head>
 <body>
 
-<div class="scale-container">
-  <!-- Image with image map -->
-  <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg" 
-       class="bg" usemap="#hotspots" alt="Contact Image">
-  
-  <map name="hotspots">
-    <area shape="rect" coords="1569,1092,2160,1180" href="mailto:mgmt@asuperbfairywren.com" target="_blank">
-    <area shape="rect" coords="1776,1195,1953,1280" href="mailto:mgmt@asuperbfairywren.com" target="_blank">
-    <area shape="rect" coords="1562,1585,1729,1650" href="/home/">
-    <area shape="rect" coords="2065,1585,2168,1650" href="javascript:history.back()">
-  </map>
+<div class="scale-container" id="container">
+  <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg" class="bg" alt="Contact Image">
+
+  <!-- Hotspots -->
+  <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" id="btn1"></a>
+  <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" id="btn2"></a>
+  <a href="/home/" class="hotspot" id="btn3"></a>
+  <a href="javascript:history.back()" class="hotspot" id="btn4"></a>
 </div>
 
 <div class="header">
@@ -100,41 +102,44 @@
   </a>
 </div>
 
-<!-- imageMapResizer JS -->
-<script src="website_assets/js/imageMapResizer.min.js"></script>
 <script>
-  // Automatically scale map areas
-  window.onload = function() {
-    imageMapResize();
-    // Add visual debug overlays for hotspots
-    const img = document.querySelector('img[usemap]');
-    const areas = document.querySelectorAll('area');
-    const wrap = img.parentElement;
+  // Original image dimensions
+  const imgWidth = 3726;
+  const imgHeight = 3113;
 
-    areas.forEach(a => {
-      const coords = a.coords.split(',').map(Number);
-      const div = document.createElement('div');
-      div.className = 'debug-hotspot';
-      div.style.left = coords[0] + 'px';
-      div.style.top = coords[1] + 'px';
-      div.style.width = (coords[2]-coords[0]) + 'px';
-      div.style.height = (coords[3]-coords[1]) + 'px';
-      wrap.appendChild(div);
-    });
-  };
-</script>
+  // Button pixel positions on original image
+  const buttons = [
+    {id:'btn1', x1:1569, y1:1092, x2:2160, y2:1180},
+    {id:'btn2', x1:1776, y1:1195, x2:1953, y2:1280},
+    {id:'btn3', x1:1562, y1:1585, x2:1729, y2:1650},
+    {id:'btn4', x1:2065, y1:1585, x2:2168, y2:1650}
+  ];
 
-<script>
-  // Keep your existing scale transform
-  function scaleContainer() {
-    const container = document.querySelector('.scale-container');
+  function positionHotspots() {
+    const container = document.getElementById('container');
     const scale = 1.4;
     const translateY = 30;
+
     container.style.transform = 'translate(-50%, -50%) translateY(' + translateY + 'vh) scale(' + scale + ')';
+
+    buttons.forEach(b => {
+      const btn = document.getElementById(b.id);
+      // Convert original px to percentage relative to original image
+      const left = ((b.x1 + b.x2)/2)/imgWidth*100;
+      const top = ((b.y1 + b.y2)/2)/imgHeight*100;
+      const width = (b.x2 - b.x1)/imgWidth*100;
+      const height = (b.y2 - b.y1)/imgHeight*100;
+
+      btn.style.left = left + '%';
+      btn.style.top = top + '%';
+      btn.style.width = width + '%';
+      btn.style.height = height + '%';
+      btn.style.transform = 'translate(-50%, -50%)';
+    });
   }
 
-  window.addEventListener('resize', scaleContainer);
-  window.addEventListener('load', scaleContainer);
+  window.addEventListener('resize', positionHotspots);
+  window.addEventListener('load', positionHotspots);
 </script>
 
 </body>
