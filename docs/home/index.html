@@ -93,7 +93,7 @@ body {
 
 .social {
   margin-top: 20px;
-  display: none; /* Hides the social icon */
+  display: none; /* Social link is invisible */
 }
 .social a img { width: 33px; vertical-align: middle; }
 
@@ -106,7 +106,12 @@ body {
 @media (max-width: 480px) {
   .header img { width: 50px; }
   .social a img { width: 20px; }
-  .menu-link.daniel, .menu-link.tala { transform: translateX(0); }
+
+  /* --- ADJUSTED FOR PHONES (Portrait) --- */
+  .header h1 { margin: 15px 0 10px 0; }
+  .menu-link.daniel { transform: translateX(-8px); } /
+  .menu-link.tala { transform: translateX(5px); }
+  /* --- END ADJUSTED --- */
 }
 </style>
 </head>
