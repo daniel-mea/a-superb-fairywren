@@ -21,30 +21,21 @@
     position: relative;
   }
 
-  /* SVG container fills viewport */
-  .svg-container {
+  .scale-container {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 150vh;
+    transform-origin: center center;
     z-index: 1;
   }
 
-  .svg-container svg {
+  .scale-container img.bg {
     width: 100%;
     height: 100%;
-  }
-
-  /* Hotspot styling */
-  .hotspot {
-    cursor: pointer;
-    fill: rgba(255, 0, 0, 0.3);
-    transition: fill 0.2s;
-  }
-
-  .hotspot:hover {
-    fill: rgba(255, 0, 0, 0.5);
+    object-fit: cover;
+    display: block;
   }
 
   .header {
@@ -70,6 +61,19 @@
     font-size: 1.5em;
   }
 
+  .hotspot {
+    position: absolute;
+    z-index: 3;
+    display: block;
+    cursor: pointer;
+    background: rgba(255,0,0,0.3);
+  }
+
+  /* DEBUG hotspots visible */
+  .debug {
+    background: rgba(255,0,0,0.3);
+  }
+
   @media (max-width: 480px) {
     .header img {
       width: 50px;
@@ -79,36 +83,16 @@
 </head>
 <body>
 
-<div class="svg-container">
-  <svg viewBox="0 0 1000 1500" preserveAspectRatio="xMidYMid slice">
-    <!-- Background Image -->
-    <image 
-      href="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg" 
-      width="1000" 
-      height="1500"
-      preserveAspectRatio="xMidYMid slice"
-    />
-    
-    <!-- Email hotspot 1 (top button) -->
-    <a href="mailto:mgmt@asuperbfairywren.com" target="_blank">
-      <rect class="hotspot" x="420" y="540" width="160" height="45"/>
-    </a>
-    
-    <!-- Email hotspot 2 (middle button) -->
-    <a href="mailto:mgmt@asuperbfairywren.com" target="_blank">
-      <rect class="hotspot" x="475" y="595" width="50" height="45"/>
-    </a>
-    
-    <!-- Back button (right) -->
-    <a href="javascript:history.back()">
-      <rect class="hotspot" x="555" y="775" width="30" height="30"/>
-    </a>
-    
-    <!-- Left button -->
-    <a href="#">
-      <rect class="hotspot" x="416" y="775" width="48" height="30"/>
-    </a>
-  </svg>
+<div class="scale-container" id="container">
+  <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg" class="bg" alt="Contact Image">
+
+  <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" style="top: 36.5%; left: 50%; width: 16%; height: 3%; transform: translate(-50%, -50%);"></a>
+  <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" style="top: 40%; left: 50%; width: 5%; height: 3%; transform: translate(-50%, -50%);"></a>
+
+  <a href="javascript:history.back()" class="hotspot debug" style="top: 52%; left: 57%; width: 3%; height: 2%; transform: translate(-50%, -50%);"></a>
+
+  <a class="hotspot debug" style="top: 52%; left: 44.1%; width: 4.8%; height: 2%; transform: translate(-50%, -50%);"></a>
+
 </div>
 
 <div class="header">
@@ -119,6 +103,18 @@
     <h1>A SUPERB FAIRYWREN</h1>
   </a>
 </div>
+
+<script>
+  function scaleContainer() {
+    const container = document.getElementById('container');
+    const scale = 1.4;
+    const translateY = 30;
+    container.style.transform = 'translate(-50%, -50%) translateY(' + translateY + 'vh) scale(' + scale + ')';
+  }
+
+  window.addEventListener('resize', scaleContainer);
+  window.addEventListener('load', scaleContainer);
+</script>
 
 </body>
 </html>
