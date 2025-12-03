@@ -66,6 +66,14 @@
       width: 50px;
     }
   }
+
+  /* Debug: visible hotspots */
+  .debug-hotspot {
+    position: absolute;
+    background: rgba(255,0,0,0.3);
+    pointer-events: none;
+    z-index: 9999;
+  }
 </style>
 </head>
 <body>
@@ -76,13 +84,9 @@
        class="bg" usemap="#hotspots" alt="Contact Image">
   
   <map name="hotspots">
-    <!-- Button 1: MAILTO -->
     <area shape="rect" coords="1569,1092,2160,1180" href="mailto:mgmt@asuperbfairywren.com" target="_blank">
-    <!-- Button 2: MAILTO -->
     <area shape="rect" coords="1776,1195,1953,1280" href="mailto:mgmt@asuperbfairywren.com" target="_blank">
-    <!-- Button 3: HOME -->
     <area shape="rect" coords="1562,1585,1729,1650" href="/home/">
-    <!-- Button 4: BACK -->
     <area shape="rect" coords="2065,1585,2168,1650" href="javascript:history.back()">
   </map>
 </div>
@@ -102,6 +106,21 @@
   // Automatically scale map areas
   window.onload = function() {
     imageMapResize();
+    // Add visual debug overlays for hotspots
+    const img = document.querySelector('img[usemap]');
+    const areas = document.querySelectorAll('area');
+    const wrap = img.parentElement;
+
+    areas.forEach(a => {
+      const coords = a.coords.split(',').map(Number);
+      const div = document.createElement('div');
+      div.className = 'debug-hotspot';
+      div.style.left = coords[0] + 'px';
+      div.style.top = coords[1] + 'px';
+      div.style.width = (coords[2]-coords[0]) + 'px';
+      div.style.height = (coords[3]-coords[1]) + 'px';
+      wrap.appendChild(div);
+    });
   };
 </script>
 
