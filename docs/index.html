@@ -17,7 +17,7 @@ html, body {
   background-color: #fff1a9; 
 }
 
-/* --- FIXED BACKGROUND GIF LAYER --- */
+/* --- BACKGROUND FIX (matches other pages) --- */
 .bg-layer {
   position: fixed;
   top: 0;
@@ -26,7 +26,7 @@ html, body {
   height: calc(var(--vh, 1vh) * 100);
   background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/fairywrenGIF_newnewnew-compressed.gif');
   background-size: cover;
-  background-position: 47% 45%;
+  background-position: center center;
   background-repeat: no-repeat;
   z-index: 0;
   pointer-events: none;
@@ -79,11 +79,27 @@ body {
   word-wrap: break-word;
 }
 
-@media (max-width: 1200px) { .footer p { max-width: 700px; } }
-@media (max-width: 768px) { .footer p { font-size: 55px; max-width: 90%; } }
-@media (max-width: 480px) { 
-  .footer p { font-size: 45px; } 
-  .header img { width: 50px; } 
+/* --- MOBILE / TABLET LOGO SHRINK --- */
+@media (max-width: 768px) {
+  .header img { width: 50px; }
+  .footer p { 
+    font-size: 55px; 
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer p { font-size: 45px; }
+}
+
+/* --- LANDSCAPE MOBILE FOOTER FIX --- */
+@media (max-width: 768px) and (orientation: landscape) {
+  .footer p {
+    font-size: 35px;
+    max-width: 90%;
+    line-height: 1.2em;
+    white-space: pre-wrap; /* allows manual line break */
+  }
 }
 </style>
 </head>
@@ -102,12 +118,12 @@ body {
 
 <div class="footer">
   <a href="/home/" style="text-decoration:none; color:#FFE555;">
-    <p>“WE ARE ALL AT WAR WITH OURSELVES.”</p>
+    <p>WE ARE ALL AT WAR<br>WITH OURSELVES.</p>
   </a>
 </div>
 
 <script>
-/* Real viewport height fix for mobile (avoids letterboxing) */
+/* Real viewport height fix for mobile */
 (function() {
   const setVh = () => {
     const vh = window.innerHeight * 0.01;
@@ -115,7 +131,10 @@ body {
   };
   setVh();
   let tid = null;
-  const debouncedSet = () => { clearTimeout(tid); tid = setTimeout(setVh, 80); };
+  const debouncedSet = () => {
+    clearTimeout(tid);
+    tid = setTimeout(setVh, 80);
+  };
   window.addEventListener('resize', debouncedSet);
   window.addEventListener('orientationchange', debouncedSet);
 })();
