@@ -7,15 +7,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 <style>
 html, body {
-margin: 0;
-padding: 0;
-height: 100%;
-font-family: 'Fraunces', serif;
-overflow: hidden;
-background-color: #fff1a9; 
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Fraunces', serif;
+  overflow: hidden;
+  background-color: #fff1a9; 
 }
 
-/* bg-layer uses the real viewport height via CSS var --vh */
+/* bg-layer uses real viewport height */
 .bg-layer {
   position: fixed;
   top: 0;
@@ -31,104 +31,80 @@ background-color: #fff1a9;
 }
 
 body {
-display: flex;
-flex-direction: column;
-justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .header, .footer {
-position: relative;
-z-index: 2;
-text-align: center;
-color: #FFE555;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #FFE555;
 }
 
 .header {
-padding-top: 15px;
+  padding-top: 15px;
 }
 .header img {
-width: 60px;
-border-radius: 50%;
+  width: 60px;
+  border-radius: 50%;
+  transition: width 0.3s ease;
 }
 .header h1 {
-color: #FFE555;
-font-weight: 500;
-text-decoration: line-through;
-text-transform: uppercase;
-margin: 10px 0 10px 0;
-font-size: 1.5em;
+  color: #FFE555;
+  font-weight: 500;
+  text-decoration: line-through;
+  text-transform: uppercase;
+  margin: 10px 0 10px 0;
+  font-size: 1.5em;
 }
 .menu-row {
-display: flex;
-justify-content: center;
-gap: 60px;
-margin-top: 17.5px;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
 }
 
-.menu-link.daniel {
-    transform: translateX(-7px);
-}
-.menu-link.tala {
-    transform: translateX(5px);
-}
+.menu-link.daniel { transform: translateX(-7px); }
+.menu-link.tala { transform: translateX(5px); }
 
 .menu-link {
-position: relative;
-font-family: 'Fraunces', serif;
-font-weight: 700;
-font-style: italic;
-font-size: 32px;
-color: #FFE555;
-text-decoration: none;
-transition: color 0.33s ease;
+  position: relative;
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 32px;
+  color: #FFE555;
+  text-decoration: none;
+  transition: color 0.33s ease;
 }
 .menu-link .underline {
-position: absolute;
-bottom: -1px;
-left: 0;
-height: 0px;
-width: 0;
-background: #FFE555;
-transition: width 0.33s ease;
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 0;
+  width: 0;
+  background: #FFE555;
+  transition: width 0.33s ease;
 }
-.menu-link:hover {
-color: white;
-}
-.menu-link:hover .underline {
-width: 100%;
-}
+.menu-link:hover { color: white; }
+.menu-link:hover .underline { width: 100%; }
 
 .social {
-    margin-top: 20px;
-    opacity: 0; 
+  margin-top: 20px;
 }
-.social a img {
-    width: 33px;
-    vertical-align: middle;
-}
+.social a img { width: 33px; vertical-align: middle; }
 
-.footer {
-padding-bottom: 15px;
-}
+.footer { padding-bottom: 15px; }
 
+/* --- MOBILE / TABLET LOGO SHRINK --- */
 @media (max-width: 768px) {
-.menu-link {
-font-size: 32px;
-}
+  .header img { width: 50px; }
 }
 @media (max-width: 480px) {
-.menu-link {
-    font-size: 32px;
-}
-.header img {
-    width: 50px;
-}
-.social a img {
-    width: 20px;
-}
-.menu-link.daniel, .menu-link.tala {
-    transform: translateX(0);
-}
+  .header img { width: 50px; }
+  .social a img { width: 20px; }
+  .menu-link.daniel, .menu-link.tala { transform: translateX(0); }
 }
 </style>
 </head>
@@ -137,40 +113,35 @@ font-size: 32px;
 <div class="bg-layer" aria-hidden="true"></div>
 
 <div class="header">
-<img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo">
-<h1>A SUPERB FAIRYWREN</h1>
-<div class="menu-row">
-<a href="/danny/" class="menu-link daniel">DANIEL
-<span class="underline"></span>
-</a>
-<a href="/tala/" class="menu-link tala">TALA
-<span class="underline"></span>
-</a>
+  <a href="/home/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo"></a>
+  <a href="/home/" style="text-decoration:none;"><h1>A SUPERB FAIRYWREN</h1></a>
+  <div class="menu-row">
+    <a href="/danny/" class="menu-link daniel">DANIEL <span class="underline"></span></a>
+    <a href="/tala/" class="menu-link tala">TALA <span class="underline"></span></a>
+  </div>
 </div>
-</div>
+
 <div class="footer">
-    <div class="social">
-        <a href="/contact/">
-            <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/2978373eaeac2a4b537306bf46ebce49d3b812c6/docs/website_assets/icon_email.svg" alt="Email">
-        </a>
-    </div>
+  <div class="social">
+    <a href="/contact/">
+      <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/2978373eaeac2a4b537306bf46ebce49d3b812c6/docs/website_assets/icon_email.svg" alt="Email">
+    </a>
+  </div>
 </div>
 
 <script>
+/* Real viewport height fix */
 (function() {
   const setVh = () => {
     const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', String(vh) + 'px');
+    document.documentElement.style.setProperty('--vh', vh + 'px');
   };
-
   setVh();
-
   let tid = null;
   const debouncedSet = () => {
     clearTimeout(tid);
     tid = setTimeout(setVh, 80);
   };
-
   window.addEventListener('resize', debouncedSet);
   window.addEventListener('orientationchange', debouncedSet);
 })();
