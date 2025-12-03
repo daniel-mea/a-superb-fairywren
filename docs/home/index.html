@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Main – A Superb Fairywren</title>
+<title>A Superb Fairywren</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
+
 <style>
 html, body {
   margin: 0;
@@ -15,16 +17,16 @@ html, body {
   background-color: #fff1a9; 
 }
 
-/* bg-layer uses real viewport height */
+/* --- BACKGROUND GIF --- */
 .bg-layer {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: calc(var(--vh, 1vh) * 100);
-  background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/peter_and_wendy-crop2.jpg');
+  background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/fairywrenGIF_newnewnew-compressed.gif');
   background-size: cover;
-  background-position: center top;
+  background-position: center center;
   background-repeat: no-repeat;
   z-index: 0;
   pointer-events: none;
@@ -34,36 +36,39 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 }
 
 .header, .footer {
-  position: relative;
-  z-index: 2;
   text-align: center;
   color: #FFE555;
+  position: relative;
+  z-index: 2;
 }
 
 .header {
   padding-top: 15px;
 }
+
 .header img {
   width: 60px;
   border-radius: 50%;
-  transition: width 0.3s ease;
 }
+
 .header h1 {
   color: #FFE555;
   font-weight: 500;
   text-decoration: line-through;
   text-transform: uppercase;
-  margin: 10px 0 10px 0;
+  margin: 10px 0 0 0;
   font-size: 1.5em;
 }
+
 .menu-row {
   display: flex;
   justify-content: center;
   gap: 60px;
-  margin-top: 17.5px; /* MATCHED TO DANNY/TALA PAGES */
+  margin-top: 17.5px; /* same spacing as other pages */
 }
 
 .menu-link.daniel { transform: translateX(-7px); }
@@ -79,6 +84,7 @@ body {
   text-decoration: none;
   transition: color 0.33s ease;
 }
+
 .menu-link .underline {
   position: absolute;
   bottom: -1px;
@@ -88,24 +94,64 @@ body {
   background: #FFE555;
   transition: width 0.33s ease;
 }
+
 .menu-link:hover { color: white; }
 .menu-link:hover .underline { width: 100%; }
 
 .social {
   margin-top: 20px;
+  opacity: 0; /* hide social icons */
 }
-.social a img { width: 33px; vertical-align: middle; }
 
 .footer { padding-bottom: 15px; }
 
-/* --- MOBILE / TABLET LOGO SHRINK --- */
+.footer p {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 69px;
+  line-height: 1.3em;
+  max-width: 850px;
+  margin: 0 auto 20px auto;
+  word-wrap: break-word;
+}
+
+/* MOBILE / TABLET LOGO SHRINK */
 @media (max-width: 768px) {
   .header img { width: 50px; }
+  .footer p { font-size: 55px; max-width: 90%; }
 }
+
 @media (max-width: 480px) {
   .header img { width: 50px; }
-  .social a img { width: 20px; }
+  .footer p { font-size: 45px; }
   .menu-link.daniel, .menu-link.tala { transform: translateX(0); }
+}
+
+/* LANDSCAPE MOBILE H1 ON TOP OF LOGO (height <= 750px) */
+@media (max-height: 750px) and (orientation: landscape) {
+  .header {
+    padding-top: 15px;
+  }
+  .header h1 {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-size: 1.2em; /* smaller font in landscape */
+  }
+  .header img {
+    margin-top: 40px; /* push logo down so H1 sits directly on top */
+  }
+  .menu-row {
+    margin-top: 17.5px; /* same spacing below logo as normal */
+  }
+  .footer p {
+    font-size: 20px;
+    max-width: 90%;
+    line-height: 1.2em;
+  }
 }
 </style>
 </head>
@@ -114,8 +160,12 @@ body {
 <div class="bg-layer" aria-hidden="true"></div>
 
 <div class="header">
-  <a href="/home/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo"></a>
-  <a href="/home/" style="text-decoration:none;"><h1>A SUPERB FAIRYWREN</h1></a>
+  <a href="/home/">
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo">
+  </a>
+  <a href="/home/" style="text-decoration:none;">
+    <h1>A SUPERB FAIRYWREN</h1>
+  </a>
   <div class="menu-row">
     <a href="/danny/" class="menu-link daniel">DANIEL <span class="underline"></span></a>
     <a href="/tala/" class="menu-link tala">TALA <span class="underline"></span></a>
@@ -123,15 +173,13 @@ body {
 </div>
 
 <div class="footer">
-  <div class="social">
-    <a href="/contact/">
-      <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/2978373eaeac2a4b537306bf46ebce49d3b812c6/docs/website_assets/icon_email.svg" alt="Email">
-    </a>
-  </div>
+  <a href="/home/" style="text-decoration:none; color:#FFE555;">
+    <p>“WE ARE ALL AT WAR WITH OURSELVES.”</p>
+  </a>
 </div>
 
 <script>
-/* Real viewport height fix */
+/* Real viewport height fix for mobile */
 (function() {
   const setVh = () => {
     const vh = window.innerHeight * 0.01;
