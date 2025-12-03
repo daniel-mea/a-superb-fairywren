@@ -4,104 +4,121 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact – A Superb Fairywren</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
+
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-  background-color: #fff1a9;
-  font-family: 'Fraunces', serif;
-}
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Fraunces', serif;
+    overflow: hidden;
+    background-color: #fff1a9;
+  }
 
-/* Fullscreen image */
-.fullscreen-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+  body {
+    position: relative;
+  }
 
-/* Hotspots via image map */
-area {
-  cursor: pointer;
-}
+  /* SVG container fills viewport */
+  .svg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
 
-/* Header */
-.header {
-  position: absolute;
-  top: 15px;
-  width: 100%;
-  text-align: center;
-  z-index: 2;
-  color: #FFE555;
-}
-.header img {
-  width: 60px;
-  border-radius: 50%;
-}
-.header h1 {
-  color: #FFE555;
-  font-weight: 500;
-  text-decoration: line-through;
-  text-transform: uppercase;
-  margin: 10px 0 0 0;
-  font-size: 1.5em;
-}
+  .svg-container svg {
+    width: 100%;
+    height: 100%;
+  }
 
-/* Small screens logo adjustment */
-@media (max-width: 480px) {
-  .header img { width: 50px; }
-}
+  /* Hotspot styling */
+  .hotspot {
+    cursor: pointer;
+    fill: rgba(255, 0, 0, 0.3);
+    transition: fill 0.2s;
+  }
+
+  .hotspot:hover {
+    fill: rgba(255, 0, 0, 0.5);
+  }
+
+  .header {
+    position: absolute;
+    top: 15px;
+    width: 100%;
+    text-align: center;
+    z-index: 2;
+    color: #FFE555;
+  }
+
+  .header img {
+    width: 60px;
+    border-radius: 50%;
+  }
+
+  .header h1 {
+    color: #FFE555;
+    font-weight: 500;
+    text-decoration: line-through;
+    text-transform: uppercase;
+    margin: 10px 0 0 0;
+    font-size: 1.5em;
+  }
+
+  @media (max-width: 480px) {
+    .header img {
+      width: 50px;
+    }
+  }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <a href="/home/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo"></a>
-  <a href="/home/" style="text-decoration:none;"><h1>A SUPERB FAIRYWREN</h1></a>
+<div class="svg-container">
+  <svg viewBox="0 0 1000 1500" preserveAspectRatio="xMidYMid slice">
+    <!-- Background Image -->
+    <image 
+      href="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg" 
+      width="1000" 
+      height="1500"
+      preserveAspectRatio="xMidYMid slice"
+    />
+    
+    <!-- Email hotspot 1 (top button) -->
+    <a href="mailto:mgmt@asuperbfairywren.com" target="_blank">
+      <rect class="hotspot" x="420" y="540" width="160" height="45"/>
+    </a>
+    
+    <!-- Email hotspot 2 (middle button) -->
+    <a href="mailto:mgmt@asuperbfairywren.com" target="_blank">
+      <rect class="hotspot" x="475" y="595" width="50" height="45"/>
+    </a>
+    
+    <!-- Back button (right) -->
+    <a href="javascript:history.back()">
+      <rect class="hotspot" x="555" y="775" width="30" height="30"/>
+    </a>
+    
+    <!-- Left button -->
+    <a href="#">
+      <rect class="hotspot" x="416" y="775" width="48" height="30"/>
+    </a>
+  </svg>
 </div>
 
-<!-- Image with map -->
-<img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg"
-     usemap="#hotspots" class="fullscreen-img" alt="Contact Background">
-
-<map name="hotspots">
-  <!-- Example clickable areas: coordinates based on original image pixels -->
-  <area shape="rect" coords="500,370,1000,460" href="mailto:mgmt@asuperbfairywren.com" style="opacity:0.3;">
-  <area shape="rect" coords="500,400,600,490" href="mailto:mgmt@asuperbfairywren.com" style="opacity:0.3;">
-  <area shape="rect" coords="570,520,600,540" href="javascript:history.back()" style="opacity:0.3;">
-  <area shape="rect" coords="440,520,488,540" href="#" style="opacity:0.3;">
-</map>
-
-<script>
-/* Image Map Resizer: scales <area> coords to fill viewport */
-function resizeMap() {
-  const img = document.querySelector('.fullscreen-img');
-  const map = document.querySelector('map[name="hotspots"]');
-  const areas = map.querySelectorAll('area');
-
-  const originalWidth = 1920; // set to original image pixel width
-  const originalHeight = 1080; // set to original image pixel height
-
-  const scaleX = img.clientWidth / originalWidth;
-  const scaleY = img.clientHeight / originalHeight;
-
-  areas.forEach(area => {
-    const coords = area.dataset.coords.split(',').map(Number);
-    const scaled = coords.map((c, i) => i % 2 === 0 ? Math.round(c * scaleX) : Math.round(c * scaleY));
-    area.coords = scaled.join(',');
-  });
-}
-
-/* Save original coords */
-document.querySelectorAll('area').forEach(area => {
-  area.dataset.coords = area.coords;
-});
-
-window.addEventListener('resize', resizeMap);
-window.addEventListener('load', resizeMap);
-</script>
+<div class="header">
+  <a href="/home/">
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo">
+  </a>
+  <a href="/home/" style="text-decoration:none;">
+    <h1>A SUPERB FAIRYWREN</h1>
+  </a>
+</div>
 
 </body>
 </html>
