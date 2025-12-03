@@ -72,19 +72,19 @@
 
 <div class="scale-container">
   <!-- Image with image map -->
-  <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg" class="bg" usemap="#hotspots" alt="Contact Image">
+  <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg" 
+       class="bg" usemap="#hotspots" alt="Contact Image">
   
-<map name="hotspots">
-  <!-- Button 1: MAILTO -->
-  <area shape="rect" coords="1569,1092,2160,1180" href="mailto:mgmt@asuperbfairywren.com" target="_blank">
-  <!-- Button 2: MAILTO -->
-  <area shape="rect" coords="1776,1195,1953,1280" href="mailto:mgmt@asuperbfairywren.com" target="_blank">
-  <!-- Button 3: HOME -->
-  <area shape="rect" coords="1562,1585,1729,1650" href="/home/">
-  <!-- Button 4: BACK -->
-  <area shape="rect" coords="2065,1585,2168,1650" href="javascript:history.back()">
-</map>
-
+  <map name="hotspots">
+    <!-- Button 1: MAILTO -->
+    <area shape="rect" coords="1569,1092,2160,1180" href="mailto:mgmt@asuperbfairywren.com" target="_blank">
+    <!-- Button 2: MAILTO -->
+    <area shape="rect" coords="1776,1195,1953,1280" href="mailto:mgmt@asuperbfairywren.com" target="_blank">
+    <!-- Button 3: HOME -->
+    <area shape="rect" coords="1562,1585,1729,1650" href="/home/">
+    <!-- Button 4: BACK -->
+    <area shape="rect" coords="2065,1585,2168,1650" href="javascript:history.back()">
+  </map>
 </div>
 
 <div class="header">
@@ -116,26 +116,6 @@
 
   window.addEventListener('resize', scaleContainer);
   window.addEventListener('load', scaleContainer);
-</script>
-
-<script>
-  const img = document.querySelector('img[usemap]');
-  const areas = document.querySelectorAll('area');
-  const wrap = img.parentElement;
-
-  areas.forEach(a => {
-    const c = a.coords.split(',').map(Number);
-    const d = document.createElement('div');
-    d.style.position = 'absolute';
-    d.style.left = c[0] + 'px';
-    d.style.top = c[1] + 'px';
-    d.style.width = (c[2]-c[0]) + 'px';
-    d.style.height = (c[3]-c[1]) + 'px';
-    d.style.background = 'rgba(255,0,0,0.3)';
-    d.style.pointerEvents = 'none';
-    d.style.zIndex = '9999';
-    wrap.appendChild(d);
-  });
 </script>
 
 </body>
