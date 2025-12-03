@@ -6,10 +6,7 @@
 <title>Daniel – A Superb Fairywren</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 <style>
-
-/* ---------------------------------------------------
-   BASE RESET
---------------------------------------------------- */
+/* base reset */
 html, body {
   margin: 0;
   padding: 0;
@@ -19,11 +16,13 @@ html, body {
   background-color: #fff1a9;
 }
 
-/* Background layer (always fills visible viewport) */
+/* bg-layer uses the real viewport height via CSS var --vh */
 .bg-layer {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100vw;
+  /* fallback to 100vh if --vh not set */
   height: calc(var(--vh, 1vh) * 100);
   background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg');
   background-size: cover;
@@ -47,9 +46,7 @@ body {
   color: #FFE555;
 }
 
-/* ---------------------------------------------------
-   HEADER
---------------------------------------------------- */
+/* header */
 .header {
   padding-top: 15px;
   text-align: center;
@@ -60,147 +57,89 @@ body {
   font-weight: 500;
   text-decoration: line-through;
   text-transform: uppercase;
-  margin: 10px 0;
+  margin: 10px 0 10px 0;
   font-size: 1.5em;
 }
 
 /* menu row */
-.menu-row { 
-  display:flex; 
-  justify-content:center; 
-  gap:60px; 
-  margin-top:17.5px; 
-}
-.menu-link { 
-  position: relative; 
-  font-weight:700; 
-  font-style:italic; 
-  font-size:32px; 
-  color:#FFE555; 
-  text-decoration:none; 
-  transition: color .33s; 
-}
+.menu-row { display:flex; justify-content:center; gap:60px; margin-top:17.5px; }
+.menu-link { position: relative; font-weight:700; font-style:italic; font-size:32px; color:#FFE555; text-decoration:none; transition: color .33s; }
 .menu-link.daniel { transform: translateX(-7px); color:white; pointer-events:none; }
 .menu-link.tala   { transform: translateX(5px); }
-.menu-link .underline { 
-  position:absolute; 
-  bottom:-1px; 
-  left:0; 
-  width:0; 
-  height:0; 
-  background:#FFE555; 
-  transition: width .33s; 
-}
+.menu-link .underline { position:absolute; bottom:-1px; left:0; width:0; height:0; background:#FFE555; transition: width .33s; }
 .menu-link:hover { color:white; }
 .menu-link:hover .underline { width:100%; }
 
-/* ---------------------------------------------------
-   SOCIAL ICONS
---------------------------------------------------- */
-.social { 
-  display:flex; 
-  justify-content:center; 
-  gap:15px; 
-  margin-top:20px; 
-}
-.social a img { width:33px; }
+/* social */
+.social { display:flex; justify-content:center; gap:15px; margin-top:20px; }
+.social a img { width:33px; vertical-align:middle; }
 
-/* ---------------------------------------------------
-   FOOTER
---------------------------------------------------- */
+/* footer */
 .footer {
   padding-bottom: 15px;
 }
 
-/* ---------------------------------------------------
-   MAIN CONTENT ICONS
---------------------------------------------------- */
+/* main content icons */
 .main-content {
-  position:absolute;
-  inset:0;
-  pointer-events:none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 2;
 }
-.project-item { 
-  position: absolute; 
-  display:flex; 
-  flex-direction:column; 
-  align-items:center; 
-  pointer-events:auto; 
-  text-decoration:none; 
-}
+.project-item { position: absolute; display:flex; flex-direction:column; align-items:center; pointer-events:auto; text-decoration:none; }
 .project-item img { width:55px; height:55px; margin-bottom:3px; }
 
-/* label style */
+/* --- UPDATED PROJECT LABEL STYLING TO MATCH TALA PAGE --- */
 .project-label { 
-  color: #FFFFFF;
-  font-size: 14px; 
-  font-weight: 400;
-  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
-  letter-spacing: 0.5px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #FFFFFF; /* Changed from #fff */
+    font-size: 14px; 
+    font-weight: 400; /* Added/Updated */
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7); /* Updated shadow */
+    letter-spacing: 0.5px; /* Added */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
+/* -------------------------------------------------------- */
 
-/* ---------------------------------------------------
-   DESKTOP / LAPTOP MODE (FROZEN)
-   width >= 1000px → NO responsive switching ever
---------------------------------------------------- */
-@media screen and (min-width: 1000px) {
+/* positions (Desktop defaults) */
+.music-projects { left:42%; top:27%; transform: translateX(-50%); }
+.writing-projects { left:49%; top:33%; transform: translateX(-50%); }
 
-  /* desktop positions (your originals) */
-  .music-projects  { left:42%; top:27%; transform: translateX(-50%); }
-  .writing-projects { left:49%; top:33%; transform: translateX(-50%); }
-
-  /* desktop icon sizes unchanged */
-  .social a img { width:33px; }
-  .project-item img { width:55px; height:55px; }
-
-  /* menu offsets as-is */
-  .menu-link.daniel { transform: translateX(-7px); }
-  .menu-link.tala   { transform: translateX(5px); }
-}
-
-/* ---------------------------------------------------
-   MOBILE + TABLET MODE
-   width < 1000px → orientation switching applies
---------------------------------------------------- */
-
-/* ---------------- PORTRAIT ---------------- */
-@media screen and (max-width: 999px) and (orientation: portrait) {
-
-  .menu-link.daniel,
-  .menu-link.tala { transform: translateX(0); }
-
+/* Orientation-based responsive styling */
+@media (orientation: portrait) {
+  .menu-link.daniel, .menu-link.tala { transform: translateX(0); }
   .header img { width:50px; }
   .social a img { width:25px; }
   .project-item img { width:55px; height:55px; }
   .project-label { font-size:12px; }
-
-  /* Portrait positions */
+  
+  /* --- MOBILE/TABLET PORTRAIT POSITIONING (MERGED) --- */
+  /* These rules now apply to ALL portrait screens (phone & tablet) */
   .music-projects { 
     top: 35%; 
     left: 30%; 
-  }
+  } 
   .writing-projects { 
     top: 60%; 
     left: 44%; 
-  }
+  } 
+  /* ---------------------------------------------------- */
 }
 
-/* ---------------- LANDSCAPE ---------------- */
-@media screen and (max-width: 999px) and (orientation: landscape) {
-
+/* --- LANDSCAPE POSITIONING (Aligned with Tala's approach) --- */
+@media (orientation: landscape) {
   .social a img { width:22px; }
-
-  /* Landscape positions */
-  .music-projects { top: 35%; left: 42%; transform: translateX(-50%); }
-  .writing-projects { top: 55%; left: 49%; transform: translateX(-50%); }
+  /* Compress icons vertically for short landscape screens */
+  .music-projects { top: 35%; }
+  .writing-projects { top: 55%; }
 }
-
+/* --------------------------------------------------------- */
 </style>
 </head>
 <body>
 
-<!-- background layer -->
+<!-- background layer that always matches the *visible* viewport -->
 <div class="bg-layer" aria-hidden="true"></div>
 
 <div class="header">
@@ -233,21 +172,27 @@ body {
 </div>
 
 <script>
-/* Set CSS variable --vh to the real viewport height */
+/* Set CSS variable --vh to the real viewport height (in px * 0.01). */
+/* This works around mobile browser UI (address bar) resizing issues. */
 (function() {
   const setVh = () => {
+    // window.innerHeight is the visible viewport height
     const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', vh + 'px');
+    document.documentElement.style.setProperty('--vh', String(vh) + 'px');
   };
 
+  // initial
   setVh();
+
+  // update on resize and orientationchange; debounced to avoid thrash
   let tid = null;
-  const debounced = () => {
+  const debouncedSet = () => {
     clearTimeout(tid);
     tid = setTimeout(setVh, 80);
   };
-  window.addEventListener('resize', debounced);
-  window.addEventListener('orientationchange', debounced);
+
+  window.addEventListener('resize', debouncedSet);
+  window.addEventListener('orientationchange', debouncedSet);
 })();
 </script>
 
