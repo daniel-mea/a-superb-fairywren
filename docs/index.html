@@ -2,123 +2,99 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>A Superb Fairywren</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 
 <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Fraunces', serif;
-    overflow: hidden;
-    background-color: #fff1a9; 
-  }
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Fraunces', serif;
+  overflow: hidden;
+  background-color: #fff1a9; 
+}
 
-  /* ------------------------------------------- */
-  /* REMOVING THE GIF LAYER STRUCTURE */
-  /* ------------------------------------------- */
-  /* Deleted .gif-layer and .gif-layer img CSS */
+/* --- FIXED BACKGROUND GIF LAYER --- */
+.bg-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
+  background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/fairywrenGIF_newnewnew-compressed.gif');
+  background-size: cover;
+  background-position: 47% 45%;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
 
-  a.bg-link {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-  }
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
 
-  body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    
-    /* *** ROBUST BACKGROUND SETUP RESTORED *** */
-    background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/fairywrenGIF_newnewnew-compressed.gif');
-    background-size: cover; /* GUARANTEES FULL SCREEN FILL (no oversizing) */
-    background-repeat: no-repeat;
-    
-    /* GIF POSITION: 3% left (47%) and 5% up (45%) from center (50%) */
-    background-position: 47% 45%; 
-    
-    position: relative;
-  }
+.header, .footer {
+  text-align: center;
+  color: #FFE555;
+  position: relative;
+  z-index: 2;
+}
 
-  .header, .footer {
-    text-align: center;
-    color: #FFE555;
-    position: relative;
-    z-index: 2;
-  }
+.header {
+  padding-top: 15px;
+}
 
-  .header {
-    padding-top: 15px;
-  }
+.header img {
+  width: 60px;
+  border-radius: 50%;
+}
 
-  .header img {
-    width: 60px;
-    border-radius: 50%;
-  }
+.header h1 {
+  color: #FFE555;
+  font-weight: 500;
+  text-decoration: line-through;
+  text-transform: uppercase;
+  margin: 10px 0 0 0;
+  font-size: 1.5em;
+}
 
-  .header h1 {
-    color: #FFE555;
-    font-weight: 500;
-    text-decoration: line-through;
-    text-transform: uppercase;
-    margin: 10px 0 0 0;
-    font-size: 1.5em;
-    /* REMOVED: text-shadow */
-  }
+.footer {
+  padding-bottom: 15px;
+}
 
-  .footer {
-    padding-bottom: 15px;
-  }
+.footer p {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 69px;
+  line-height: 1.3em;
+  max-width: 850px;
+  margin: 0 auto 20px auto;
+  word-wrap: break-word;
+}
 
-  .footer p {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-weight: 700;
-    font-size: 69px;
-    line-height: 1.3em;
-    max-width: 850px;
-    margin: 0 auto 20px auto;
-    word-wrap: break-word;
-    /* REMOVED: text-shadow */
-  }
-
-  @media (max-width: 1200px) {
-    .footer p {
-      max-width: 700px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .footer p {
-      font-size: 55px;
-      max-width: 90%;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .footer p {
-      font-size: 45px;
-    }
-
-    .header img {
-      width: 50px;
-    }
-  }
+@media (max-width: 1200px) { .footer p { max-width: 700px; } }
+@media (max-width: 768px) { .footer p { font-size: 55px; max-width: 90%; } }
+@media (max-width: 480px) { 
+  .footer p { font-size: 45px; } 
+  .header img { width: 50px; } 
+}
 </style>
 </head>
 <body>
 
-<a class="bg-link" href="/home/"></a>
+<div class="bg-layer" aria-hidden="true"></div>
 
 <div class="header">
   <a href="/home/">
     <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo">
   </a>
-
   <a href="/home/" style="text-decoration:none;">
     <h1>A SUPERB FAIRYWREN</h1>
   </a>
@@ -129,6 +105,21 @@
     <p>“WE ARE ALL AT WAR WITH OURSELVES.”</p>
   </a>
 </div>
+
+<script>
+/* Real viewport height fix for mobile (avoids letterboxing) */
+(function() {
+  const setVh = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', vh + 'px');
+  };
+  setVh();
+  let tid = null;
+  const debouncedSet = () => { clearTimeout(tid); tid = setTimeout(setVh, 80); };
+  window.addEventListener('resize', debouncedSet);
+  window.addEventListener('orientationchange', debouncedSet);
+})();
+</script>
 
 </body>
 </html>
