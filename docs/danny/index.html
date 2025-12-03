@@ -22,7 +22,6 @@ html, body {
   top: 0;
   left: 0;
   width: 100vw;
-  /* fallback to 100vh if --vh not set */
   height: calc(var(--vh, 1vh) * 100);
   background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg');
   background-size: cover;
@@ -93,14 +92,13 @@ body {
 
 /* --- UPDATED PROJECT LABEL STYLING TO MATCH TALA PAGE --- */
 .project-label { 
-    color: #FFFFFF; /* Changed from #fff */
+    color: #FFFFFF;
     font-size: 14px; 
-    font-weight: 400; /* Added/Updated */
-    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7); /* Updated shadow */
-    letter-spacing: 0.5px; /* Added */
+    font-weight: 400;
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
+    letter-spacing: 0.5px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
-/* -------------------------------------------------------- */
 
 /* positions (Desktop defaults) */
 .music-projects { left:42%; top:27%; transform: translateX(-50%); }
@@ -109,37 +107,42 @@ body {
 /* Orientation-based responsive styling */
 @media (orientation: portrait) {
   .menu-link.daniel, .menu-link.tala { transform: translateX(0); }
-  .header img { width:50px; }
   .social a img { width:25px; }
   .project-item img { width:55px; height:55px; }
   .project-label { font-size:12px; }
   
-  /* --- MOBILE/TABLET PORTRAIT POSITIONING (MERGED) --- */
-  /* These rules now apply to ALL portrait screens (phone & tablet) */
-  .music-projects { 
-    top: 35%; 
-    left: 30%; 
-  } 
-  .writing-projects { 
-    top: 60%; 
-    left: 44%; 
-  } 
-  /* ---------------------------------------------------- */
+  .music-projects { top: 35%; left: 30%; } 
+  .writing-projects { top: 60%; left: 44%; } 
 }
 
-/* --- LANDSCAPE POSITIONING (Aligned with Tala's approach) --- */
-@media (orientation: landscape) {
+/* --- LANDSCAPE POSITIONING FOR MOBILE/TABLET ONLY --- */
+@media (orientation: landscape) and (max-width: 1024px) {
   .social a img { width:22px; }
-  /* Compress icons vertically for short landscape screens */
   .music-projects { top: 35%; }
   .writing-projects { top: 55%; }
+
+  /* header adjustments: overlay title on logo */
+  .header {
+    position: relative;
+    height: 60px; /* matches logo size */
+  }
+  .header img,
+  .header h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+  }
+  .header h1 {
+    font-size: 1.5em; /* same as desktop/laptop */
+  }
 }
-/* --------------------------------------------------------- */
 </style>
 </head>
 <body>
 
-<!-- background layer that always matches the *visible* viewport -->
+<!-- background layer -->
 <div class="bg-layer" aria-hidden="true"></div>
 
 <div class="header">
@@ -172,25 +175,14 @@ body {
 </div>
 
 <script>
-/* Set CSS variable --vh to the real viewport height (in px * 0.01). */
-/* This works around mobile browser UI (address bar) resizing issues. */
 (function() {
   const setVh = () => {
-    // window.innerHeight is the visible viewport height
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', String(vh) + 'px');
   };
-
-  // initial
   setVh();
-
-  // update on resize and orientationchange; debounced to avoid thrash
   let tid = null;
-  const debouncedSet = () => {
-    clearTimeout(tid);
-    tid = setTimeout(setVh, 80);
-  };
-
+  const debouncedSet = () => { clearTimeout(tid); tid = setTimeout(setVh, 80); };
   window.addEventListener('resize', debouncedSet);
   window.addEventListener('orientationchange', debouncedSet);
 })();
