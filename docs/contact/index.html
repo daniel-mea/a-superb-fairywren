@@ -8,82 +8,77 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 
 <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Fraunces', serif;
-    overflow: hidden;
-    background-color: #fff1a9;
-  }
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Fraunces', serif;
+  background-color: #fff1a9;
+  overflow: hidden;
+}
 
-  body {
-    position: relative;
-  }
+body {
+  position: relative;
+}
 
-  .scale-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    z-index: 1;
-  }
+.scale-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 
-  .scale-container img.bg {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
+.scale-container img.bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
-  .header {
-    position: absolute;
-    top: 15px;
-    width: 100%;
-    text-align: center;
-    z-index: 2;
-    color: #FFE555;
-  }
+.header {
+  position: absolute;
+  top: 15px;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+  color: #FFE555;
+}
 
+.header img {
+  width: 60px;
+  border-radius: 50%;
+}
+
+.header h1 {
+  color: #FFE555;
+  font-weight: 500;
+  text-decoration: line-through;
+  text-transform: uppercase;
+  margin: 10px 0 0 0;
+  font-size: 1.5em;
+}
+
+.hotspot {
+  position: absolute;
+  display: block;
+  cursor: pointer;
+  background: rgba(255,0,0,0.3); /* always 0.3 opacity */
+  z-index: 3;
+}
+
+@media (max-width: 480px) {
   .header img {
-    width: 60px;
-    border-radius: 50%;
+    width: 50px;
   }
-
-  .header h1 {
-    color: #FFE555;
-    font-weight: 500;
-    text-decoration: line-through;
-    text-transform: uppercase;
-    margin: 10px 0 0 0;
-    font-size: 1.5em;
-  }
-
-  .hotspot {
-    position: absolute;
-    display: block;
-    cursor: pointer;
-    background: rgba(255,0,0,0.3);
-    z-index: 3;
-  }
-
-  @media (max-width: 480px) {
-    .header img {
-      width: 50px;
-    }
-  }
+}
 </style>
 </head>
 <body>
 
-<div class="scale-container" id="container">
+<div class="scale-container">
   <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg" class="bg" alt="Contact Image">
 
   <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" style="top: 36.5%; left: 50%; width: 16%; height: 3%; transform: translate(-50%, -50%);"></a>
   <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" style="top: 40%; left: 50%; width: 5%; height: 3%; transform: translate(-50%, -50%);"></a>
-
   <a href="javascript:history.back()" class="hotspot" style="top: 52%; left: 57%; width: 3%; height: 2%; transform: translate(-50%, -50%);"></a>
   <a class="hotspot" style="top: 52%; left: 44.1%; width: 4.8%; height: 2%; transform: translate(-50%, -50%);"></a>
 </div>
@@ -96,30 +91,6 @@
     <h1>A SUPERB FAIRYWREN</h1>
   </a>
 </div>
-
-<script>
-  function scaleContainer() {
-    const container = document.getElementById('container');
-    const img = container.querySelector('img.bg');
-    const viewportRatio = window.innerWidth / window.innerHeight;
-    const imageRatio = img.naturalWidth / img.naturalHeight;
-
-    let scale = 1;
-
-    if(viewportRatio > imageRatio){
-      // screen wider than image
-      scale = window.innerHeight / img.naturalHeight;
-    } else {
-      // screen taller than image
-      scale = window.innerWidth / img.naturalWidth;
-    }
-
-    container.style.transform = `translate(-50%, -50%) scale(${scale})`;
-  }
-
-  window.addEventListener('resize', scaleContainer);
-  window.addEventListener('load', scaleContainer);
-</script>
 
 </body>
 </html>
