@@ -5,106 +5,102 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact – A Superb Fairywren</title>
 <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    background-color: #fff1a9;
-    font-family: 'Fraunces', serif;
-  }
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background-color: #fff1a9;
+  font-family: 'Fraunces', serif;
+}
 
-  body {
-    position: relative;
-  }
+/* Fullscreen image */
+.fullscreen-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
-  img.fullscreen-bg {
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    display: block;
-  }
+/* Hotspots via image map */
+area {
+  cursor: pointer;
+}
 
-  area {
-    cursor: pointer;
-  }
+/* Header */
+.header {
+  position: absolute;
+  top: 15px;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+  color: #FFE555;
+}
+.header img {
+  width: 60px;
+  border-radius: 50%;
+}
+.header h1 {
+  color: #FFE555;
+  font-weight: 500;
+  text-decoration: line-through;
+  text-transform: uppercase;
+  margin: 10px 0 0 0;
+  font-size: 1.5em;
+}
 
-  /* debug overlay if you want to see hotspots */
-  .debug {
-    opacity: 0.3;
-  }
-
-  .header {
-    position: absolute;
-    top: 15px;
-    width: 100%;
-    text-align: center;
-    z-index: 2;
-    color: #FFE555;
-  }
-
-  .header img { width: 60px; border-radius: 50%; }
-  .header h1 {
-    color: #FFE555;
-    font-weight: 500;
-    text-decoration: line-through;
-    text-transform: uppercase;
-    margin: 10px 0 0 0;
-    font-size: 1.5em;
-  }
-
-  @media (max-width: 480px) {
-    .header img { width: 50px; }
-  }
+/* Small screens logo adjustment */
+@media (max-width: 480px) {
+  .header img { width: 50px; }
+}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <a href="/home/"><img src="docs/website_assets/site_logo-small.jpg" alt="Site Logo"></a>
-  <a href="/home/"><h1>A SUPERB FAIRYWREN</h1></a>
+  <a href="/home/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo"></a>
+  <a href="/home/" style="text-decoration:none;"><h1>A SUPERB FAIRYWREN</h1></a>
 </div>
 
-<!-- fullscreen image with hotspots -->
-<img src="docs/website_assets/Nokiaaaa-large2.jpg" usemap="#hotspots" class="fullscreen-bg" alt="Contact Image">
+<!-- Image with map -->
+<img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg"
+     usemap="#hotspots" class="fullscreen-img" alt="Contact Background">
 
 <map name="hotspots">
-  <!-- Example hotspots: adjust coordinates according to your original image pixels -->
-  <area shape="rect" coords="300,400,700,450" href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="debug">
-  <area shape="rect" coords="400,500,450,530" href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="debug">
-  <area shape="rect" coords="600,700,650,730" href="javascript:history.back()" class="debug">
+  <!-- Example clickable areas: coordinates based on original image pixels -->
+  <area shape="rect" coords="500,370,1000,460" href="mailto:mgmt@asuperbfairywren.com" style="opacity:0.3;">
+  <area shape="rect" coords="500,400,600,490" href="mailto:mgmt@asuperbfairywren.com" style="opacity:0.3;">
+  <area shape="rect" coords="570,520,600,540" href="javascript:history.back()" style="opacity:0.3;">
+  <area shape="rect" coords="440,520,488,540" href="#" style="opacity:0.3;">
 </map>
 
-<!-- JS to scale image map coordinates with the image -->
 <script>
-(function(){
-  function resizeMap(){
-    const img = document.querySelector('img[usemap]');
-    const map = document.querySelector('map[name="' + img.useMap.slice(1) + '"]');
-    const areas = map.querySelectorAll('area');
-    const naturalWidth = img.naturalWidth;
-    const naturalHeight = img.naturalHeight;
-    const currentWidth = img.offsetWidth;
-    const currentHeight = img.offsetHeight;
-    const xRatio = currentWidth / naturalWidth;
-    const yRatio = currentHeight / naturalHeight;
-    areas.forEach(area => {
-      const originalCoords = area.dataset.coords.split(',').map(Number);
-      const scaledCoords = originalCoords.map((coord, index) => 
-        index % 2 === 0 ? coord * xRatio : coord * yRatio
-      );
-      area.coords = scaledCoords.join(',');
-    });
-  }
+/* Image Map Resizer: scales <area> coords to fill viewport */
+function resizeMap() {
+  const img = document.querySelector('.fullscreen-img');
+  const map = document.querySelector('map[name="hotspots"]');
+  const areas = map.querySelectorAll('area');
 
-  // Store original coords
-  document.querySelectorAll('area').forEach(area => {
-    area.dataset.coords = area.coords;
+  const originalWidth = 1920; // set to original image pixel width
+  const originalHeight = 1080; // set to original image pixel height
+
+  const scaleX = img.clientWidth / originalWidth;
+  const scaleY = img.clientHeight / originalHeight;
+
+  areas.forEach(area => {
+    const coords = area.dataset.coords.split(',').map(Number);
+    const scaled = coords.map((c, i) => i % 2 === 0 ? Math.round(c * scaleX) : Math.round(c * scaleY));
+    area.coords = scaled.join(',');
   });
+}
 
-  window.addEventListener('resize', resizeMap);
-  window.addEventListener('load', resizeMap);
-})();
+/* Save original coords */
+document.querySelectorAll('area').forEach(area => {
+  area.dataset.coords = area.coords;
+});
+
+window.addEventListener('resize', resizeMap);
+window.addEventListener('load', resizeMap);
 </script>
 
 </body>
