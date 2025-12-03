@@ -8,68 +8,79 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: 'Fraunces', serif;
-  overflow: hidden;
-  background-color: #fff1a9;
-}
-
-body {
-  position: relative;
-}
-
-.header {
-  position: absolute;
-  top: 15px;
-  width: 100%;
-  text-align: center;
-  z-index: 2;
-  color: #FFE555;
-}
-
-.header img {
-  width: 60px;
-  border-radius: 50%;
-}
-
-.header h1 {
-  color: #FFE555;
-  font-weight: 500;
-  text-decoration: line-through;
-  text-transform: uppercase;
-  margin: 10px 0 0 0;
-  font-size: 1.5em;
-}
-
-@media (max-width: 480px) {
-  .header img {
-    width: 50px;
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Fraunces', serif;
+    overflow: hidden;
+    background-color: #fff1a9;
   }
-}
 
-.hotspot {
-  background: rgba(255,0,0,0.3);
-  display: block;
-}
+  body {
+    position: relative;
+  }
+
+  .scale-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 150vh;
+    transform-origin: center center;
+    z-index: 1;
+  }
+
+  .scale-container img.bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .header {
+    position: absolute;
+    top: 15px;
+    width: 100%;
+    text-align: center;
+    z-index: 2;
+    color: #FFE555;
+  }
+
+  .header img {
+    width: 60px;
+    border-radius: 50%;
+  }
+
+  .header h1 {
+    color: #FFE555;
+    font-weight: 500;
+    text-decoration: line-through;
+    text-transform: uppercase;
+    margin: 10px 0 0 0;
+    font-size: 1.5em;
+  }
+
+  @media (max-width: 480px) {
+    .header img {
+      width: 50px;
+    }
+  }
 </style>
 </head>
 <body>
 
-<!-- Image with map -->
-<img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg"
-     usemap="#hotspots"
-     style="position:absolute; top:50%; left:50%; width:100%; height:150vh; transform:translate(-50%,-50%); object-fit:cover;"
-     alt="Contact Image">
-
-<map name="hotspots">
-  <area shape="rect" coords="420,540,580,585" href="mailto:mgmt@asuperbfairywren.com" alt="Email 1">
-  <area shape="rect" coords="475,595,525,640" href="mailto:mgmt@asuperbfairywren.com" alt="Email 2">
-  <area shape="rect" coords="555,775,585,805" href="javascript:history.back()" alt="Back">
-  <area shape="rect" coords="416,775,464,805" href="#" alt="Left">
-</map>
+<div class="scale-container">
+  <!-- Image with image map -->
+  <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg" class="bg" usemap="#hotspots" alt="Contact Image">
+  
+  <map name="hotspots">
+    <area shape="rect" coords="420,540,580,585" href="mailto:mgmt@asuperbfairywren.com" target="_blank">
+    <area shape="rect" coords="475,595,525,640" href="mailto:mgmt@asuperbfairywren.com" target="_blank">
+    <area shape="rect" coords="555,775,585,805" href="javascript:history.back()">
+    <area shape="rect" coords="416,775,464,805" href="#">
+  </map>
+</div>
 
 <div class="header">
   <a href="/home/">
@@ -80,15 +91,26 @@ body {
   </a>
 </div>
 
-<!-- Local imageMapResizer -->
+<!-- imageMapResizer JS -->
 <script src="website_assets/js/imageMapResizer.min.js"></script>
 <script>
-  // automatically resizes all image maps
+  // Automatically scale map areas
   window.onload = function() {
-    if (typeof imageMapResize === "function") {
-      imageMapResize();
-    }
+    imageMapResize();
   };
+</script>
+
+<script>
+  // Keep your existing scale transform
+  function scaleContainer() {
+    const container = document.querySelector('.scale-container');
+    const scale = 1.4;
+    const translateY = 30;
+    container.style.transform = 'translate(-50%, -50%) translateY(' + translateY + 'vh) scale(' + scale + ')';
+  }
+
+  window.addEventListener('resize', scaleContainer);
+  window.addEventListener('load', scaleContainer);
 </script>
 
 </body>
