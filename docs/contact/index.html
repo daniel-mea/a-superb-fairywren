@@ -3,117 +3,158 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact – A Superb Fairywren</title>
+<title>Hotbox Test Final</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 
 <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Fraunces', serif;
-    overflow: hidden;
-    background-color: #fff1a9;
-  }
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Fraunces', serif;
+  background-color: #fff1a9;
+}
 
-  body {
-    position: relative;
-  }
+/* ================= HEADER ================= */
 
-  .scale-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100vw;
-    height: 150vh;
-    transform-origin: center center;
-    z-index: 1;
-  }
+.header {
+  position: fixed;
+  top: 15px;
+  width: 100%;
+  text-align: center;
+  z-index: 10;
+  pointer-events: auto;
+}
 
-  .scale-container img.bg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
+.header img {
+  width: 60px;
+  border-radius: 50%;
+}
 
-  .header {
-    position: absolute;
-    top: 15px;
-    width: 100%;
-    text-align: center;
-    z-index: 2;
-    color: #FFE555;
-  }
+.header h1 {
+  color: #FFE555;
+  font-weight: 500;
+  text-decoration: line-through;
+  text-transform: uppercase;
+  margin: 10px 0 0 0;
+  font-size: 1.5em;
+}
 
-  .header img {
-    width: 60px;
-    border-radius: 50%;
-  }
+/* Mobile / Portrait tweaks */
+@media (orientation: portrait) {
+  .header img { width: 50px; }
+}
 
-  .header h1 {
-    color: #FFE555;
-    font-weight: 500;
-    text-decoration: line-through;
-    text-transform: uppercase;
-    margin: 10px 0 0 0;
-    font-size: 1.5em;
-  }
+/* ================= IMAGE + HOTBOX ================= */
 
-  .hotspot {
-    position: absolute;
-    z-index: 3;
-    display: block;
-    cursor: pointer;
-    background: rgba(255,0,0,0.0);
-  }
+#bg {
+  position: absolute;
+  z-index: 1;
+}
 
-  /* DEBUG hotspots visible */
-  .debug {
-    background: rgba(255,0,0,0.0);
-  }
-
-  @media (max-width: 480px) {
-    .header img {
-      width: 50px;
-    }
-  }
+.hotbox {
+  position: absolute;
+  border: 3px solid red;  
+  box-sizing: border-box;
+  cursor: pointer;
+  z-index: 2;
+}
 </style>
 </head>
 <body>
 
-<div class="scale-container" id="container">
-  <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg" class="bg" alt="Contact Image">
-
-  <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" style="top: 36.5%; left: 50%; width: 16%; height: 3%; transform: translate(-50%, -50%);"></a>
-  <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" style="top: 40%; left: 50%; width: 5%; height: 3%; transform: translate(-50%, -50%);"></a>
-
-  <a href="javascript:history.back()" class="hotspot debug" style="top: 52%; left: 57%; width: 3%; height: 2%; transform: translate(-50%, -50%);"></a>
-
-  <a class="hotspot debug" style="top: 52%; left: 44.1%; width: 4.8%; height: 2%; transform: translate(-50%, -50%);"></a>
-
-</div>
-
+<!-- ✅ HEADER -->
 <div class="header">
   <a href="/home/">
-    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo">
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg">
   </a>
   <a href="/home/" style="text-decoration:none;">
     <h1>A SUPERB FAIRYWREN</h1>
   </a>
 </div>
 
-<script>
-  function scaleContainer() {
-    const container = document.getElementById('container');
-    const scale = 1.4;
-    const translateY = 30;
-    container.style.transform = 'translate(-50%, -50%) translateY(' + translateY + 'vh) scale(' + scale + ')';
-  }
+<!-- ✅ IMAGE + HOTBOX LAYER -->
+<img id="bg" src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg">
 
-  window.addEventListener('resize', scaleContainer);
-  window.addEventListener('load', scaleContainer);
+<div id="hotbox1" class="hotbox"></div>
+<div id="hotbox2" class="hotbox"></div>
+<div id="hotbox3" class="hotbox"></div>
+<div id="hotbox4" class="hotbox"></div>
+
+<script>
+const img = document.getElementById("bg");
+const box1 = document.getElementById("hotbox1");
+const box2 = document.getElementById("hotbox2");
+const box3 = document.getElementById("hotbox3");
+const box4 = document.getElementById("hotbox4");
+
+const ORIGINAL_W = 3726;
+const ORIGINAL_H = 3113;
+const EXTRA_SCALE = 1.4;
+const SHIFT_FACTOR = 0.30; // fraction of viewport center
+const MIN_SCALE = 0.5;     // prevents too small on phones
+
+// First two hotboxes (existing)
+const HOTBOX1 = { x: (ORIGINAL_W / 2) - 291, y: (ORIGINAL_H / 2) - 462, w: 585.5, h: 85.5 };
+const HOTBOX2 = { x: HOTBOX1.x + 200, y: HOTBOX1.y + 99, w: 180, h: 88 };
+
+// New independent hotboxes
+const HOTBOX3 = { x: 1560, y: 1585, w: 175, h: 69 };
+const HOTBOX4 = { x: 2060, y: 1585, w: 111.5, h: 69 };
+
+function updateHotboxes() {
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  // Cover scale multiplied by extra scale
+  let scale = Math.max(vw / ORIGINAL_W, vh / ORIGINAL_H) * EXTRA_SCALE;
+  if (scale < MIN_SCALE) scale = MIN_SCALE;
+
+  const renderedW = ORIGINAL_W * scale;
+  const renderedH = ORIGINAL_H * scale;
+
+  // Horizontal centering
+  const offsetX = (vw - renderedW) / 2;
+
+  // Vertical positioning: 30% down from viewport center, top never leaves viewport
+  let offsetY = vh * SHIFT_FACTOR - (renderedH - vh) / 2;
+  if (offsetY > 0) offsetY = 0;
+
+  // Apply to image
+  img.style.width = renderedW + "px";
+  img.style.height = renderedH + "px";
+  img.style.left = offsetX + "px";
+  img.style.top = offsetY + "px";
+
+  // Apply to all hotboxes
+  [ [box1, HOTBOX1], [box2, HOTBOX2], [box3, HOTBOX3], [box4, HOTBOX4] ].forEach(([box, H]) => {
+    box.style.left = offsetX + H.x * scale + "px";
+    box.style.top = offsetY + H.y * scale + "px";
+    box.style.width = H.w * scale + "px";
+    box.style.height = H.h * scale + "px";
+  });
+}
+
+// Open mailto in new tab
+function openMail() {
+  window.open("mailto:mgmt@asuperbfairywren.com", "_blank");
+}
+
+box1.onclick = openMail;
+box2.onclick = openMail;
+
+box3.onclick = () => {
+  window.location.href = '/home/';
+};
+
+box4.onclick = () => {
+  window.history.back();
+};
+
+window.addEventListener("load", updateHotboxes);
+window.addEventListener("resize", updateHotboxes);
 </script>
 
 </body>
