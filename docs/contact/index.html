@@ -66,12 +66,12 @@
     z-index: 3;
     display: block;
     cursor: pointer;
-    background: rgba(255,0,0,0.3);
-    transition: background 0.2s;
+    background: rgba(255,0,0,0.0);
   }
 
-  .hotspot:hover {
-    background: rgba(255,0,0,0.5);
+  /* DEBUG hotspots visible */
+  .debug {
+    background: rgba(255,0,0,0.0);
   }
 
   @media (max-width: 480px) {
@@ -86,11 +86,13 @@
 <div class="scale-container" id="container">
   <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg" class="bg" alt="Contact Image">
 
-  <!-- Hotspots -->
-  <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" id="btn1"></a>
-  <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" id="btn2"></a>
-  <a href="/home/" class="hotspot" id="btn3"></a>
-  <a href="javascript:history.back()" class="hotspot" id="btn4"></a>
+  <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" style="top: 36.5%; left: 50%; width: 16%; height: 3%; transform: translate(-50%, -50%);"></a>
+  <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" style="top: 40%; left: 50%; width: 5%; height: 3%; transform: translate(-50%, -50%);"></a>
+
+  <a href="javascript:history.back()" class="hotspot debug" style="top: 52%; left: 57%; width: 3%; height: 2%; transform: translate(-50%, -50%);"></a>
+
+  <a class="hotspot debug" style="top: 52%; left: 44.1%; width: 4.8%; height: 2%; transform: translate(-50%, -50%);"></a>
+
 </div>
 
 <div class="header">
@@ -103,43 +105,15 @@
 </div>
 
 <script>
-  // Original image dimensions
-  const imgWidth = 3726;
-  const imgHeight = 3113;
-
-  // Button pixel positions on original image
-  const buttons = [
-    {id:'btn1', x1:1569, y1:1092, x2:2160, y2:1180},
-    {id:'btn2', x1:1776, y1:1195, x2:1953, y2:1280},
-    {id:'btn3', x1:1562, y1:1585, x2:1729, y2:1650},
-    {id:'btn4', x1:2065, y1:1585, x2:2168, y2:1650}
-  ];
-
-  function positionHotspots() {
+  function scaleContainer() {
     const container = document.getElementById('container');
     const scale = 1.4;
     const translateY = 30;
-
     container.style.transform = 'translate(-50%, -50%) translateY(' + translateY + 'vh) scale(' + scale + ')';
-
-    buttons.forEach(b => {
-      const btn = document.getElementById(b.id);
-      // Convert original px to percentage relative to original image
-      const left = ((b.x1 + b.x2)/2)/imgWidth*100;
-      const top = ((b.y1 + b.y2)/2)/imgHeight*100;
-      const width = (b.x2 - b.x1)/imgWidth*100;
-      const height = (b.y2 - b.y1)/imgHeight*100;
-
-      btn.style.left = left + '%';
-      btn.style.top = top + '%';
-      btn.style.width = width + '%';
-      btn.style.height = height + '%';
-      btn.style.transform = 'translate(-50%, -50%)';
-    });
   }
 
-  window.addEventListener('resize', positionHotspots);
-  window.addEventListener('load', positionHotspots);
+  window.addEventListener('resize', scaleContainer);
+  window.addEventListener('load', scaleContainer);
 </script>
 
 </body>
