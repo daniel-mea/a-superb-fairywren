@@ -15,7 +15,7 @@ html, body {
   background-color: #fff1a9; 
 }
 
-/* --- BACKGROUND FIX --- */
+/* bg-layer uses real viewport height */
 .bg-layer {
   position: fixed;
   top: 0;
@@ -46,13 +46,11 @@ body {
 .header {
   padding-top: 15px;
 }
-
 .header img {
   width: 60px;
   border-radius: 50%;
   transition: width 0.3s ease;
 }
-
 .header h1 {
   color: #FFE555;
   font-weight: 500;
@@ -61,12 +59,11 @@ body {
   margin: 10px 0 10px 0;
   font-size: 1.5em;
 }
-
 .menu-row {
   display: flex;
   justify-content: center;
   gap: 60px;
-  margin-top: 17.5px;
+  margin-top: 17.5px; /* MATCHED TO DANNY/TALA PAGES */
 }
 
 .menu-link.daniel { transform: translateX(-7px); }
@@ -82,7 +79,6 @@ body {
   text-decoration: none;
   transition: color 0.33s ease;
 }
-
 .menu-link .underline {
   position: absolute;
   bottom: -1px;
@@ -92,14 +88,11 @@ body {
   background: #FFE555;
   transition: width 0.33s ease;
 }
-
 .menu-link:hover { color: white; }
 .menu-link:hover .underline { width: 100%; }
 
 .social {
   margin-top: 20px;
-  /* --- AÑADIR/ADD THIS LINE TO HIDE THE SOCIAL LINKS --- */
-  display: none; 
 }
 .social a img { width: 33px; vertical-align: middle; }
 
@@ -108,11 +101,11 @@ body {
 /* --- MOBILE / TABLET LOGO SHRINK --- */
 @media (max-width: 768px) {
   .header img { width: 50px; }
-  .menu-link.daniel, .menu-link.tala { transform: translateX(0); }
 }
-
 @media (max-width: 480px) {
   .header img { width: 50px; }
+  .social a img { width: 20px; }
+  .menu-link.daniel, .menu-link.tala { transform: translateX(0); }
 }
 </style>
 </head>
@@ -121,12 +114,8 @@ body {
 <div class="bg-layer" aria-hidden="true"></div>
 
 <div class="header">
-  <a href="/home/" style="text-decoration:none;">
-    <h1>A SUPERB FAIRYWREN</h1>
-  </a>
-  <a href="/home/">
-    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo">
-  </a>
+  <a href="/home/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo"></a>
+  <a href="/home/" style="text-decoration:none;"><h1>A SUPERB FAIRYWREN</h1></a>
   <div class="menu-row">
     <a href="/danny/" class="menu-link daniel">DANIEL <span class="underline"></span></a>
     <a href="/tala/" class="menu-link tala">TALA <span class="underline"></span></a>
@@ -142,7 +131,7 @@ body {
 </div>
 
 <script>
-/* Real viewport height fix for mobile */
+/* Real viewport height fix */
 (function() {
   const setVh = () => {
     const vh = window.innerHeight * 0.01;
