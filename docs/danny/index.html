@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Daniel – A Superb Fairywren</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 <style>
 /* base reset */
 html, body {
@@ -113,3 +120,59 @@ body {
   .writing-projects { top: 55%; }
 }
 </style>
+</head>
+<body>
+
+<div class="bg-layer" aria-hidden="true"></div>
+
+<div class="header">
+  <a href="/home/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo"></a>
+  <a href="/home/" style="text-decoration:none;"><h1>A SUPERB FAIRYWREN</h1></a>
+  <div class="menu-row">
+    <a href="/danny/" class="menu-link daniel">DANIEL <span class="underline"></span></a>
+    <a href="/tala/" class="menu-link tala">TALA <span class="underline"></span></a>
+  </div>
+</div>
+
+<div class="main-content">
+  <a href="/danny-music/" class="project-item music-projects">
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/icon_musicprojects.png" alt="Music Projects">
+    <span class="project-label">music</span>
+  </a>
+
+  <a href="/danny-writing/" class="project-item writing-projects">
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/icon_writingprojects.png" alt="Writing Projects">
+    <span class="project-label">writing</span>
+  </a>
+</div>
+
+<div class="footer">
+  <div class="social">
+    <a href="https://instagram.com/danny__mea" target="_blank"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_ig.svg" alt="Instagram"></a>
+    <a href="/contact/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/2978373eaeac2a4b537306bf46ebce49d3b812c6/docs/website_assets/icon_email.svg" alt="Email"></a>
+    <a href="https://www.youtube.com/@DannyMEA" target="_blank"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_yt.svg" alt="YouTube"></a>
+  </div>
+</div>
+
+<script>
+(function() {
+  const setVh = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', String(vh) + 'px');
+  };
+
+  setVh();
+
+  let tid = null;
+  const debouncedSet = () => {
+    clearTimeout(tid);
+    tid = setTimeout(setVh, 80);
+  };
+
+  window.addEventListener('resize', debouncedSet);
+  window.addEventListener('orientationchange', debouncedSet);
+})();
+</script>
+
+</body>
+</html>
