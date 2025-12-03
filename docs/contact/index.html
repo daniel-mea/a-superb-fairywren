@@ -13,42 +13,29 @@
     padding: 0;
     height: 100%;
     font-family: 'Fraunces', serif;
-    overflow: hidden;
     background-color: #fff1a9;
+    overflow: hidden;
   }
 
-  body {
+  .container {
     position: relative;
-  }
-
-  /* SVG container fills viewport */
-  .svg-container {
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 1;
+    overflow: hidden;
   }
 
-  .svg-container svg {
-    position: absolute;
-    top: 0;
-    left: 0;
+  .container img.bg {
     width: 100%;
     height: 100%;
+    object-fit: cover; /* ensures image fills viewport with cropping as needed */
     display: block;
   }
 
-  /* Hotspot styling */
   .hotspot {
+    position: absolute;
+    background: rgba(255,0,0,0.3);
     cursor: pointer;
-    fill: rgba(255, 0, 0, 0.3);
-    transition: fill 0.2s;
-  }
-
-  .hotspot:hover {
-    fill: rgba(255, 0, 0, 0.5);
+    z-index: 2;
   }
 
   .header {
@@ -56,7 +43,7 @@
     top: 15px;
     width: 100%;
     text-align: center;
-    z-index: 2;
+    z-index: 3;
     color: #FFE555;
   }
 
@@ -83,46 +70,63 @@
 </head>
 <body>
 
-<div class="svg-container">
-  <svg viewBox="0 0 1000 1500" preserveAspectRatio="xMidYMid slice">
-    <!-- Background Image -->
-    <image 
-      href="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg" 
-      width="1000" 
-      height="1500"
-      preserveAspectRatio="xMidYMid slice"
-    />
-    
-    <!-- Email hotspot 1 (top button) -->
-    <a href="mailto:mgmt@asuperbfairywren.com" target="_blank">
-      <rect class="hotspot" x="420" y="540" width="160" height="45"/>
-    </a>
-    
-    <!-- Email hotspot 2 (middle button) -->
-    <a href="mailto:mgmt@asuperbfairywren.com" target="_blank">
-      <rect class="hotspot" x="475" y="595" width="50" height="45"/>
-    </a>
-    
-    <!-- Back button (right) -->
-    <a href="javascript:history.back()">
-      <rect class="hotspot" x="555" y="775" width="30" height="30"/>
-    </a>
-    
-    <!-- Left button -->
-    <a href="#">
-      <rect class="hotspot" x="416" y="775" width="48" height="30"/>
-    </a>
-  </svg>
+<div class="container" id="container">
+  <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large2.jpg" class="bg" alt="Contact Image" id="bgImage">
+
+  <!-- Example hotspots -->
+  <a href="mailto:mgmt@asuperbfairywren.com" class="hotspot" data-x="420" data-y="540" data-w="160" data-h="45"></a>
+  <a href="mailto:mgmt@asuperbfairywren.com" class="hotspot" data-x="475" data-y="595" data-w="50" data-h="45"></a>
+  <a href="javascript:history.back()" class="hotspot" data-x="555" data-y="775" data-w="30" data-h="30"></a>
+  <a href="#" class="hotspot" data-x="416" data-y="775" data-w="48" data-h="30"></a>
 </div>
 
 <div class="header">
-  <a href="/home/">
-    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo">
-  </a>
-  <a href="/home/" style="text-decoration:none;">
-    <h1>A SUPERB FAIRYWREN</h1>
-  </a>
+  <a href="/home/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo"></a>
+  <a href="/home/" style="text-decoration:none;"><h1>A SUPERB FAIRYWREN</h1></a>
 </div>
+
+<script>
+  const container = document.getElementById('container');
+  const bg = document.getElementById('bgImage');
+  const hotspots = document.querySelectorAll('.hotspot');
+
+  // Original image dimensions
+  const imgOriginalWidth = 1000;
+  const imgOriginalHeight = 1500;
+
+  function scaleHotspots() {
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+    const imgRatio = imgOriginalWidth / imgOriginalHeight;
+    const containerRatio = containerWidth / containerHeight;
+
+    let scale, offsetX = 0, offsetY = 0;
+
+    if(containerRatio > imgRatio) {
+      // viewport wider than image -> scale by width
+      scale = containerWidth / imgOriginalWidth;
+      offsetY = (containerHeight - imgOriginalHeight * scale) / 2;
+    } else {
+      // viewport taller than image -> scale by height
+      scale = containerHeight / imgOriginalHeight;
+      offsetX = (containerWidth - imgOriginalWidth * scale) / 2;
+    }
+
+    hotspots.forEach(hs => {
+      const x = parseFloat(hs.dataset.x) * scale + offsetX;
+      const y = parseFloat(hs.dataset.y) * scale + offsetY;
+      const w = parseFloat(hs.dataset.w) * scale;
+      const h = parseFloat(hs.dataset.h) * scale;
+      hs.style.left = x + 'px';
+      hs.style.top = y + 'px';
+      hs.style.width = w + 'px';
+      hs.style.height = h + 'px';
+    });
+  }
+
+  window.addEventListener('resize', scaleHotspots);
+  window.addEventListener('load', scaleHotspots);
+</script>
 
 </body>
 </html>
