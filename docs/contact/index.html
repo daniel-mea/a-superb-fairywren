@@ -25,16 +25,16 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 100vw;
-    height: 150vh;
-    transform-origin: center center;
+    transform: translate(-50%, -50%) scale(1);
+    width: 100%;
+    max-width: 100%;
+    height: auto;
     z-index: 1;
   }
 
   .scale-container img.bg {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
     display: block;
   }
 
@@ -63,15 +63,10 @@
 
   .hotspot {
     position: absolute;
-    z-index: 3;
     display: block;
     cursor: pointer;
     background: rgba(255,0,0,0.3);
-  }
-
-  /* DEBUG hotspots visible */
-  .debug {
-    background: rgba(255,0,0,0.3);
+    z-index: 3;
   }
 
   @media (max-width: 480px) {
@@ -89,10 +84,8 @@
   <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" style="top: 36.5%; left: 50%; width: 16%; height: 3%; transform: translate(-50%, -50%);"></a>
   <a href="mailto:mgmt@asuperbfairywren.com" target="_blank" class="hotspot" style="top: 40%; left: 50%; width: 5%; height: 3%; transform: translate(-50%, -50%);"></a>
 
-  <a href="javascript:history.back()" class="hotspot debug" style="top: 52%; left: 57%; width: 3%; height: 2%; transform: translate(-50%, -50%);"></a>
-
-  <a class="hotspot debug" style="top: 52%; left: 44.1%; width: 4.8%; height: 2%; transform: translate(-50%, -50%);"></a>
-
+  <a href="javascript:history.back()" class="hotspot" style="top: 52%; left: 57%; width: 3%; height: 2%; transform: translate(-50%, -50%);"></a>
+  <a class="hotspot" style="top: 52%; left: 44.1%; width: 4.8%; height: 2%; transform: translate(-50%, -50%);"></a>
 </div>
 
 <div class="header">
@@ -107,9 +100,21 @@
 <script>
   function scaleContainer() {
     const container = document.getElementById('container');
-    const scale = 1.4;
-    const translateY = 30;
-    container.style.transform = 'translate(-50%, -50%) translateY(' + translateY + 'vh) scale(' + scale + ')';
+    const img = container.querySelector('img.bg');
+    const viewportRatio = window.innerWidth / window.innerHeight;
+    const imageRatio = img.naturalWidth / img.naturalHeight;
+
+    let scale = 1;
+
+    if(viewportRatio > imageRatio){
+      // screen wider than image
+      scale = window.innerHeight / img.naturalHeight;
+    } else {
+      // screen taller than image
+      scale = window.innerWidth / img.naturalWidth;
+    }
+
+    container.style.transform = `translate(-50%, -50%) scale(${scale})`;
   }
 
   window.addEventListener('resize', scaleContainer);
