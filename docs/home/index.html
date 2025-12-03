@@ -15,7 +15,7 @@ html, body {
   background-color: #fff1a9; 
 }
 
-/* --- BACKGROUND GIF --- */
+/* bg-layer uses real viewport height */
 .bg-layer {
   position: fixed;
   top: 0;
@@ -34,7 +34,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: relative;
 }
 
 .header, .footer {
@@ -47,13 +46,11 @@ body {
 .header {
   padding-top: 15px;
 }
-
 .header img {
   width: 60px;
   border-radius: 50%;
   transition: width 0.3s ease;
 }
-
 .header h1 {
   color: #FFE555;
   font-weight: 500;
@@ -62,12 +59,11 @@ body {
   margin: 10px 0 10px 0;
   font-size: 1.5em;
 }
-
 .menu-row {
   display: flex;
   justify-content: center;
   gap: 60px;
-  margin-top: 17.5px; /* same spacing as other pages */
+  margin-top: 17.5px; /* MATCHED TO DANNY/TALA PAGES */
 }
 
 .menu-link.daniel { transform: translateX(-7px); }
@@ -83,7 +79,6 @@ body {
   text-decoration: none;
   transition: color 0.33s ease;
 }
-
 .menu-link .underline {
   position: absolute;
   bottom: -1px;
@@ -93,44 +88,24 @@ body {
   background: #FFE555;
   transition: width 0.33s ease;
 }
-
 .menu-link:hover { color: white; }
 .menu-link:hover .underline { width: 100%; }
 
-.social { 
+.social {
   margin-top: 20px;
-  opacity: 0; /* hide social icons */
 }
+.social a img { width: 33px; vertical-align: middle; }
 
 .footer { padding-bottom: 15px; }
 
-/* MOBILE / TABLET LOGO SHRINK */
+/* --- MOBILE / TABLET LOGO SHRINK --- */
 @media (max-width: 768px) {
   .header img { width: 50px; }
 }
-
-/* MOBILE / SMALLER LOGO */
 @media (max-width: 480px) {
   .header img { width: 50px; }
+  .social a img { width: 20px; }
   .menu-link.daniel, .menu-link.tala { transform: translateX(0); }
-}
-
-/* LANDSCAPE MOBILE H1 CENTERED ON TOP OF LOGO */
-@media (max-height: 750px) and (orientation: landscape) {
-  .header h1 {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 0;
-    font-size: 1.2em; /* smaller font in landscape */
-  }
-  .header img {
-    margin-top: 40px; /* logo pushed down so H1 sits directly on top */
-  }
-  .menu-row {
-    margin-top: 17.5px; /* maintain spacing below logo as usual */
-  }
 }
 </style>
 </head>
