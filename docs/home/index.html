@@ -12,7 +12,7 @@ html, body {
   height: 100%;
   font-family: 'Fraunces', serif;
   overflow: hidden;
-  background-color: #fff1a9; 
+  background-color: #000000;
 }
 
 /* bg-layer uses real viewport height */
@@ -49,6 +49,8 @@ body {
 .header img {
   width: 60px;
   border-radius: 50%;
+  display: block;
+  margin: 0 auto;
   transition: width 0.3s ease;
 }
 .header h1 {
@@ -56,14 +58,16 @@ body {
   font-weight: 500;
   text-decoration: line-through;
   text-transform: uppercase;
-  margin: 10px 0 10px 0;
+  margin: 14px 0 0 0;
   font-size: 1.5em;
+  transition: transform 0.3s ease;
 }
+
 .menu-row {
   display: flex;
   justify-content: center;
   gap: 60px;
-  margin-top: 17.5px; /* MATCHED TO DANNY/TALA PAGES */
+  margin-top: 17.5px;
 }
 
 .menu-link.daniel { transform: translateX(-7px); }
@@ -93,7 +97,7 @@ body {
 
 .social {
   margin-top: 20px;
-  display: none; /* Social link is invisible */
+  display: none; 
 }
 .social a img { width: 33px; vertical-align: middle; }
 
@@ -107,10 +111,33 @@ body {
   .header img { width: 50px; }
   .social a img { width: 20px; }
 
-  /* --- ADJUSTED FOR PHONES (Portrait) --- */
-  .menu-link.daniel { transform: translateX(-7px); } /
+  .menu-link.daniel { transform: translateX(-7px); }
   .menu-link.tala { transform: translateX(10px); }
-  /* --- END ADJUSTED --- */
+}
+
+/* --- SMALL LANDSCAPE CENTER H1 OVER LOGO --- */
+@media (max-width: 1000px) and (max-height: 500px) and (orientation: landscape) {
+  .header {
+    display: grid;
+    place-items: center;
+    padding-top: 15px; 
+  }
+
+  .header a:first-child,
+  .header a:nth-child(2) {
+    grid-area: 1 / 1; 
+  }
+
+  .header a:nth-child(2) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header h1 {
+    margin: 0;
+    transition: transform 0.3s ease;
+  }
 }
 </style>
 </head>
