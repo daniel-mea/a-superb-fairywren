@@ -141,7 +141,9 @@ function updateHotboxes() {
   const renderedW = ORIGINAL_W * scale;
   const renderedH = ORIGINAL_H * scale;
 
-  const offsetX = (vw - renderedW) / 2;
+  let offsetX = (vw - renderedW) / 2;
+  if (offsetX > 0) offsetX = 0;
+
   let offsetY = vh * SHIFT_FACTOR - (renderedH - vh) / 2;
 
   // shift down on small landscape phones
