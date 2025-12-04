@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hotbox Test Final</title>
+<title>A Superb Fairywren - Contact</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 
@@ -82,7 +82,7 @@ html, body {
 
 .hotbox {
   position: absolute;
-  border: 3px solid red;  
+  border: 0px solid red;  
   box-sizing: border-box;
   cursor: pointer;
   z-index: 2;
@@ -143,7 +143,14 @@ function updateHotboxes() {
 
   const offsetX = (vw - renderedW) / 2;
   let offsetY = vh * SHIFT_FACTOR - (renderedH - vh) / 2;
-  if (offsetY > 0) offsetY = 0;
+
+  // shift down on small landscape phones
+  if (window.innerWidth <= 1000 && window.innerHeight <= 500 && window.innerHeight < window.innerWidth) {
+    offsetY += 222; // tweak this number to move further down
+}
+
+if (offsetY > 0) offsetY = 0;
+
 
   img.style.width = renderedW + "px";
   img.style.height = renderedH + "px";
