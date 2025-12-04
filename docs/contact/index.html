@@ -139,6 +139,11 @@ function updateHotboxes() {
   let offsetY = vh * SHIFT_FACTOR - (renderedH - vh) / 2;
   if (offsetY > 0) offsetY = 0;
 
+  // ---- SMALL LANDSCAPE SHIFT ----
+  if (vw <= 1000 && vh <= 500 && window.matchMedia("(orientation: landscape)").matches) {
+    offsetY += 20;
+  }
+
   img.style.width = renderedW + "px";
   img.style.height = renderedH + "px";
   img.style.left = offsetX + "px";
@@ -146,7 +151,7 @@ function updateHotboxes() {
 
   [[box1,HOTBOX1],[box2,HOTBOX2],[box3,HOTBOX3],[box4,HOTBOX4]].forEach(([box,H])=>{
     box.style.left = offsetX + H.x*scale + "px";
-    box.style.top = offsetY + H.y*scale + "px";
+    box.style.top = offsetY + H.y*scale + "px"; // hotboxes move with image
     box.style.width = H.w*scale + "px";
     box.style.height = H.h*scale + "px";
   });
