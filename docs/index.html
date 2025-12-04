@@ -14,10 +14,10 @@ html, body {
   height: 100%;
   font-family: 'Fraunces', serif;
   overflow: hidden;
-  background-color: #fff1a9; 
+  background-color: #7FC3FF;
 }
 
-/* --- BACKGROUND FIX (matches other pages) --- */
+/* --- BACKGROUND --- */
 .bg-layer {
   position: fixed;
   top: 0;
@@ -53,6 +53,8 @@ body {
 .header img {
   width: 60px;
   border-radius: 50%;
+  display: block;
+  margin: 0 auto;
 }
 
 .header h1 {
@@ -60,7 +62,7 @@ body {
   font-weight: 500;
   text-decoration: line-through;
   text-transform: uppercase;
-  margin: 10px 0 0 0;
+  margin: 14px 0 0 0;
   font-size: 1.5em;
 }
 
@@ -92,14 +94,37 @@ body {
   .footer p { font-size: 45px; }
 }
 
-/* --- LANDSCAPE MOBILE FOOTER FIX --- */
+/* --- LANDSCAPE MOBILE FIX: H1 CENTERED OVER LOGO --- */
 @media (max-width: 1000px) and (max-height: 500px) and (orientation: landscape) {
   .footer p {
-    font-size: 33px;       /* smaller font for landscape phones */
+    font-size: 33px;
     line-height: 1.1em;
     max-width: 90%;
-    padding-bottom: 15px;  /* float it above bottom edge */
+    padding-bottom: 15px;
     margin: 0 auto;
+  }
+
+  /* Grid-based layout to center H1 over logo */
+  .header {
+    display: grid;
+    place-items: center; /* center both elements in same grid cell */
+    padding-top: 15px; /* keep logo in original vertical offset */
+  }
+
+  .header a:first-child,
+  .header a:nth-child(2) {
+    grid-area: 1 / 1; /* overlap in same cell */
+  }
+
+  .header a:nth-child(2) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header h1 {
+    margin: 0;
+    transition: transform 0.3s ease; /* ADDED: smooth 0.3s animation */
   }
 }
 </style>

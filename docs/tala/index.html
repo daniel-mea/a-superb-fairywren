@@ -65,6 +65,8 @@ padding-top: 15px;
 .header img {
 width: 60px;
 border-radius: 50%;
+/* --- CHANGE 1: ADDED TRANSITION FOR SMOOTH SHRINKING --- */
+transition: width 0.3s ease;
 }
 .header h1 {
 color: #FFE555;
@@ -174,7 +176,8 @@ padding-bottom: 15px;
 
 /* Orientation-based responsive styling */
 @media (orientation: portrait) {
-  .menu-link.daniel, .menu-link.tala { transform: translateX(0); }
+  /* --- CHANGE 2 PART 1: REMOVED TRANSLATEX(0) RESET --- */
+  /* .menu-link.daniel, .menu-link.tala { transform: translateX(0); } */
   .header img { width: 50px; }
   .social a img { width: 25px; }
   .project-item img { width: 55px; height: 55px; }
@@ -186,6 +189,14 @@ padding-bottom: 15px;
   .music-projects { left: 42%; top: 48%; } 
   .talk-projects { left: 58%; top: 64%; } 
 }
+
+/* --- CHANGE 2 PART 2: ADDED MAX-WIDTH 480PX BLOCK (FROM MAIN PAGE) --- */
+@media (max-width: 480px) {
+  .menu-link.daniel { transform: translateX(-7px); }
+  .menu-link.tala { transform: translateX(10px); }
+  /* The rest of the media query rules for this block are handled below */
+}
+/* ------------------------------------------------------------------- */
 
 
 @media (orientation: landscape) {

@@ -51,7 +51,12 @@ body {
   padding-top: 15px;
   text-align: center;
 }
-.header img { width: 60px; border-radius: 50%; }
+.header img { 
+  width: 60px; 
+  border-radius: 50%; 
+  /* --- CHANGE 1: ADDED TRANSITION FOR SMOOTH SHRINKING (FROM MAIN PAGE) --- */
+  transition: width 0.3s ease; 
+}
 .header h1 {
   color: #FFE555;
   font-weight: 500;
@@ -108,7 +113,6 @@ body {
 
 /* Orientation-based responsive styling */
 @media (orientation: portrait) {
-  .menu-link.daniel, .menu-link.tala { transform: translateX(0); }
   .header img { width:50px; }
   .social a img { width:25px; }
   .project-item img { width:55px; height:55px; }
@@ -127,6 +131,15 @@ body {
   /* ---------------------------------------------------- */
 }
 
+/* --- CHANGE 2: ADDED MAX-WIDTH 480PX BLOCK FROM MAIN PAGE --- */
+@media (max-width: 480px) {
+  /* This block ensures the correct offsets on the smallest screens */
+  .menu-link.daniel { transform: translateX(-7px); }
+  .menu-link.tala { transform: translateX(10px); }
+  .social a img { width: 20px; }
+}
+/* ----------------------------------------------------------- */
+
 /* --- LANDSCAPE POSITIONING (Aligned with Tala's approach) --- */
 @media (orientation: landscape) {
   .social a img { width:22px; }
@@ -139,7 +152,6 @@ body {
 </head>
 <body>
 
-<!-- background layer that always matches the *visible* viewport -->
 <div class="bg-layer" aria-hidden="true"></div>
 
 <div class="header">
