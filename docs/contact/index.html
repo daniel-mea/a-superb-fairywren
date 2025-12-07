@@ -144,9 +144,14 @@ function updateHotboxes() {
 
   let offsetY = vh * SHIFT_FACTOR - (renderedH - vh) / 2;
 
+  // small landscape phones: shift image down and scale to fill width
   if (window.innerWidth <= 1000 && window.innerHeight <= 500 && window.innerHeight < window.innerWidth) {
-    offsetY += 222;
-  }
+    offsetY += 222; // keep vertical adjustment
+
+    // override scale to fit width exactly in this orientation
+    scale = (vw / ORIGINAL_W) * EXTRA_SCALE;
+    if (scale < MIN_SCALE) scale = MIN_SCALE;
+}
 
   if (offsetY > 0) offsetY = 0;
 
