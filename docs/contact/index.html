@@ -15,18 +15,17 @@ html, body {
   overflow: hidden;
   font-family: 'Fraunces', serif;
   background-color: #000000;
-  touch-action: none;        /* prevents touch scrolling/panning */
-  overscroll-behavior: none; /* prevents pull-to-refresh/bounce */
+  touch-action: none;
+  overscroll-behavior: none;
 }
 
 /* ================= HEADER ================= */
 .header {
-  position: fixed;
-  top: 15px;
-  width: 100%;
+  position: relative; /* changed from fixed */
   text-align: center;
   z-index: 10;
   pointer-events: auto;
+  padding-top: 15px;
 }
 
 .header img {
@@ -48,7 +47,7 @@ html, body {
 
 /* ================= MEDIA QUERIES ================= */
 
-/* Portrait or small screens: shrink logo to 50px */
+/* Portrait or small screens: shrink logo */
 @media (max-width: 1000px), (max-height: 500px) {
   .header img { width: 50px; }
 }
@@ -58,12 +57,12 @@ html, body {
   .header {
     display: grid;
     place-items: center;
-    padding-top: 15px;
+    padding-top: 15px; 
   }
 
   .header a:first-child,
   .header a:nth-child(2) {
-    grid-area: 1 / 1;
+    grid-area: 1 / 1; 
   }
 
   .header a:nth-child(2) {
@@ -117,14 +116,12 @@ const box2 = document.getElementById("hotbox2");
 const box3 = document.getElementById("hotbox3");
 const box4 = document.getElementById("hotbox4");
 
-// updated image dimensions
 const ORIGINAL_W = 3726;
 const ORIGINAL_H = 1921;
 const EXTRA_SCALE = 1.4;
-const SHIFT_FACTOR = 0.25; // slightly lower to compensate for cropped image
+const SHIFT_FACTOR = 0.25;
 const MIN_SCALE = 0.5;
 
-// proportionally scale old hotbox Y positions
 const HEIGHT_SCALE = 1921 / 3113;
 
 const HOTBOX1 = { x: (ORIGINAL_W / 2) - 291, y: ((3113/2)-790) * HEIGHT_SCALE, w: 585.5, h: 85.5 };
@@ -147,13 +144,11 @@ function updateHotboxes() {
 
   let offsetY = vh * SHIFT_FACTOR - (renderedH - vh) / 2;
 
-  // shift down on small landscape phones
   if (window.innerWidth <= 1000 && window.innerHeight <= 500 && window.innerHeight < window.innerWidth) {
-    offsetY += 222; // tweak this number to move further down
-}
+    offsetY += 222;
+  }
 
-if (offsetY > 0) offsetY = 0;
-
+  if (offsetY > 0) offsetY = 0;
 
   img.style.width = renderedW + "px";
   img.style.height = renderedH + "px";
