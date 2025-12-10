@@ -150,22 +150,24 @@ body {
   .music-projects { top: 35%; left: 30%; } 
   .writing-projects { top: 60%; left: 44%; } 
 
-  /* FIX MENU ALIGNMENT WITH H1 ON PORTRAIT PHONES */
-  @media (max-width: 480px) {
-    .header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 15px;
-    }
-    .menu-row {
-      justify-content: center;
-      margin-top: -5;
-    }
-    .header h1 { margin-bottom: 5px; }
-    .menu-link.daniel { transform: translateX(-7px); }
-    .menu-link.tala { transform: translateX(5px); }
+/* FIX MENU ALIGNMENT WITH H1 ON PORTRAIT PHONES */
+@media (max-width: 480px) {
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 15px;
   }
+  .header .menu-row {
+    justify-content: center;
+    margin-top: -10px; /* <-- applies the 5px spacing */
+  }
+  .header h1 {
+    margin-bottom: 5px;
+  }
+  .menu-link.daniel { transform: translateX(-7px); }
+  .menu-link.tala { transform: translateX(5px); }
+}
 }
 
 /* LANDSCAPE POSITIONING */
