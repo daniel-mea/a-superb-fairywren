@@ -19,7 +19,8 @@ html, body {
   top: 0;
   left: 0;
   width: 100vw;
-  height: calc(var(--vh, 1vh) * 100);
+  height: 100svh; /* fallback for older browsers */
+  height: 100dvh; /* dynamic viewport height for modern browsers */
   background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/talas_diary-crop0B.jpg');
   background-size: cover;
   background-position: center center;
@@ -27,28 +28,9 @@ html, body {
   z-index: 0;
   pointer-events: none;
 }
-
-/* Real viewport height fix for mobile */
 </style>
 </head>
 <body>
 <div class="bg-layer" aria-hidden="true"></div>
-
-<script>
-(function() {
-  const setVh = () => {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  };
-  setVh();
-  let tid = null;
-  const debouncedSet = () => {
-    clearTimeout(tid);
-    tid = setTimeout(setVh, 80);
-  };
-  window.addEventListener('resize', debouncedSet);
-  window.addEventListener('orientationchange', debouncedSet);
-})();
-</script>
 </body>
 </html>
