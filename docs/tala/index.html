@@ -6,17 +6,21 @@
 <title>A Superb Fairywren - Tala</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 <style>
-/* base reset */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden;
   font-family: 'Fraunces', serif;
+  overflow: hidden;
   background-color: #000000;
 }
 
-/* bg-layer */
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+}
+
 .bg-layer {
   position: fixed;
   top: 0;
@@ -31,20 +35,12 @@ html, body {
   pointer-events: none;
 }
 
-/* layout */
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 .header, .footer, .main-content {
   position: relative;
   z-index: 2;
   color: #FFE555;
 }
 
-/* header */
 .header {
   padding-top: 15px;
   text-align: center;
@@ -63,41 +59,40 @@ body {
   text-transform: uppercase;
   margin: 10px 0 10px 0;
   font-size: 1.5em;
+  max-width: 320px; /* control menu alignment */
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* menu row */
+/* menu row aligned to H1 */
 .menu-row {
   display: flex;
-  justify-content: center; /* center links exactly like H1 */
-  gap: 60px;
+  justify-content: space-between; /* DANIEL left, TALA right */
+  width: 320px; /* same as H1 max-width */
+  margin: 0 auto;
   margin-top: 17.5px;
 }
-
 .menu-link {
   position: relative;
-  font-weight: 700;
-  font-style: italic;
-  font-size: 32px;
-  color: #FFE555;
-  text-decoration: none;
-  transition: color 0.33s;
+  font-weight:700;
+  font-style:italic;
+  font-size:32px;
+  color:#FFE555;
+  text-decoration:none;
+  transition: color .33s;
 }
-
-.menu-link.daniel { /* no changes */ }
-.menu-link.tala { color: white; pointer-events: none; }
-
+.menu-link.tala { color:white; pointer-events:none; }
 .menu-link .underline {
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  width: 0;
-  height: 0;
-  background: #FFE555;
-  transition: width 0.33s;
+  position:absolute;
+  bottom:-1px;
+  left:0;
+  width:0;
+  height:0;
+  background:#FFE555;
+  transition: width .33s;
 }
-
-.menu-link:hover { color: white; }
-.menu-link:hover .underline { width: 100%; }
+.menu-link:hover { color:white; }
+.menu-link:hover .underline { width:100%; }
 
 /* social */
 .social { display:flex; justify-content:center; gap:15px; margin-top:20px; }
@@ -106,14 +101,13 @@ body {
 /* footer */
 .footer { padding-bottom: 15px; }
 
-/* main content icons */
+/* main content */
 .main-content {
   position: absolute;
   width: 100%;
   height: 100%;
   top: 0; left: 0;
   pointer-events: none;
-  z-index: 2;
 }
 .project-item {
   position: absolute;
@@ -125,12 +119,12 @@ body {
 }
 .project-item img { width:55px; height:55px; margin-bottom:3px; }
 .project-label { 
-    color: #FFFFFF;
-    font-size: 14px;
-    font-weight: 400;
-    text-shadow: 0px 0px 2px rgba(0,0,0,0.7);
-    letter-spacing: 0.5px;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 400;
+  text-shadow: 0px 0px 2px rgba(0,0,0,0.7);
+  letter-spacing: 0.5px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 /* Desktop positions */
@@ -150,7 +144,7 @@ body {
   .talk-projects { left: 58%; top: 64%; }
 }
 
-/* SMALL SCREEN PORTRAIT FIX - ALIGN LIKE DANIEL PAGE */
+/* SMALL SCREEN PORTRAIT FIX - align menu like H1 */
 @media (max-width: 480px) {
   .header {
     display: flex;
@@ -158,11 +152,11 @@ body {
     align-items: center;
     padding-top: 15px;
   }
-  .header .menu-row {
-    justify-content: center; 
-    gap: 60px;
+  .menu-row {
+    width: 100%;
+    max-width: 320px;
+    justify-content: space-between;
     margin-top: 11.5px;
-    width: auto; /* remove any width restriction */
   }
   .header h1 { margin-bottom: 5px; }
 }
@@ -182,16 +176,13 @@ body {
     place-items: center;
     padding-top: 15px;
   }
-
   .header a:first-child,
   .header a:nth-child(2) { grid-area: 1 / 1; }
-
   .header a:nth-child(2) {
     display: flex;
     align-items: center;
     justify-content: center;
   }
-
   .header h1 { margin: 0; }
   .header img { display: block; margin: 0 auto; width: 50px; border-radius: 50%; }
 }
