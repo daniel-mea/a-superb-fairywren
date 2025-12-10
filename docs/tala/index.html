@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>A Superb Fairywren - Tala</title>
+<title>A Superb Fairywren - Home</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 <style>
 html, body {
@@ -15,35 +15,36 @@ html, body {
   background-color: #000000;
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; 
-}
-
+/* bg-layer uses real viewport height */
 .bg-layer {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: calc(var(--vh, 1vh) * 100);
-  background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/talas_diary-crop0B.jpg');
+  background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/peter_and_wendy-crop2.jpg');
   background-size: cover;
-  background-position: center 15%;
+  background-position: center top;
   background-repeat: no-repeat;
   z-index: 0;
   pointer-events: none;
 }
 
-.header, .footer, .main-content {
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header, .footer {
   position: relative;
   z-index: 2;
+  text-align: center;
   color: #FFE555;
 }
 
 .header {
   padding-top: 15px;
-  text-align: center;
 }
 .header img {
   width: 60px;
@@ -52,139 +53,96 @@ body {
   display: block;
   margin: 0 auto;
 }
+
 .header h1 {
   color: #FFE555;
   font-weight: 500;
   text-decoration: line-through;
   text-transform: uppercase;
-  margin: 10px 0 10px 0;
+  margin: 10px 0 0 0;
   font-size: 1.5em;
-  max-width: 320px; /* control menu alignment */
-  margin-left: auto;
-  margin-right: auto;
+  transition: transform 0.3s ease;
 }
 
-/* menu row aligned to H1 */
 .menu-row {
   display: flex;
-  justify-content: space-between; /* DANIEL left, TALA right */
-  width: 320px; /* same as H1 max-width */
-  margin: 0 auto;
+  justify-content: center;
+  gap: 60px;
   margin-top: 17.5px;
 }
+
+.menu-link.daniel { transform: translateX(-7px); }
+.menu-link.tala { transform: translateX(5px); }
+
 .menu-link {
   position: relative;
-  font-weight:700;
-  font-style:italic;
-  font-size:32px;
-  color:#FFE555;
-  text-decoration:none;
-  transition: color .33s;
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 32px;
+  color: #FFE555;
+  text-decoration: none;
+  transition: color 0.33s ease;
 }
-.menu-link.tala { color:white; pointer-events:none; }
 .menu-link .underline {
-  position:absolute;
-  bottom:-1px;
-  left:0;
-  width:0;
-  height:0;
-  background:#FFE555;
-  transition: width .33s;
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 0;
+  width: 0;
+  background: #FFE555;
+  transition: width 0.33s ease;
 }
-.menu-link:hover { color:white; }
-.menu-link:hover .underline { width:100%; }
+.menu-link:hover { color: white; }
+.menu-link:hover .underline { width: 100%; }
 
-/* social */
-.social { display:flex; justify-content:center; gap:15px; margin-top:20px; }
-.social a img { width:33px; vertical-align:middle; }
+.social {
+  margin-top: 20px;
+  display: none; 
+}
+.social a img { width: 33px; vertical-align: middle; }
 
-/* footer */
 .footer { padding-bottom: 15px; }
 
-/* main content */
-.main-content {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0; left: 0;
-  pointer-events: none;
+/* --- MOBILE / TABLET LOGO SHRINK --- */
+@media (max-width: 768px) {
+  .header img { width: 50px; }
 }
-.project-item {
-  position: absolute;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  pointer-events:auto;
-  text-decoration:none;
-}
-.project-item img { width:55px; height:55px; margin-bottom:3px; }
-.project-label { 
-  color: #FFFFFF;
-  font-size: 14px;
-  font-weight: 400;
-  text-shadow: 0px 0px 2px rgba(0,0,0,0.7);
-  letter-spacing: 0.5px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-}
-
-/* Desktop positions */
-.writing-projects { left: 53%; top: 25%; transform: translateX(-50%); }
-.music-projects { left: 50%; top: 40%; transform: translateX(-50%); }
-.talk-projects { left: 57.5%; top: 55%; transform: translateX(-50%); }
-
-/* PORTRAIT ORIENTATION */
-@media (orientation: portrait) {
-  .header img { width:50px; }
-  .social a img { width:25px; }
-  .project-item img { width:55px; height:55px; }
-  .project-label { font-size:12px; }
-
-  .writing-projects { left: 49%; top: 32%; } 
-  .music-projects { left: 42%; top: 48%; } 
-  .talk-projects { left: 58%; top: 64%; }
-}
-
-/* SMALL SCREEN PORTRAIT FIX - align menu like H1 */
 @media (max-width: 480px) {
-  .header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 15px;
-  }
-  .menu-row {
-    width: 100%;
-    max-width: 320px;
-    justify-content: space-between;
-    margin-top: 11.5px;
-  }
-  .header h1 { margin-bottom: 5px; }
+  .header img { width: 50px; }
+  .social a img { width: 20px; }
+
+  .menu-link.daniel { transform: translateX(-7px); }
+  .menu-link.tala { transform: translateX(10px); }
 }
 
-/* LANDSCAPE */
-@media (orientation: landscape) {
-  .social a img { width:22px; }
-  .writing-projects { top: 30%; }
-  .music-projects { top: 45%; }
-  .talk-projects { top: 60%; }
-}
-
-/* SMALL SCREEN LANDSCAPE STACK */
+/* --- SMALL LANDSCAPE CENTER H1 OVER LOGO --- */
 @media (max-width: 1000px) and (max-height: 500px) and (orientation: landscape) {
   .header {
-    display: grid !important;
+    display: grid;
     place-items: center;
-    padding-top: 15px;
+    padding-top: 15px; 
   }
+
   .header a:first-child,
-  .header a:nth-child(2) { grid-area: 1 / 1; }
+  .header a:nth-child(2) {
+    grid-area: 1 / 1; 
+  }
+
   .header a:nth-child(2) {
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .header h1 { margin: 0; }
-  .header img { display: block; margin: 0 auto; width: 50px; border-radius: 50%; }
+
+  .header h1 {
+    margin: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .header img {
+    width: 50px;
+  }
 }
 </style>
 </head>
@@ -201,46 +159,27 @@ body {
   </div>
 </div>
 
-<div class="main-content">
-  <a href="/tala-music/" class="project-item music-projects">
-    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/icon_musicprojects.png" alt="Music Projects">
-    <span class="project-label">music</span>
-  </a>
-
-  <a href="/tala-writing/" class="project-item writing-projects">
-    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/icon_writingprojects.png" alt="Writing Projects">
-    <span class="project-label">writing</span>
-  </a>
-
-  <a href="/tala-hmu/" class="project-item talk-projects">
-    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/icon_talkprojects.png" alt="Talk Projects">
-    <span class="project-label">🔥🔥🔥</span>
-  </a>
-</div>
-
 <div class="footer">
   <div class="social">
-    <a href="https://www.instagram.com/the.real.tala.cruz/" target="_blank">
-      <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_ig.svg" alt="Instagram">
-    </a>
     <a href="/contact/">
       <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/2978373eaeac2a4b537306bf46ebce49d3b812c6/docs/website_assets/icon_email.svg" alt="Email">
-    </a>
-    <a href="https://www.fanvue.com/tala.cruz" target="_blank">
-      <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_fv.svg" alt="Fanvue">
     </a>
   </div>
 </div>
 
 <script>
+/* Real viewport height fix */
 (function() {
   const setVh = () => {
     const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', String(vh) + 'px');
+    document.documentElement.style.setProperty('--vh', vh + 'px');
   };
   setVh();
   let tid = null;
-  const debouncedSet = () => { clearTimeout(tid); tid = setTimeout(setVh, 80); };
+  const debouncedSet = () => {
+    clearTimeout(tid);
+    tid = setTimeout(setVh, 80);
+  };
   window.addEventListener('resize', debouncedSet);
   window.addEventListener('orientationchange', debouncedSet);
 })();
