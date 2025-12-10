@@ -52,7 +52,6 @@ body {
   display: block;
   margin: 0 auto;
 }
-
 .header h1 {
   color: #FFE555;
   font-weight: 500;
@@ -62,6 +61,7 @@ body {
   font-size: 1.5em;
 }
 
+/* menu row */
 .menu-row {
   display:flex;
   justify-content:center;
@@ -78,7 +78,7 @@ body {
   transition: color .33s;
 }
 .menu-link.daniel { transform: translateX(-7px); }
-.menu-link.tala   { transform: translateX(5px); color:white; pointer-events:none; }
+.menu-link.tala   { color:white; pointer-events:none; }
 .menu-link .underline {
   position:absolute;
   bottom:-1px;
@@ -91,11 +91,14 @@ body {
 .menu-link:hover { color:white; }
 .menu-link:hover .underline { width:100%; }
 
+/* social */
 .social { display:flex; justify-content:center; gap:15px; margin-top:20px; }
 .social a img { width:33px; vertical-align:middle; }
 
+/* footer */
 .footer { padding-bottom: 15px; }
 
+/* main content */
 .main-content {
   position: absolute;
   width: 100%;
@@ -103,7 +106,6 @@ body {
   top: 0; left: 0;
   pointer-events: none;
 }
-
 .project-item {
   position: absolute;
   display:flex;
@@ -127,7 +129,7 @@ body {
 .music-projects { left: 50%; top: 40%; transform: translateX(-50%); }
 .talk-projects { left: 57.5%; top: 55%; transform: translateX(-50%); }
 
-/* Portrait responsive */
+/* PORTRAIT ORIENTATION */
 @media (orientation: portrait) {
   .header img { width:50px; }
   .social a img { width:25px; }
@@ -137,26 +139,24 @@ body {
   .writing-projects { left: 49%; top: 32%; } 
   .music-projects { left: 42%; top: 48%; } 
   .talk-projects { left: 58%; top: 64%; }
-
-  /* FIX MENU ALIGNMENT LIKE DANIEL PAGE */
-  @media (max-width: 480px) {
-    .header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 15px;
-    }
-    .menu-row {
-      justify-content: center;
-      margin-top: 1px;
-    }
-    .header h1 { margin-bottom: 5px; }
-    .menu-link.daniel { transform: translateX(-7px); }
-    .menu-link.tala { transform: translateX(5px); }
-  }
 }
 
-/* Landscape */
+/* SMALL SCREEN PORTRAIT FIX */
+@media (max-width: 480px) {
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 15px;
+  }
+  .menu-row {
+    justify-content: center;
+    margin-top: 11.5px;
+  }
+  .header h1 { margin-bottom: 5px; }
+}
+
+/* LANDSCAPE */
 @media (orientation: landscape) {
   .social a img { width:22px; }
   .writing-projects { top: 30%; }
@@ -164,10 +164,10 @@ body {
   .talk-projects { top: 60%; }
 }
 
-/* Small landscape stack */
+/* SMALL SCREEN LANDSCAPE STACK */
 @media (max-width: 1000px) and (max-height: 500px) and (orientation: landscape) {
   .header {
-    display: grid;
+    display: grid !important;
     place-items: center;
     padding-top: 15px;
   }
