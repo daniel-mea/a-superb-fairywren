@@ -13,14 +13,17 @@ html, body {
   overflow: hidden;
 }
 
-/* Background layer fills viewport without stretching */
+/* Background layer fills viewport robustly */
 .bg-layer {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100svh; /* fallback for older browsers */
-  height: 100dvh; /* dynamic viewport height for modern browsers */
+  height: 100vh; /* fallback */
+  height: 100svh; /* fallback for mobile browsers */
+  height: 100dvh; /* primary: dynamic viewport height */
+  height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom)); /* account for notches & bars */
+  
   background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/talas_diary-crop0B.jpg');
   background-size: cover;
   background-position: center center;
