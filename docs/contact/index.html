@@ -2,53 +2,126 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
-<title>BG + Hotboxes (fixed)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>BG + Hotboxes + Header</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
+
 <style>
-  html,body{margin:0;padding:0;height:100%;overflow:hidden;background:#000}
-  /* dynamic viewport height used for Safari address-bar weirdness */
-  :root{--vh:1vh}
+/* ====================== BASE ====================== */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background-color: #000000;
+  font-family: 'Fraunces', serif;
+}
 
-  /* full-screen bg container */
-  .bg-layer{
-    position:fixed;inset:0;
-    width:100vw;
-    height:calc(var(--vh,1vh) * 100);
-    background-image:url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large3.jpg');
-    background-size:cover;
-    background-position:center center;
-    background-repeat:no-repeat;
-    z-index:0;
-    pointer-events:none;
-  }
+/* dynamic viewport height for Safari address bar */
+:root { --vh: 1vh; }
 
-  /* overlay that exactly matches bg-layer bounds */
-  .overlay{
-    position:fixed;inset:0;
-    width:100vw;
-    height:calc(var(--vh,1vh) * 100);
-    z-index:5;
-    pointer-events:none;
-  }
+/* ====================== BACKGROUND ====================== */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
+  background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large3.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
 
-  .hotbox{
-    position:absolute;
-    border:3px solid rgba(255,255,255,0.9);
-    box-sizing:border-box;
-    pointer-events:auto; /* enable clicks */
-    background:transparent;
+/* ====================== HEADER ====================== */
+.header {
+  padding-top: 15px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.header img {
+  width: 60px;
+  border-radius: 50%;
+  transition: width 0.3s ease;
+  display: block;
+  margin: 0 auto;
+}
+
+.header h1 {
+  color: #FFE555;
+  font-weight: 500;
+  text-decoration: line-through;
+  text-transform: uppercase;
+  margin: 10px 0 0 0;
+  font-size: 1.5em;
+}
+
+/* ====================== OVERLAY ====================== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* ====================== HOTBOXES ====================== */
+.hotbox {
+  position: absolute;
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  box-sizing: border-box;
+  pointer-events: auto;
+  cursor: pointer;
+  background: transparent;
+}
+
+/* ====================== RESPONSIVE ====================== */
+@media (max-width: 768px) {
+  .header img { width: 50px; }
+}
+
+@media (max-width: 1000px) and (max-height: 500px) and (orientation: landscape) {
+  /* Grid-based layout to center H1 over logo in short landscape screens */
+  .header {
+    display: grid;
+    place-items: center;
+    padding-top: 15px;
   }
+  .header a:first-child,
+  .header a:nth-child(2) { grid-area: 1 / 1; }
+  .header a:nth-child(2) { display: flex; align-items: center; justify-content: center; }
+  .header h1 { margin: 0; transition: transform 0.3s ease; }
+  .header img { width: 50px; }
+}
 </style>
 </head>
 <body>
 
-<div class="bg-layer" id="bgLayer" aria-hidden="true"></div>
-<div class="overlay" id="overlay"></div>
+  <!-- background -->
+  <div class="bg-layer" id="bgLayer" aria-hidden="true"></div>
+
+  <!-- header with logo + H1 -->
+  <div class="header">
+    <a href="/home/">
+      <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo">
+    </a>
+    <a href="/home/" style="text-decoration:none;">
+      <h1>A SUPERB FAIRYWREN</h1>
+    </a>
+  </div>
+
+  <!-- overlay for hotboxes -->
+  <div class="overlay" id="overlay"></div>
 
 <script>
-/* ===== dynamic --vh (Danny logic) ===== */
-(function(){
-  const setVh = ()=> document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
+/* ====================== dynamic --vh ====================== */
+(function() {
+  const setVh = () => { document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px'); };
   setVh();
   let tid=null;
   const debounced=()=>{ clearTimeout(tid); tid=setTimeout(setVh,80); };
@@ -56,12 +129,12 @@
   window.addEventListener('orientationchange',debounced);
 })();
 
-/* ===== Constants (from your contact page) ===== */
+/* ====================== CONSTANTS ====================== */
 const ORIGINAL_W = 3726;
 const ORIGINAL_H = 1921;
 const HEIGHT_SCALE = 1921 / 3113;
 
-/* HOTBOX definitions (exact as you provided) */
+/* hotbox positions from contact page */
 const HOTBOX1 = { x: (ORIGINAL_W / 2) - 291, y: ((3113/2)-790) * HEIGHT_SCALE, w: 585.5, h: 85.5 };
 const HOTBOX2 = { x: HOTBOX1.x + 200, y: (HOTBOX1.y + 455) * HEIGHT_SCALE, w: 180, h: 88 };
 const HOTBOX3 = { x: 1560, y: 1565 * HEIGHT_SCALE, w: 175, h: 69 };
@@ -71,60 +144,42 @@ const HOTBOXES = [HOTBOX1, HOTBOX2, HOTBOX3, HOTBOX4];
 
 const overlay = document.getElementById('overlay');
 
-/* create hotbox elements */
-HOTBOXES.forEach((hb, i) => {
+/* ====================== CREATE HOTBOX ELEMENTS ====================== */
+HOTBOXES.forEach((hb,i)=>{
   const el = document.createElement('div');
   el.className = 'hotbox';
   el.dataset.idx = String(i+1);
-  // example click handlers (adapt or remove)
-  el.addEventListener('click', ()=>{
-    if (i === 0 || i === 1) window.open('mailto:mgmt@asuperbfairywren.com','_blank');
-    else if (i === 2) window.location.href = '/home/';
-    else window.history.back();
+
+  el.addEventListener('click',()=>{
+    if(i===0||i===1) window.open('mailto:mgmt@asuperbfairywren.com','_blank');
+    else if(i===2) window.location.href='/home/';
+    else if(i===3) window.history.back();
   });
+
   overlay.appendChild(el);
 });
 
-/* map background-image cover -> actual rendered rect then place hotboxes */
+/* ====================== HOTBOX POSITIONING ====================== */
 function updateHotboxesCoverMapping(){
   const vw = window.innerWidth;
   const vh = window.innerHeight;
-  // container size (matches bg-layer)
-  const cw = vw;
-  const ch = Math.round(vh); // using innerHeight so var(--vh) is in sync
 
-  // COVER scale: image is scaled by this factor
-  const scale = Math.max(cw / ORIGINAL_W, ch / ORIGINAL_H);
-
+  const scale = Math.max(vw/ORIGINAL_W, vh/ORIGINAL_H);
   const renderedW = ORIGINAL_W * scale;
   const renderedH = ORIGINAL_H * scale;
+  const offsetX = (vw - renderedW)/2;
+  const offsetY = (vh - renderedH)/2;
 
-  // background-position:center center => image is centered in container
-  const offsetX = (cw - renderedW) / 2;
-  const offsetY = (ch - renderedH) / 2;
-
-  // Clamp so it never jumps out (defensive — keeps image visible)
-  // (not strictly needed, but safe)
-  const clampedOffsetX = offsetX;
-  const clampedOffsetY = offsetY;
-
-  // Apply transform to overlay so its coordinate space lines up with bg-layer
-  // (overlay already matches container; hotboxes will be positioned in px)
   const hotEls = overlay.children;
-  HOTBOXES.forEach((hb, i) => {
-    const el = hotEls[i];
-    const left = hb.x * scale + clampedOffsetX;
-    const top  = hb.y * scale + clampedOffsetY;
-    const width = hb.w * scale;
-    const height = hb.h * scale;
-    el.style.left = Math.round(left) + 'px';
-    el.style.top  = Math.round(top) + 'px';
-    el.style.width = Math.round(width) + 'px';
-    el.style.height = Math.round(height) + 'px';
+  HOTBOXES.forEach((hb,i)=>{
+    const el=hotEls[i];
+    el.style.left = Math.round(hb.x*scale + offsetX)+'px';
+    el.style.top  = Math.round(hb.y*scale + offsetY)+'px';
+    el.style.width = Math.round(hb.w*scale)+'px';
+    el.style.height = Math.round(hb.h*scale)+'px';
   });
 }
 
-/* initial + listeners */
 window.addEventListener('load', updateHotboxesCoverMapping);
 window.addEventListener('resize', updateHotboxesCoverMapping);
 window.addEventListener('orientationchange', updateHotboxesCoverMapping);
