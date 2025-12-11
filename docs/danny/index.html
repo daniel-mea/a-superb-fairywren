@@ -1,36 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Superb Fairywren - Contact</title>
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>A Superb Fairywren - Danny</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
-
 <style>
+/* base reset */
 html, body {
   margin: 0;
   padding: 0;
-  width: 100%;
-  height: 100%; /* fallback */
+  height: 100%;
   overflow: hidden;
   font-family: 'Fraunces', serif;
-  background-color: #000;
+  background-color: #000000;
 }
 
-.header {
+/* bg-layer uses the real viewport height via CSS var --vh */
+.bg-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  /* fallback to 100vh if --vh not set */
+  height: calc(var(--vh, 1vh) * 100);
+  background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* layout above bg */
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ensure controls are above the bg */
+.header, .footer, .main-content {
   position: relative;
-  text-align: center;
-  z-index: 10;
-  padding-top: 15px;
+  z-index: 2;
+  color: #FFE555;
 }
 
+/* header */
+.header {
+  padding-top: 15px;
+  text-align: center;
+}
 .header img {
   width: 60px;
   border-radius: 50%;
+  transition: width 0.3s ease;
   display: block;
   margin: 0 auto;
-  transition: width 0.3s ease;
 }
 
 .header h1 {
@@ -38,124 +64,176 @@ html, body {
   font-weight: 500;
   text-decoration: line-through;
   text-transform: uppercase;
-  margin: 10px 0 0 0;
+  margin: 10px 0 10px 0;
   font-size: 1.5em;
 }
 
-@media (max-width:1000px),(max-height:500px){
-  .header img{width:50px;}
-}
-@media (max-width:1000px) and (max-height:500px) and (orientation: landscape){
-  .header{display:grid; place-items:center; padding-top:15px;}
-  .header a:first-child,.header a:nth-child(2){grid-area:1/1;}
-  .header a:nth-child(2){display:flex; align-items:center; justify-content:center;}
-  .header h1{margin:0;}
+/* menu row */
+.menu-row { display:flex; justify-content:center; gap:60px; margin-top:17.5px; }
+.menu-link { position: relative; font-weight:700; font-style:italic; font-size:32px; color:#FFE555; text-decoration:none; transition: color .33s; }
+.menu-link.daniel { transform: translateX(-7px); color:white; pointer-events:none; }
+.menu-link.tala   { transform: translateX(5px); }
+.menu-link .underline { position:absolute; bottom:-1px; left:0; width:0; height:0; background:#FFE555; transition: width .33s; }
+.menu-link:hover { color:white; }
+.menu-link:hover .underline { width:100%; }
+
+/* social */
+.social { display:flex; justify-content:center; gap:15px; margin-top:20px; }
+.social a img { width:33px; vertical-align:middle; }
+
+/* footer */
+.footer {
+  padding-bottom: 15px;
 }
 
-#bg{
-  position:absolute;
-  z-index:1;
+/* main content icons */
+.main-content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.project-item { position: absolute; display:flex; flex-direction:column; align-items:center; pointer-events:auto; text-decoration:none; }
+.project-item img { width:55px; height:55px; margin-bottom:3px; }
+
+/* --- UPDATED PROJECT LABEL STYLING TO MATCH TALA PAGE --- */
+.project-label { 
+    color: #FFFFFF; /* Changed from #fff */
+    font-size: 14px; 
+    font-weight: 400; /* Added/Updated */
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7); /* Updated shadow */
+    letter-spacing: 0.5px; /* Added */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+/* -------------------------------------------------------- */
+
+/* positions (Desktop defaults) */
+.music-projects { left:42%; top:27%; transform: translateX(-50%); }
+.writing-projects { left:49%; top:33%; transform: translateX(-50%); }
+
+/* Orientation-based responsive styling */
+@media (orientation: portrait) {
+  .header img { width:50px; }
+  .social a img { width:25px; }
+  .project-item img { width:55px; height:55px; }
+  .project-label { font-size:12px; }
+  
+  /* --- MOBILE/TABLET PORTRAIT POSITIONING (MERGED) --- */
+  /* These rules now apply to ALL portrait screens (phone & tablet) */
+  .music-projects { 
+    top: 35%; 
+    left: 30%; 
+  } 
+  .writing-projects { 
+    top: 60%; 
+    left: 44%; 
+  } 
+  /* ---------------------------------------------------- */
 }
 
-.hotbox{
-  position:absolute;
-  border:0;
-  box-sizing:border-box;
-  cursor:pointer;
-  z-index:2;
+/* --- CHANGE 2: ADDED MAX-WIDTH 480PX BLOCK FROM MAIN PAGE --- */
+@media (max-width: 480px) {
+  /* This block ensures the correct offsets on the smallest screens */
+  .menu-link.daniel { transform: translateX(-7px); }
+  .menu-link.tala { transform: translateX(5px); }
+}
+/* ----------------------------------------------------------- */
+
+/* --- LANDSCAPE POSITIONING (Aligned with Tala's approach) --- */
+@media (orientation: landscape) {
+  .social a img { width:22px; }
+  /* Compress icons vertically for short landscape screens */
+  .music-projects { top: 35%; }
+  .writing-projects { top: 55%; }
+}
+@media (max-width: 1000px) and (max-height: 500px) and (orientation: landscape) {
+  .header {
+    display: grid;
+    place-items: center;
+    padding-top: 15px;
+  }
+
+  .header a:first-child,
+  .header a:nth-child(2) {
+    grid-area: 1 / 1;
+  }
+
+  .header a:nth-child(2) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header h1 {
+    margin: 0;
+  }
+  
+  .header img {
+    display: block;
+    margin: 0 auto;
+    width: 50px; /* shrink logo to match portrait phones */
+  }
 }
 </style>
 </head>
 <body>
 
+<div class="bg-layer" aria-hidden="true"></div>
+
 <div class="header">
   <a href="/home/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo"></a>
   <a href="/home/" style="text-decoration:none;"><h1>A SUPERB FAIRYWREN</h1></a>
+  <div class="menu-row">
+    <a href="/danny/" class="menu-link daniel">DANIEL <span class="underline"></span></a>
+    <a href="/tala/" class="menu-link tala">TALA <span class="underline"></span></a>
+  </div>
 </div>
 
-<img id="bg" src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large3.jpg">
+<div class="main-content">
+  <a href="/danny-music/" class="project-item music-projects">
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/icon_musicprojects.png" alt="Music Projects">
+    <span class="project-label">music</span>
+  </a>
 
-<div id="hotbox1" class="hotbox"></div>
-<div id="hotbox2" class="hotbox"></div>
-<div id="hotbox3" class="hotbox"></div>
-<div id="hotbox4" class="hotbox"></div>
+  <a href="/danny-writing/" class="project-item writing-projects">
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/icon_writingprojects.png" alt="Writing Projects">
+    <span class="project-label">writing</span>
+  </a>
+</div>
+
+<div class="footer">
+  <div class="social">
+    <a href="https://instagram.com/danny__mea" target="_blank"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_ig.svg" alt="Instagram"></a>
+    <a href="/contact/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/2978373eaeac2a4b537306bf46ebce49d3b812c6/docs/website_assets/icon_email.svg" alt="Email"></a>
+    <a href="https://www.youtube.com/@DannyMEA" target="_blank"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_yt.svg" alt="YouTube"></a>
+  </div>
+</div>
 
 <script>
-// --- Dynamic --vh for Safari address bar ---
-(function(){
+/* Set CSS variable --vh to the real viewport height (in px * 0.01). */
+/* This works around mobile browser UI (address bar) resizing issues. */
+(function() {
   const setVh = () => {
+    // window.innerHeight is the visible viewport height
     const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', vh + 'px');
+    document.documentElement.style.setProperty('--vh', String(vh) + 'px');
   };
+
+  // initial
   setVh();
-  let tid=null;
-  const debouncedSet=()=>{ clearTimeout(tid); tid=setTimeout(setVh,80); };
-  window.addEventListener('resize',debouncedSet);
-  window.addEventListener('orientationchange',debouncedSet);
+
+  // update on resize and orientationchange; debounced to avoid thrash
+  let tid = null;
+  const debouncedSet = () => {
+    clearTimeout(tid);
+    tid = setTimeout(setVh, 80);
+  };
+
+  window.addEventListener('resize', debouncedSet);
+  window.addEventListener('orientationchange', debouncedSet);
 })();
-
-// --- Hotbox + image setup ---
-const img=document.getElementById("bg");
-const box1=document.getElementById("hotbox1");
-const box2=document.getElementById("hotbox2");
-const box3=document.getElementById("hotbox3");
-const box4=document.getElementById("hotbox4");
-
-const ORIGINAL_W=3726, ORIGINAL_H=1921;
-const EXTRA_SCALE=1.4, SHIFT_FACTOR=0.25, MIN_SCALE=0.5;
-const HEIGHT_SCALE=1921/3113;
-
-const HOTBOX1={x:(ORIGINAL_W/2)-291,y:((3113/2)-790)*HEIGHT_SCALE,w:585.5,h:85.5};
-const HOTBOX2={x:HOTBOX1.x+200,y:(HOTBOX1.y+455)*HEIGHT_SCALE,w:180,h:88};
-const HOTBOX3={x:1560,y:1565*HEIGHT_SCALE,w:175,h:69};
-const HOTBOX4={x:2060,y:1565*HEIGHT_SCALE,w:111.5,h:69};
-
-function updateHotboxes(){
-  const vw=window.innerWidth;
-  const vh=window.innerHeight;
-
-  let scale=Math.max(vw/ORIGINAL_W,vh/ORIGINAL_H)*EXTRA_SCALE;
-  if(scale<MIN_SCALE) scale=MIN_SCALE;
-
-  const renderedW=ORIGINAL_W*scale;
-  const renderedH=ORIGINAL_H*scale;
-
-  // vertical shift
-  let verticalShift=vh*SHIFT_FACTOR;
-  if(vw>vh && vh<500) verticalShift+=222;
-
-  let offsetX=(vw-renderedW)/2;
-  let offsetY=verticalShift-(renderedH-vh)/2;
-
-  // clamp to viewport
-  if(offsetY>0) offsetY=0;
-  if(offsetY+renderedH<vh) offsetY=vh-renderedH;
-
-  // apply to image
-  img.style.width=renderedW+"px";
-  img.style.height=renderedH+"px";
-  img.style.left=offsetX+"px";
-  img.style.top=offsetY+"px";
-
-  // apply to hotboxes
-  [[box1,HOTBOX1],[box2,HOTBOX2],[box3,HOTBOX3],[box4,HOTBOX4]].forEach(([box,H])=>{
-    box.style.left=offsetX+H.x*scale+"px";
-    box.style.top=offsetY+H.y*scale+"px";
-    box.style.width=H.w*scale+"px";
-    box.style.height=H.h*scale+"px";
-  });
-}
-
-function openMail(){ window.open("mailto:mgmt@asuperbfairywren.com","_blank"); }
-
-box1.onclick=openMail;
-box2.onclick=openMail;
-box3.onclick=()=>{window.location.href='/home/';};
-box4.onclick=()=>{window.history.back();};
-
-window.addEventListener("load",updateHotboxes);
-window.addEventListener("resize",updateHotboxes);
-window.addEventListener("orientationchange",updateHotboxes);
 </script>
 
 </body>
