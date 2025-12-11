@@ -133,52 +133,49 @@ function updateHotboxes() {
   const vw = window.innerWidth;
   const vh = window.innerHeight;
 
-  let scale, renderedW, renderedH, offsetX, offsetY;
+  const sceneW = ORIGINAL_W;
+  const sceneH = ORIGINAL_H;
 
-  // --- SMALL LANDSCAPE OVERRIDE ---
-  if (vw <= 1000 && vh <= 500 && vh < vw) {
-    // scale to fill width
-    scale = (vw / ORIGINAL_W) * EXTRA_SCALE;
-    if (scale < MIN_SCALE) scale = MIN_SCALE;
+  // scale
+  let scale = Math.max(vw / sceneW, vh / sceneH) * EXTRA_SCALE;
+  if (scale < MIN_SCALE) scale = MIN_SCALE;
 
-    renderedW = ORIGINAL_W * scale;
-    renderedH = ORIGINAL_H * scale;
+  const renderedW = sceneW * scale;
+  const renderedH = sceneH * scale;
 
-    // horizontally center
-    offsetX = (vw - renderedW) / 2;
+  // vertical shift
+  let verticalShift = vh * SHIFT_FACTOR;
+  if (vw > vh && vh < 500) verticalShift = 333;
 
+  let offsetX = (vw - renderedW) / 2;
+  let offsetY = verticalShift - (renderedH - vh)/2;
 
-    // vertical position
-    offsetY = vh * SHIFT_FACTOR - (renderedH - vh)/2 + 222;
-    if (offsetY > 0) offsetY = 0;
+  // clamp to viewport
+  if (offsetY > 0) offsetY = 0;
+  if (offsetY + renderedH < vh) offsetY = vh - renderedH;
 
-  } else {
-    // default scaling for other orientations
-    scale = Math.max(vw / ORIGINAL_W, vh / ORIGINAL_H) * EXTRA_SCALE;
-    if (scale < MIN_SCALE) scale = MIN_SCALE;
-
-    renderedW = ORIGINAL_W * scale;
-    renderedH = ORIGINAL_H * scale;
-
-    offsetX = (vw - renderedW) / 2;
-    if (offsetX > 0) offsetX = 0;
-
-    offsetY = vh * SHIFT_FACTOR - (renderedH - vh)/2;
-    if (offsetY > 0) offsetY = 0;
-  }
-
-  img.style.width = renderedW + "px";
+  // image
+  img.style.width  = renderedW + "px";
   img.style.height = renderedH + "px";
-  img.style.left = offsetX + "px";
-  img.style.top = offsetY + "px";
+  img.style.left   = offsetX + "px";
+  img.style.top    = offsetY + "px";
 
-  [[box1,HOTBOX1],[box2,HOTBOX2],[box3,HOTBOX3],[box4,HOTBOX4]].forEach(([box,H])=>{
-    box.style.left = offsetX + H.x*scale + "px";
-    box.style.top = offsetY + H.y*scale + "px";
-    box.style.width = H.w*scale + "px";
-    box.style.height = H.h*scale + "px";
-  });
+  // hotboxes
+  const hotboxes = [
+    [box1, HOTBOX1],
+    [box2, HOTBOX2],
+    [box3, HOTBOX3],
+    [box4, HOTBOX4],
+  ];
+
+  for (const [box, H] of hotboxes) {
+    box.style.left   = offsetX + H.x * scale + "px";
+    box.style.top    = offsetY + H.y * scale + "px";
+    box.style.width  = H.w * scale + "px";
+    box.style.height = H.h * scale + "px";
+  }
 }
+
 
 function openMail() { window.open("mailto:mgmt@asuperbfairywren.com", "_blank"); }
 
