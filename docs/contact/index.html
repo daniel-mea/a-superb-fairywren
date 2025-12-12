@@ -175,10 +175,18 @@ function updateLayout(){
   let offsetX = (vw - renderedW) / 2;
   let offsetY = verticalShift - (renderedH - vh) / 2;
 
-  // Step 7: NO CLAMPING - this is the key difference from original
-  // Original had: if (offsetY > 0) offsetY = 0; 
-  // Original had: if (offsetY + renderedH < vh) offsetY = vh - renderedH;
-  // We intentionally skip this to avoid black bars
+  // Step 7: CLAMP to prevent black bars at edges
+  // Prevent black bar at top
+  if (offsetY > 0) offsetY = 0;
+  
+  // Prevent black bar at bottom
+  if (offsetY + renderedH < vh) offsetY = vh - renderedH;
+  
+  // Prevent black bar at left
+  if (offsetX > 0) offsetX = 0;
+  
+  // Prevent black bar at right
+  if (offsetX + renderedW < vw) offsetX = vw - renderedW;
 
   // Apply to image
   bgImg.style.width = renderedW + 'px';
