@@ -12,21 +12,22 @@ html, body {
   height: 100%;
   font-family: 'Fraunces', serif;
   overflow: hidden;
-  background-color: #fff1a9; 
+  background-color: #000000;
 }
 
 body {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; 
+  justify-content: space-between;
 }
 
+/* Background */
 .bg-layer {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-  height: calc(var(--vh, 1vh) * 100); 
+  height: calc(var(--vh, 1vh) * 100);
   background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/talas_diary-crop0B.jpg');
   background-size: cover;
   background-position: center 15%;
@@ -35,6 +36,7 @@ body {
   pointer-events: none;
 }
 
+/* Header/Footer */
 .header, .footer {
   position: relative;
   z-index: 2;
@@ -48,6 +50,9 @@ body {
 .header img {
   width: 60px;
   border-radius: 50%;
+  transition: width 0.3s ease;
+  display: block;
+  margin: 0 auto;
 }
 .header h1 {
   color: #FFE555;
@@ -57,62 +62,32 @@ body {
   margin: 10px 0 10px 0;
   font-size: 1.5em;
 }
-
 .menu-row {
   display: flex;
   justify-content: center;
   gap: 60px;
   margin-top: 17.5px;
 }
-
-.menu-link.daniel {
-    transform: translateX(-7px);
-}
-.menu-link.tala {
-    transform: translateX(5px);
-    color: white; 
-    pointer-events: none;
-}
-
-.menu-link {
-  position: relative;
-  font-family: 'Fraunces', serif;
-  font-weight: 700;
-  font-style: italic;
-  font-size: 32px;
-  color: #FFE555;
-  text-decoration: none;
-  transition: color 0.33s ease;
-}
-.menu-link .underline {
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  height: 0px;
-  width: 0;
-  background: #FFE555;
-  transition: width 0.33s ease;
-}
-.menu-link:hover { color: white; }
-.menu-link:hover .underline { width: 100%; }
+.menu-link.daniel { transform: translateX(-7px); }
+.menu-link.tala { transform: translateX(5px); color:white; }
+.menu-link { position: relative; font-weight:700; font-style:italic; font-size:32px; color:#FFE555; text-decoration:none; transition: color .33s; }
+.menu-link .underline { position:absolute; bottom:-1px; left:0; width:0; height:0; background:#FFE555; transition: width .33s; }
+.menu-link:hover { color:white; }
+.menu-link:hover .underline { width:100%; }
 
 .social {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 20px; 
+  display:flex; justify-content:center; gap:15px; margin-top:20px;
 }
-.social a img { width: 33px; vertical-align: middle; }
+.social a img { width:33px; vertical-align:middle; }
 
-.footer { padding-bottom: 15px; }
+.footer { padding-bottom:15px; }
 
-/* --- MAIN CONTENT REPLACEMENT BOX --- */
+/* Main content: coming soon polaroid */
 .main-content {
   position: absolute;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   pointer-events: none;
   display: flex;
   justify-content: center;
@@ -126,7 +101,6 @@ body {
   height: 300px;
   overflow: hidden;
   font-family: 'Fraunces', serif;
-  color: #FFFFFF;
   text-align: right;
 }
 
@@ -145,8 +119,6 @@ body {
   font-size: 32px;
   line-height: 0.5;
   text-transform: lowercase;
-  margin: 0;
-  padding: 0;
 }
 
 .coming-soon-box div span {
@@ -158,28 +130,27 @@ body {
 
 /* Responsive tweaks */
 @media (orientation: portrait) {
-  .header img { width: 50px; }
-  .social a img { width: 25px; }
-  .coming-soon-box div { font-size: 28px; }
+  .header img { width:50px; }
+  .social a img { width:25px; }
+  .coming-soon-box div { font-size:28px; }
 }
 
-@media (max-width: 480px) {
+@media (max-width:480px) {
   .menu-link.daniel { transform: translateX(-7px); }
   .menu-link.tala { transform: translateX(5px); }
-  .coming-soon-box div { font-size: 24px; }
+  .coming-soon-box div { font-size:24px; }
 }
 
 @media (orientation: landscape) {
-  .social a img { width: 22px; }
+  .social a img { width:22px; }
 }
 
-@media (max-width: 1000px) and (max-height: 500px) and (orientation: landscape) {
-  .header { display: grid; place-items: center; padding-top: 15px; }
-  .header a:first-child, .header a:nth-child(2) { grid-area: 1 / 1; }
-  .header a:nth-child(2) { display: flex; align-items: center; justify-content: center; }
-  .header h1 { margin: 0; }
-  .header img { width: 50px; }
-  .coming-soon-box div { font-size: 28px; }
+@media (max-width:1000px) and (max-height:500px) and (orientation: landscape) {
+  .header { display:grid; place-items:center; padding-top:15px; }
+  .header a:first-child, .header a:nth-child(2) { grid-area:1/1; }
+  .header a:nth-child(2) { display:flex; align-items:center; justify-content:center; }
+  .header h1 { margin:0; }
+  .header img { display:block; margin:0 auto; width:50px; }
 }
 </style>
 </head>
@@ -196,12 +167,14 @@ body {
   </div>
 </div>
 
-<div class="main-content">
-  <div class="coming-soon-box">
-    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/fee66541f01b59894e8f7ee276011ee1b6e87f91/docs/website_assets/polaroid_tamworthcross2.png" alt="Coming Soon Polaroid">
-    <div>
+<div class="main-content" style="display:flex; justify-content:center; align-items:center; height:100%;">
+  <div style="position: relative; width: 300px; height: 300px; overflow: hidden; font-family: 'Fraunces', serif; color: #FFFFFF; text-align: right;">
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/fee66541f01b59894e8f7ee276011ee1b6e87f91/docs/website_assets/polaroid_tamworthcross2.png" 
+         alt="Coming Soon Polaroid" 
+         style="width: 100%; height: 100%; object-fit: cover; display: block; border: none;">
+    <div style="position: absolute; bottom: 0; right: 0; font-size: 32px; line-height: 0.5; text-transform: lowercase; margin: 0; padding: 0;">
       coming<br>
-      soon<span>💦💦💦</span>
+      soon<span style="font-size: 0.7em; line-height: 1; display: inline-block; vertical-align: bottom;">💦💦</span>
     </div>
   </div>
 </div>
@@ -218,16 +191,13 @@ body {
 (function() {
   const setVh = () => {
     const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', vh + 'px');
+    document.documentElement.style.setProperty('--vh', vh+'px');
   };
   setVh();
-  let tid = null;
-  const debouncedSet = () => {
-    clearTimeout(tid);
-    tid = setTimeout(setVh, 80);
-  };
-  window.addEventListener('resize', debouncedSet);
-  window.addEventListener('orientationchange', debouncedSet);
+  let tid=null;
+  const debouncedSet = () => { clearTimeout(tid); tid=setTimeout(setVh,80); };
+  window.addEventListener('resize',debouncedSet);
+  window.addEventListener('orientationchange',debouncedSet);
 })();
 </script>
 
