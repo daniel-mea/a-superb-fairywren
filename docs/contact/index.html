@@ -147,8 +147,11 @@ function updateLayout(){
   const vw = window.innerWidth;
   const vh = window.innerHeight;
 
+  const sceneW = ORIGINAL_W;
+  const sceneH = ORIGINAL_H;
+
   // Step 1: Calculate base scale for coverage
-  let scale = Math.max(vw / ORIGINAL_W, vh / ORIGINAL_H);
+  let scale = Math.max(vw / sceneW, vh / sceneH);
   
   // Step 2: Apply zoom multiplier
   scale = scale * EXTRA_SCALE;
@@ -159,12 +162,23 @@ function updateLayout(){
   }
 
   // Step 4: Calculate rendered dimensions
-  const renderedW = ORIGINAL_W * scale;
-  const renderedH = ORIGINAL_H * scale;
+  const renderedW = sceneW * scale;
+  const renderedH = sceneH * scale;
 
-  // Step 5: Position image - center horizontally, shift up vertically
+  // Step 5: ORIGINAL VERTICAL SHIFT LOGIC
+  let verticalShift = vh * 0.25;  // SHIFT_FACTOR from original
+  if (vw > vh && vh < 500) {
+    verticalShift = 333;  // Fixed shift for short landscape
+  }
+
+  // Step 6: Position image
   let offsetX = (vw - renderedW) / 2;
-  let offsetY = (vh - renderedH) / 2 - (renderedH * 0.15);
+  let offsetY = verticalShift - (renderedH - vh) / 2;
+
+  // Step 7: NO CLAMPING - this is the key difference from original
+  // Original had: if (offsetY > 0) offsetY = 0; 
+  // Original had: if (offsetY + renderedH < vh) offsetY = vh - renderedH;
+  // We intentionally skip this to avoid black bars
 
   // Apply to image
   bgImg.style.width = renderedW + 'px';
