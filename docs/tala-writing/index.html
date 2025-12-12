@@ -3,33 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Tala – A Superb Fairywren</title>
+<title>A Superb Fairywren - Tala's Writing</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
 <style>
-/* --- CORE LAYOUT SETUP (REVERTED TO SIMPLER STRUCTURE) --- */
 html, body {
-margin: 0;
-padding: 0;
-height: 100%;
-font-family: 'Fraunces', serif;
-overflow: hidden;
-background-color: #fff1a9; 
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Fraunces', serif;
+  overflow: hidden;
+  background-color: #fff1a9; 
 }
 
-/* BODY structure reverted to original flex/space-between for header/footer positioning */
 body {
-display: flex;
-flex-direction: column;
-justify-content: space-between; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
 }
 
-/* --- BACKGROUND FIX (Crucial for 100% height) --- */
 .bg-layer {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-  /* Uses the JS-calculated height to fix mobile viewport bugs */
   height: calc(var(--vh, 1vh) * 100); 
   background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/talas_diary-crop0B.jpg');
   background-size: cover;
@@ -39,47 +35,34 @@ justify-content: space-between;
   pointer-events: none;
 }
 
-/* --- HEADER, FOOTER, MAIN CONTENT --- */
-
 .header, .footer {
-position: relative;
-z-index: 2;
-text-align: center;
-color: #FFE555;
-}
-
-/* MAIN CONTENT REVERTED to absolute positioning relative to viewport */
-.main-content {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 2;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #FFE555;
 }
 
 .header {
-padding-top: 15px;
+  padding-top: 15px;
 }
 .header img {
-width: 60px;
-border-radius: 50%;
+  width: 60px;
+  border-radius: 50%;
 }
 .header h1 {
-color: #FFE555;
-font-weight: 500;
-text-decoration: line-through;
-text-transform: uppercase;
-margin: 10px 0 10px 0;
-font-size: 1.5em;
+  color: #FFE555;
+  font-weight: 500;
+  text-decoration: line-through;
+  text-transform: uppercase;
+  margin: 10px 0 10px 0;
+  font-size: 1.5em;
 }
 
 .menu-row {
-display: flex;
-justify-content: center;
-gap: 60px;
-margin-top: 17.5px;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 17.5px;
 }
 
 .menu-link.daniel {
@@ -92,108 +75,111 @@ margin-top: 17.5px;
 }
 
 .menu-link {
-position: relative;
-font-family: 'Fraunces', serif;
-font-weight: 700;
-font-style: italic;
-font-size: 32px;
-color: #FFE555;
-text-decoration: none;
-transition: color 0.33s ease;
+  position: relative;
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 32px;
+  color: #FFE555;
+  text-decoration: none;
+  transition: color 0.33s ease;
 }
 .menu-link .underline {
-position: absolute;
-bottom: -1px;
-left: 0;
-height: 0px;
-width: 0;
-background: #FFE555;
-transition: width 0.33s ease;
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 0px;
+  width: 0;
+  background: #FFE555;
+  transition: width 0.33s ease;
 }
-.menu-link:hover {
-color: white; 
-}
-.menu-link:hover .underline {
-width: 100%;
-}
+.menu-link:hover { color: white; }
+.menu-link:hover .underline { width: 100%; }
 
 .social {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px; 
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px; 
 }
-.social a img {
-    width: 33px;
-    vertical-align: middle;
+.social a img { width: 33px; vertical-align: middle; }
+
+.footer { padding-bottom: 15px; }
+
+/* --- MAIN CONTENT REPLACEMENT BOX --- */
+.main-content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
 }
 
-.footer {
-padding-bottom: 15px;
+.coming-soon-box {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  font-family: 'Fraunces', serif;
+  color: #FFFFFF;
+  text-align: right;
 }
 
-/* --- ICON POSITIONS (Desktop defaults) --- */
-
-.project-item {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    pointer-events: auto;
-    text-decoration: none; 
-}
-.project-item img {
-    width: 55px;
-    height: 55px;
-    margin-bottom: 3px;
-}
-.project-label {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    color: #FFFFFF;
-    font-size: 14px;
-    font-weight: 400; 
-    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
-    letter-spacing: 0.5px;
+.coming-soon-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border: none;
 }
 
-.writing-projects {
-    left: 53%; 
-    top: 25%; /* Desktop position */
-    transform: translateX(-50%);
-}
-.music-projects {
-    left: 50%;
-    top: 40%; /* Desktop position */
-    transform: translateX(-50%);
-}
-.talk-projects {
-    left: 57.5%; 
-    top: 55%; /* Desktop position */
-    transform: translateX(-50%);
+.coming-soon-box div {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 32px;
+  line-height: 0.5;
+  text-transform: lowercase;
+  margin: 0;
+  padding: 0;
 }
 
-/* Orientation-based responsive styling */
+.coming-soon-box div span {
+  font-size: 0.7em;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+/* Responsive tweaks */
 @media (orientation: portrait) {
-  .menu-link.daniel, .menu-link.tala { transform: translateX(0); }
   .header img { width: 50px; }
   .social a img { width: 25px; }
-  .project-item img { width: 55px; height: 55px; }
-  .project-label { font-size:12px; }
-  
-  /* --- MOBILE/TABLET PORTRAIT POSITIONING (MERGED) --- */
-  /* These rules now apply to ALL portrait screens (phone & tablet) */
-  .writing-projects { left: 49%; top: 32%; } 
-  .music-projects { left: 42%; top: 48%; } 
-  .talk-projects { left: 58%; top: 64%; } 
+  .coming-soon-box div { font-size: 28px; }
 }
 
+@media (max-width: 480px) {
+  .menu-link.daniel { transform: translateX(-7px); }
+  .menu-link.tala { transform: translateX(5px); }
+  .coming-soon-box div { font-size: 24px; }
+}
 
 @media (orientation: landscape) {
   .social a img { width: 22px; }
-  /* In landscape, the screen is short, so we move the icons closer together */
-  .writing-projects { top: 30%; }
-  .music-projects { top: 45%; }
-  .talk-projects { top: 60%; }
+}
+
+@media (max-width: 1000px) and (max-height: 500px) and (orientation: landscape) {
+  .header { display: grid; place-items: center; padding-top: 15px; }
+  .header a:first-child, .header a:nth-child(2) { grid-area: 1 / 1; }
+  .header a:nth-child(2) { display: flex; align-items: center; justify-content: center; }
+  .header h1 { margin: 0; }
+  .header img { width: 50px; }
+  .coming-soon-box div { font-size: 28px; }
 }
 </style>
 </head>
@@ -202,71 +188,44 @@ padding-bottom: 15px;
 <div class="bg-layer" aria-hidden="true"></div>
 
 <div class="header">
-    <a href="/home/">
-        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo">
-    </a>
-    <a href="/home/" style="text-decoration:none;">
-        <h1>A SUPERB FAIRYWREN</h1>
-    </a>
-    <div class="menu-row">
-        <a href="/danny/" class="menu-link daniel">DANIEL
-            <span class="underline"></span>
-        </a>
-        <a href="/tala/" class="menu-link tala">TALA
-            <span class="underline"></span>
-        </a>
-    </div>
+  <a href="/home/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo"></a>
+  <a href="/home/" style="text-decoration:none;"><h1>A SUPERB FAIRYWREN</h1></a>
+  <div class="menu-row">
+    <a href="/danny/" class="menu-link daniel">DANIEL<span class="underline"></span></a>
+    <a href="/tala/" class="menu-link tala">TALA<span class="underline"></span></a>
+  </div>
 </div>
 
 <div class="main-content">
-    
-    <a href="/tala-music/" class="project-item music-projects">
-        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/icon_musicprojects.png" alt="Music Projects">
-        <span class="project-label">music</span>
-    </a>
-
-    <a href="/tala-writing/" class="project-item writing-projects">
-        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/icon_writingprojects.png" alt="Writing Projects">
-        <span class="project-label">writing</span>
-    </a>
-
-    <a href="/tala-hmu/" class="project-item talk-projects">
-        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/icon_talkprojects.png" alt="Talk Projects">
-        <span class="project-label">🔥🔥🔥</span>
-    </a>
-
-</div>
-<div class="footer">
-    <div class="social">
-        <a href="https://www.instagram.com/the.real.tala.cruz/" target="_blank">
-            <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_ig.svg" alt="Instagram">
-        </a>
-        <a href="/contact/">
-            <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/2978373eaeac2a4b537306bf46ebce49d3b812c6/docs/website_assets/icon_email.svg" alt="Email">
-        </a>
-        <a href="https://www.fanvue.com/tala.cruz" target="_blank">
-            <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_fv.svg" alt="Fanvue">
-        </a>
+  <div class="coming-soon-box">
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/fee66541f01b59894e8f7ee276011ee1b6e87f91/docs/website_assets/polaroid_tamworthcross2.png" alt="Coming Soon Polaroid">
+    <div>
+      coming<br>
+      soon<span>💦💦💦</span>
     </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="social">
+    <a href="https://www.instagram.com/the.real.tala.cruz/" target="_blank"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_ig.svg" alt="Instagram"></a>
+    <a href="/contact/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/2978373eaeac2a4b537306bf46ebce49d3b812c6/docs/website_assets/icon_email.svg" alt="Email"></a>
+    <a href="https://www.fanvue.com/tala.cruz" target="_blank"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_fv.svg" alt="Fanvue"></a>
+  </div>
 </div>
 
 <script>
 (function() {
   const setVh = () => {
-    // This function calculates the actual viewport height (fixing the 100vh bug)
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', vh + 'px');
   };
-
   setVh();
-
   let tid = null;
   const debouncedSet = () => {
     clearTimeout(tid);
-    // Debounced for performance on resize/rotation
     tid = setTimeout(setVh, 80);
   };
-
   window.addEventListener('resize', debouncedSet);
   window.addEventListener('orientationchange', debouncedSet);
 })();
