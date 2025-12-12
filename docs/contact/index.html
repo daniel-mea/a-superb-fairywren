@@ -22,15 +22,8 @@ html, body {
 :root { --vh: 1vh; }
 
 /* ====================== BACKGROUND ====================== */
-.bg-layer {
+#bg-img {
   position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: calc(var(--vh, 1vh) * 100);
-  background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large3.jpg');
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
   z-index: 0;
   pointer-events: none;
 }
@@ -40,7 +33,7 @@ html, body {
   padding-top: 15px;
   text-align: center;
   position: relative;
-  z-index: 2;
+  z-index: 10;
 }
 
 .header img {
@@ -60,24 +53,15 @@ html, body {
   font-size: 1.5em;
 }
 
-/* ====================== OVERLAY ====================== */
-.overlay {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: calc(var(--vh, 1vh) * 100);
-  z-index: 5;
-  pointer-events: none;
-}
-
 /* ====================== HOTBOXES ====================== */
 .hotbox {
-  position: absolute;
+  position: fixed;
   border: 3px solid rgba(255, 255, 255, 0.9);
   box-sizing: border-box;
   pointer-events: auto;
   cursor: pointer;
   background: transparent;
+  z-index: 5;
 }
 
 /* ====================== RESPONSIVE ====================== */
@@ -86,7 +70,6 @@ html, body {
 }
 
 @media (max-width: 1000px) and (max-height: 500px) and (orientation: landscape) {
-  /* Grid-based layout to center H1 over logo in short landscape screens */
   .header {
     display: grid;
     place-items: center;
@@ -102,8 +85,8 @@ html, body {
 </head>
 <body>
 
-  <!-- background -->
-  <div class="bg-layer" id="bgLayer" aria-hidden="true"></div>
+  <!-- background image -->
+  <img id="bg-img" src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Nokiaaaa-large3.jpg" alt="">
 
   <!-- header with logo + H1 -->
   <div class="header">
@@ -115,8 +98,11 @@ html, body {
     </a>
   </div>
 
-  <!-- overlay for hotboxes -->
-  <div class="overlay" id="overlay"></div>
+  <!-- hotboxes -->
+  <div id="hotbox1" class="hotbox"></div>
+  <div id="hotbox2" class="hotbox"></div>
+  <div id="hotbox3" class="hotbox"></div>
+  <div id="hotbox4" class="hotbox"></div>
 
 <script>
 /* ====================== dynamic --vh ====================== */
@@ -134,55 +120,77 @@ const ORIGINAL_W = 3726;
 const ORIGINAL_H = 1921;
 const HEIGHT_SCALE = 1921 / 3113;
 
-/* hotbox positions from contact page */
+// Zoom and scale settings
+const EXTRA_SCALE = 1.4;  // 1.4x zoom
+const MIN_SCALE = 0.5;    // Never scale below 50% of original dimensions
+
+/* hotbox positions */
 const HOTBOX1 = { x: (ORIGINAL_W / 2) - 291, y: ((3113/2)-790) * HEIGHT_SCALE, w: 585.5, h: 85.5 };
 const HOTBOX2 = { x: HOTBOX1.x + 200, y: (HOTBOX1.y + 455) * HEIGHT_SCALE, w: 180, h: 88 };
 const HOTBOX3 = { x: 1560, y: 1565 * HEIGHT_SCALE, w: 175, h: 69 };
 const HOTBOX4 = { x: 2060, y: 1565 * HEIGHT_SCALE, w: 111.5, h: 69 };
 
-const HOTBOXES = [HOTBOX1, HOTBOX2, HOTBOX3, HOTBOX4];
+const bgImg = document.getElementById('bg-img');
+const box1 = document.getElementById('hotbox1');
+const box2 = document.getElementById('hotbox2');
+const box3 = document.getElementById('hotbox3');
+const box4 = document.getElementById('hotbox4');
 
-const overlay = document.getElementById('overlay');
+/* ====================== CLICK HANDLERS ====================== */
+box1.onclick = () => window.open('mailto:mgmt@asuperbfairywren.com','_blank');
+box2.onclick = () => window.open('mailto:mgmt@asuperbfairywren.com','_blank');
+box3.onclick = () => window.location.href = '/home/';
+box4.onclick = () => window.history.back();
 
-/* ====================== CREATE HOTBOX ELEMENTS ====================== */
-HOTBOXES.forEach((hb,i)=>{
-  const el = document.createElement('div');
-  el.className = 'hotbox';
-  el.dataset.idx = String(i+1);
-
-  el.addEventListener('click',()=>{
-    if(i===0||i===1) window.open('mailto:mgmt@asuperbfairywren.com','_blank');
-    else if(i===2) window.location.href='/home/';
-    else if(i===3) window.history.back();
-  });
-
-  overlay.appendChild(el);
-});
-
-/* ====================== HOTBOX POSITIONING ====================== */
-function updateHotboxesCoverMapping(){
+/* ====================== POSITIONING LOGIC ====================== */
+function updateLayout(){
   const vw = window.innerWidth;
   const vh = window.innerHeight;
 
-  const scale = Math.max(vw/ORIGINAL_W, vh/ORIGINAL_H);
+  // Step 1: Calculate base scale for coverage
+  let scale = Math.max(vw / ORIGINAL_W, vh / ORIGINAL_H);
+  
+  // Step 2: Apply zoom multiplier
+  scale = scale * EXTRA_SCALE;
+  
+  // Step 3: Enforce minimum scale constraint
+  if (scale < MIN_SCALE) {
+    scale = MIN_SCALE;
+  }
+
+  // Step 4: Calculate rendered dimensions
   const renderedW = ORIGINAL_W * scale;
   const renderedH = ORIGINAL_H * scale;
-  const offsetX = (vw - renderedW)/2;
-  const offsetY = (vh - renderedH)/2;
 
-  const hotEls = overlay.children;
-  HOTBOXES.forEach((hb,i)=>{
-    const el=hotEls[i];
-    el.style.left = Math.round(hb.x*scale + offsetX)+'px';
-    el.style.top  = Math.round(hb.y*scale + offsetY)+'px';
-    el.style.width = Math.round(hb.w*scale)+'px';
-    el.style.height = Math.round(hb.h*scale)+'px';
-  });
+  // Step 5: Position image - center horizontally, shift up vertically
+  let offsetX = (vw - renderedW) / 2;
+  let offsetY = (vh - renderedH) / 2 - (renderedH * 0.15);
+
+  // Apply to image
+  bgImg.style.width = renderedW + 'px';
+  bgImg.style.height = renderedH + 'px';
+  bgImg.style.left = offsetX + 'px';
+  bgImg.style.top = offsetY + 'px';
+
+  // Update hotboxes
+  const hotboxes = [
+    [box1, HOTBOX1],
+    [box2, HOTBOX2],
+    [box3, HOTBOX3],
+    [box4, HOTBOX4],
+  ];
+
+  for (const [box, H] of hotboxes) {
+    box.style.left = (offsetX + H.x * scale) + 'px';
+    box.style.top = (offsetY + H.y * scale) + 'px';
+    box.style.width = (H.w * scale) + 'px';
+    box.style.height = (H.h * scale) + 'px';
+  }
 }
 
-window.addEventListener('load', updateHotboxesCoverMapping);
-window.addEventListener('resize', updateHotboxesCoverMapping);
-window.addEventListener('orientationchange', updateHotboxesCoverMapping);
+window.addEventListener('load', updateLayout);
+window.addEventListener('resize', updateLayout);
+window.addEventListener('orientationchange', updateLayout);
 </script>
 
 </body>
