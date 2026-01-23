@@ -29,7 +29,18 @@ html, body {
   background-position: center center;
   background-repeat: no-repeat;
   z-index: 0;
-  pointer-events: none;
+  pointer-events: auto; /* Changed from none to auto */
+}
+
+/* Clickable link overlay for background */
+.bg-link {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
+  z-index: 1;
+  cursor: pointer;
 }
 
 body {
@@ -137,6 +148,7 @@ body {
 <body>
 
 <div class="bg-layer" aria-hidden="true"></div>
+<a href="/home/" class="bg-link" aria-label="Go to home"></a>
 
 <div class="header">
   <a href="/home/">
@@ -149,7 +161,7 @@ body {
 
 <div class="footer">
   <a href="/home/" style="text-decoration:none; color:#FFE555;">
-    <p>“WE ARE ALL AT WAR WITH OURSELVES.”</p>
+    <p>"WE ARE ALL AT WAR WITH OURSELVES."</p>
   </a>
 </div>
 
