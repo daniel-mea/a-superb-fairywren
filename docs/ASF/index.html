@@ -65,7 +65,6 @@ body {
   text-transform: uppercase;
   margin: 10px 0 0 0;
   font-size: 1.5em;
-  line-height: 1.2; /* Explicitly set to match original behavior */
 }
 
 /* MATCHES ORIGINAL SPACING: 25px accounts for h1 line-height + 10px gap */
@@ -81,10 +80,22 @@ body {
   gap: 15px;
 }
 
+.book-image-wrapper {
+  width: 444px;
+  height: auto;
+  overflow: hidden;
+  display: block;
+}
+
 .book-image {
   width: 444px;
   height: auto;
   display: block;
+  transition: transform 0.3s ease;
+}
+
+.book-image:hover {
+  transform: scale(1.03);
 }
 
 .buy-button {
@@ -131,13 +142,15 @@ body {
 @media (orientation: portrait) {
   .header img { width:50px; }
   .social a img { width:25px; }
-  .book-image { width: 250px; }
-  .buy-button { width: 250px; font-size: 14px; padding: 10px 12px; gap: 5px; }
+  .book-image-wrapper { width: 300px; }
+  .book-image { width: 300px; }
+  .buy-button { width: 300px; font-size: 14px; padding: 10px 12px; gap: 5px; }
 }
 
 @media (max-width: 480px) {
-  .book-image { width: 220px; }
-  .buy-button { width: 220px; font-size: 12px; padding: 10px 10px; gap: 4px; }
+  .book-image-wrapper { width: 300px; }
+  .book-image { width: 300px; }
+  .buy-button { width: 300px; font-size: 12px; padding: 10px 10px; gap: 4px; }
 }
 
 @media (orientation: landscape) {
@@ -155,6 +168,7 @@ body {
   .header h1 { margin: 0; }
   .header img { display: block; margin: 0 auto; width: 50px; }
   .book-section { margin-top: 15px; } /* Slightly tighter for landscape mobile */
+  .book-image-wrapper { width: 200px; }
   .book-image { width: 200px; }
   .buy-button { width: 200px; font-size: 11px; padding: 8px 8px; gap: 3px; }
 }
@@ -171,13 +185,15 @@ body {
 
 <div class="book-section">
   <div class="book-container">
-    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Mockup-1ASF_paperback.jpg" alt="A Superb Fairywren Book" class="book-image">
+    <div class="book-image-wrapper">
+      <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Mockup-1ASF_paperback.jpg" alt="A Superb Fairywren Book" class="book-image">
+    </div>
     <div class="buy-button">
-      <a href="https://asuperbfairywren.com/ASF-buy">Paperback</a>
+      <a href="https://buy.stripe.com/14AdRagju5GOfNh31LgrS00">Paperback</a>
       <span class="separator">·</span>
-      <a href="https://asuperbfairywren.com/ASF-buy">eBook</a>
+      <a href="https://buy.stripe.com/14AdRagju5GOfNh31LgrS00">eBook</a>
       <span class="separator">·</span>
-      <a href="https://asuperbfairywren.com/ASF-buy">Audiobook</a>
+      <a href="https://buy.stripe.com/14AdRagju5GOfNh31LgrS00">Audiobook</a>
     </div>
   </div>
 </div>
@@ -197,8 +213,13 @@ body {
     document.documentElement.style.setProperty('--vh', vh + 'px');
   };
   setVh();
-  window.addEventListener('resize', setVh);
-  window.addEventListener('orientationchange', setVh);
+  let tid = null;
+  const debouncedSet = () => {
+    clearTimeout(tid);
+    tid = setTimeout(setVh, 80);
+  };
+  window.addEventListener('resize', debouncedSet);
+  window.addEventListener('orientationchange', debouncedSet);
 })();
 </script>
 
