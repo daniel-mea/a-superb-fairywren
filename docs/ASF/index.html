@@ -75,8 +75,7 @@ body {
   pointer-events: none;
   z-index: 1;
   width: 100%;
-  padding: 10px 50px;
-  box-sizing: border-box;
+  padding: 10px;
 }
 
 .book-container {
@@ -85,20 +84,16 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 15px;
-  width: var(--container-width, 444px);
-  transition: width 0.1s ease;
 }
 
 .book-image-wrapper {
   overflow: hidden;
-  width: 100%;
 }
 
 .book-image {
-  width: 100%;
   height: auto;
   display: block;
-  transition: transform 0.3s ease;
+  transition: width 0.3s ease, transform 0.3s ease;
 }
 
 .book-image:hover {
@@ -106,7 +101,6 @@ body {
 }
 
 .buy-button {
-  width: var(--button-width, 333px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -116,9 +110,8 @@ body {
   color: #000000;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-weight: 444;
-  font-size: var(--button-font-size, 17.5px);
   box-sizing: border-box;
-  transition: width 0.1s ease, font-size 0.1s ease;
+  transition: width 0.3s ease, font-size 0.3s ease;
 }
 
 .buy-button a {
@@ -136,16 +129,16 @@ body {
   pointer-events: none;
 }
 
-.social { 
-  display: flex; 
-  justify-content: center; 
-  gap: 15px; 
-  margin-top: 20px; 
+.social {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
 }
 
-.social a img { 
-  width: 33px; 
-  vertical-align: middle; 
+.social a img {
+  width: 33px;
+  vertical-align: middle;
 }
 
 .footer {
@@ -168,21 +161,21 @@ body {
     place-items: center;
     padding-top: 15px;
   }
-  .header a:first-child, .header a:nth-child(2) { 
-    grid-area: 1 / 1; 
+  .header a:first-child, .header a:nth-child(2) {
+    grid-area: 1 / 1;
   }
-  .header a:nth-child(2) { 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
+  .header a:nth-child(2) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .header h1 { 
-    margin: 0; 
+  .header h1 {
+    margin: 0;
   }
-  .header img { 
-    display: block; 
-    margin: 0 auto; 
-    width: 50px; 
+  .header img {
+    display: block;
+    margin: 0 auto;
+    width: 50px;
   }
 }
 </style>
@@ -235,51 +228,82 @@ body {
   window.addEventListener('orientationchange', debouncedSet);
 })();
 
-/* Dynamic sizing */
-(function() {
-  function updateSizes() {
-    const header = document.querySelector('.header');
-    const footer = document.querySelector('.footer');
-    const headerHeight = header.offsetHeight;
-    const footerHeight = footer.offsetHeight;
-    
-    // 100px buffer to trigger scaling sooner, 10px min gap to footer
-    const buffer = 100;
-    const minGapToFooter = 10;
-    
-    // Available space: viewport - header - footer - 20px padding (10px top + 10px bottom) - buffer - min gap
-    const availableHeight = window.innerHeight - headerHeight - footerHeight - 20 - buffer - minGapToFooter;
-    const availableWidth = window.innerWidth - 66; // 33px padding each side
-    
-    // Container needs: image + 15px gap + button (~40px)
-    const buttonHeight = 40;
-    const maxImageHeight = availableHeight - 15 - buttonHeight;
-    const imageAspectRatio = 1.5;
-    const maxWidthForHeight = maxImageHeight * imageAspectRatio;
-    
-    // Take smaller constraint
-    let containerWidth = Math.min(availableWidth, maxWidthForHeight);
-    
-    // Clamp 200-444
-    containerWidth = Math.max(200, Math.min(444, containerWidth));
-    
-    // Button: 333px until container reaches 333px, then scales
-    let buttonWidth = containerWidth > 333 ? '333px' : '100%';
-    
-    // Font scales proportionally
-    const fontSize = 10 + ((containerWidth - 200) / (444 - 200)) * (17.5 - 10);
-    
-    document.documentElement.style.setProperty('--container-width', containerWidth + 'px');
-    document.documentElement.style.setProperty('--button-width', buttonWidth);
-    document.documentElement.style.setProperty('--button-font-size', fontSize + 'px');
+const image = document.querySelector('.book-image');
+const button = document.querySelector('.buy-button');
+const header = document.querySelector('.header');
+const footer = document.querySelector('.footer');
+
+const full_img_w = 444;
+const full_btn_w = 333;
+const full_font = 17.5;
+const min_w = 200;
+const pad = 10;
+const side_img_buffer = 40; // New: extra side buffer for image only
+const gap = 15;
+
+let ar = 0;
+
+const resizeHandler = () => {
+  if (ar === 0) return;
+
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  // Reset to full sizes to measure accurately
+  image.style.width = `${full_img_w}px`;
+  button.style.width = `${full_btn_w}px`;
+  button.style.fontSize = `${full_font}px`;
+
+  const full_btn_h = button.offsetHeight;
+  const btn_style = getComputedStyle(button);
+  const btn_pad = parseFloat(btn_style.paddingTop) + parseFloat(btn_style.paddingBottom);
+  const full_var_btn_h = full_btn_h - btn_pad;
+
+  const avail_w = vw - 2 * pad;
+  const avail_h = vh - header.offsetHeight - footer.offsetHeight - 2 * pad;
+
+  // Phase 1: Image-specific available width includes extra side buffer
+  const avail_w_img = avail_w - 2 * side_img_buffer;
+  const max_img_w_from_w = avail_w_img;
+  const max_img_h_from_h = avail_h - gap - full_btn_h;
+  const max_img_w_from_h = max_img_h_from_h / ar;
+  let candidate_img_w = Math.min(full_img_w, max_img_w_from_w, max_img_w_from_h);
+
+  if (candidate_img_w >= full_btn_w) {
+    // Phase 1: Set image width, button fixed
+    image.style.width = `${candidate_img_w}px`;
+    button.style.width = `${full_btn_w}px`;
+    button.style.fontSize = `${full_font}px`;
+  } else {
+    // Phase 2: Shrink both proportionally (keeping widths equal), no extra buffer
+    const a = full_btn_w * ar + full_var_btn_h;
+    const b = gap + btn_pad;
+
+    const s_fit_w = avail_w / full_btn_w;
+    const s_fit_h = (avail_h - b) / a;
+    let s_fit = Math.min(1, s_fit_w, s_fit_h);
+    let s = Math.max(s_fit, min_w / full_btn_w);
+
+    const final_w = full_btn_w * s;
+    image.style.width = `${final_w}px`;
+    button.style.width = `${final_w}px`;
+    button.style.fontSize = `${full_font * s}px`;
   }
-  
-  updateSizes();
-  window.addEventListener('resize', updateSizes);
-  window.addEventListener('orientationchange', () => {
-    setTimeout(updateSizes, 100);
-  });
-})();
+};
+
+image.addEventListener('load', () => {
+  ar = image.naturalHeight / image.naturalWidth;
+  resizeHandler();
+});
+
+let resizeTid = null;
+const debouncedResize = () => {
+  clearTimeout(resizeTid);
+  resizeTid = setTimeout(resizeHandler, 80);
+};
+
+window.addEventListener('resize', debouncedResize);
+window.addEventListener('orientationchange', debouncedResize);
 </script>
 
 </body>
