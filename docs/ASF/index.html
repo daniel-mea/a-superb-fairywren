@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>A Superb Fairywren</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
+<style>
+/* base reset */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Fraunces', serif;
+  background-color: #000000;
+}
+
+/* bg-layer uses the real viewport height via CSS var --vh */
+.bg-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
+  background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/newspaper_dark.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Updated layout to fix image positioning */
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Keeps content at the top */
+}
+
+/* ensure controls are above the bg */
+.header, .footer, .book-section {
+  position: relative;
+  z-index: 2;
+  color: #FFE555;
+}
+
+/* header */
+.header {
+  padding-top: 15px;
+  text-align: center;
+}
+.header img {
+  width: 60px;
+  border-radius: 50%;
+  transition: width 0.3s ease;
+  display: block;
+  margin: 0 auto;
+}
+
+.header h1 {
+  color: #FFE555;
+  font-weight: 500;
+  text-decoration: line-through;
+  text-transform: uppercase;
+  margin: 10px 0 0 0;
+  font-size: 1.5em;
+  line-height: 1.2; /* Explicitly set to match original behavior */
+}
+
+/* MATCHES ORIGINAL SPACING: 25px accounts for h1 line-height + 10px gap */
+.book-section {
+  text-align: center;
+  margin-top: 25px; 
+}
+
+.book-container {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.book-image {
+  width: 444px;
+  height: auto;
+  display: block;
+}
+
+.buy-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background-color: #FFE555;
+  color: #000000;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 444;
+  font-size: 17.5px;
+  padding: 10px 10px;
+  width: 333px;
+  box-sizing: border-box;
+}
+
+.buy-button a {
+  color: #000000;
+  text-decoration: none;
+  transition: color 0.1s ease;
+}
+
+.buy-button a:hover {
+  color: #ffffff;
+}
+
+.buy-button .separator {
+  color: #000000;
+  pointer-events: none;
+}
+
+/* social */
+.social { display:flex; justify-content:center; gap:15px; margin-top:20px; }
+.social a img { width:33px; vertical-align:middle; }
+
+/* footer - Manually pushed to bottom */
+.footer {
+  margin-top: auto;
+  padding-bottom: 15px;
+}
+
+/* responsive tweaks */
+@media (orientation: portrait) {
+  .header img { width:50px; }
+  .social a img { width:25px; }
+  .book-image { width: 250px; }
+  .buy-button { width: 250px; font-size: 14px; padding: 10px 12px; gap: 5px; }
+}
+
+@media (max-width: 480px) {
+  .book-image { width: 220px; }
+  .buy-button { width: 220px; font-size: 12px; padding: 10px 10px; gap: 4px; }
+}
+
+@media (orientation: landscape) {
+  .social a img { width:22px; }
+}
+
+@media (max-width: 1000px) and (max-height: 500px) and (orientation: landscape) {
+  .header {
+    display: grid;
+    place-items: center;
+    padding-top: 15px;
+  }
+  .header a:first-child, .header a:nth-child(2) { grid-area: 1 / 1; }
+  .header a:nth-child(2) { display: flex; align-items: center; justify-content: center; }
+  .header h1 { margin: 0; }
+  .header img { display: block; margin: 0 auto; width: 50px; }
+  .book-section { margin-top: 15px; } /* Slightly tighter for landscape mobile */
+  .book-image { width: 200px; }
+  .buy-button { width: 200px; font-size: 11px; padding: 8px 8px; gap: 3px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-layer" aria-hidden="true"></div>
+
+<div class="header">
+  <a href="/home/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo"></a>
+  <a href="/home/" style="text-decoration:none;"><h1>A SUPERB FAIRYWREN</h1></a>
+</div>
+
+<div class="book-section">
+  <div class="book-container">
+    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Mockup-1ASF_paperback.jpg" alt="A Superb Fairywren Book" class="book-image">
+    <div class="buy-button">
+      <a href="https://asuperbfairywren.com/ASF-buy">Paperback</a>
+      <span class="separator">·</span>
+      <a href="https://asuperbfairywren.com/ASF-buy">eBook</a>
+      <span class="separator">·</span>
+      <a href="https://asuperbfairywren.com/ASF-buy">Audiobook</a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="social">
+    <a href="https://instagram.com/danny__mea" target="_blank"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_ig.svg" alt="Instagram"></a>
+    <a href="/contact/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/2978373eaeac2a4b537306bf46ebce49d3b812c6/docs/website_assets/icon_email.svg" alt="Email"></a>
+    <a href="https://www.youtube.com/@DannyMEA" target="_blank"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_yt.svg" alt="YouTube"></a>
+  </div>
+</div>
+
+<script>
+(function() {
+  const setVh = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', vh + 'px');
+  };
+  setVh();
+  window.addEventListener('resize', setVh);
+  window.addEventListener('orientationchange', setVh);
+})();
+</script>
+
+</body>
+</html>
