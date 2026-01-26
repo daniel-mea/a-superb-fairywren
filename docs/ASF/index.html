@@ -36,19 +36,22 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
 
 /* ensure controls are above the bg */
-.header, .footer, .book-section {
+.header, .footer {
   position: relative;
-  z-index: 2;
+  z-index: 10; /* Higher z-index so header/footer stay on top */
   color: #FFE555;
+  width: 100%;
 }
 
 /* header */
 .header {
   padding-top: 15px;
   text-align: center;
+  flex-shrink: 0;
 }
 .header img {
   width: 60px;
@@ -67,18 +70,16 @@ body {
   font-size: 1.5em;
 }
 
-/* Centered book section */
+/* Middle section that takes up remaining space */
 .book-section {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   pointer-events: none;
+  z-index: 1; /* Lower z-index so it sits behind header/footer */
+  width: 100%;
 }
 
 .book-container {
@@ -144,6 +145,7 @@ body {
 /* footer */
 .footer {
   padding-bottom: 15px;
+  flex-shrink: 0;
 }
 
 /* responsive tweaks */
