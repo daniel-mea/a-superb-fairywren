@@ -15,7 +15,7 @@ exports.handler = async (event) => {
       
       line_items: [
         {
-          price: 'price_1StRfgK70oIXhMLJlpi6Qxot', // Paperback price ID
+          price: 'price_1SrthxK70oIXhMLJzufYOfiB', // Paperback price ID
           quantity: 1,
         },
       ],
