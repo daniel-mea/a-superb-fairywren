@@ -102,8 +102,7 @@
     
     <script>
         // Initialize Stripe with your publishable key
-        const stripe = Stripe('pk_test_51Srr8CGXWk5MoZyWNfVQilN4Fc1UFhRXUhWJlo50I7UJF5iIaL7xdH022CaOBnsttg4lKV5YCbZZ69R8yYIqGkct00Wgt8VB9s');
-        
+        const stripe = Stripe('{{ STRIPE_PUBLISHABLE_KEY }}');
         initialize();
         
         async function initialize() {
