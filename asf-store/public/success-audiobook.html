@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - A Superb Fairywren</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #10b981;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: scaleIn 0.5s ease-in-out;
+        }
+        
+        .checkmark svg {
+            width: 50px;
+            height: 50px;
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        
+        @keyframes scaleIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        h1 {
+            font-size: 32px;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+        
+        p {
+            font-size: 18px;
+            color: #6b7280;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .download-section {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .download-section h2 {
+            font-size: 20px;
+            color: #374151;
+            margin-bottom: 20px;
+        }
+        
+        .download-button {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .download-button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .format-badge {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .format-info {
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 10px;
+        }
+        
+        .info-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            margin-top: 20px;
+        }
+        
+        .info-box p {
+            font-size: 14px;
+            color: #78350f;
+            margin: 0;
+        }
+        
+        .back-link {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        #loading {
+            display: block;
+        }
+        
+        #content {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="loading">
+            <p>Loading your downloads...</p>
+        </div>
+        
+        <div id="content">
+            <div class="checkmark">
+                <svg viewBox="0 0 52 52">
+                    <polyline points="14 27 22 35 38 19"/>
+                </svg>
+            </div>
+            
+            <h1>Thank You for Your Purchase!</h1>
+            <p>Your audiobook is ready to download. A confirmation email with these download links has been sent to your email address.</p>
+            
+            <div class="download-section">
+                <h2>Download Complete Audiobook</h2>
+                <a href="#" id="m4b-link" class="download-button">
+                    Download M4B <span class="format-badge">M4B</span>
+                </a>
+                <p class="format-info">Single file with chapters – works with Apple Books, audiobook apps</p>
+            </div>
+            
+            <div class="download-section">
+                <h2>Download Chapter MP3s</h2>
+                <a href="#" id="zip-link" class="download-button">
+                    Download ZIP <span class="format-badge">MP3 Chapters</span>
+                </a>
+                <p class="format-info">Individual chapter files – tap to download, then tap again to unzip</p>
+            </div>
+            
+            <div class="info-box">
+                <p><strong>📱 Note:</strong> These download links will expire in 48 hours. Please save your files to your device. For the ZIP file, tap to download and then tap the downloaded file again to extract the MP3s.</p>
+            </div>
+            
+            <a href="https://asuperbfairywren.com" class="back-link">← Back to website</a>
+        </div>
+    </div>
+    
+    <script>
+        // Get session ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id');
+        
+        if (!sessionId) {
+            document.getElementById('loading').innerHTML = '<p style="color: red;">Error: No session ID found. Please contact support.</p>';
+        } else {
+            // Fetch download links from our API
+            fetch(`/.netlify/functions/get-download-links?session_id=${sessionId}&type=audiobook`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById('loading').innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+                        return;
+                    }
+                    
+                    // Set download links
+                    document.getElementById('m4b-link').href = data.m4b;
+                    document.getElementById('zip-link').href = data.mp3zip;
+                    
+                    // Show content
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('content').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('loading').innerHTML = '<p style="color: red;">Error loading download links. Please refresh the page or contact support.</p>';
+                });
+        }
+    </script>
+</body>
+</html>
