@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - A Superb Fairywren</title>
-    <link rel="preconnect" href="https://js.stripe.com">
-    <link rel="dns-prefetch" href="https://api.stripe.com">
+    <title>A Superb Fairywren - Checkout</title>
     <script src="https://js.stripe.com/v3/"></script>
     <link rel="icon" type="image/png" href="https://asuperbfairywren.com/favicon.png">
     <style>
@@ -655,7 +653,7 @@
     </div>
     
     <script>
-        const stripe = Stripe('pk_live_51Srr8CGXWk5MoZyWNfVQilN4Fc1UFhRXUhWJlo50I7UJF5iIaL7xdH022CaOBnsttg4lKV5YCbZZ69R8yYIqGkct00Wgt8VB9s');
+        const stripe = Stripe('pk_live_51Srr7vK70oIXhMLJtTBJRDYASaXkU1vVRzxSow1me8ixhIKhShjuCgCtvibAEpzdldYtayAkM1x1ub2oJpE0VDDc00T9SMS8NN');
         
         let quantity = 1;
         let bookPrice = 19.99;
@@ -726,7 +724,7 @@
             document.getElementById('prev-addon').addEventListener('click', () => navigateAddon(-1));
             document.getElementById('next-addon').addEventListener('click', () => navigateAddon(1));
             
-            const response = await fetch('https://create-payment-intent.daniel-d-mea.workers.dev', {
+            const response = await fetch('asf101-create-payment-intent.daniel-d-mea.workers.dev', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
