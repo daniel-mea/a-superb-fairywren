@@ -194,7 +194,7 @@
         }
         
         .shipping-calculating {
-            color: #6a6a6a;
+            color: #909090;
             font-size: 14px;
         }
         
@@ -249,7 +249,7 @@
         }
         
         .carousel-button:disabled {
-            opacity: 0.5;
+            opacity: 1;
             cursor: default;
             background: #f4f4f4;
         }
@@ -360,7 +360,7 @@
         }
         
         .add-button.added {
-            background: #FFE555;
+            background: #e8e8e8;
             color: #303030;
         }
         
@@ -375,6 +375,7 @@
         #payment-request-button {
             margin-bottom: 24px;
             min-height: 55px;
+            border-radius: 6px; /* Claude visual */
         }
         
         .divider {
@@ -410,9 +411,9 @@
         }
         
         .section-subtitle {
-            font-size: 14px;
+            font-size: 15px; /* Claude visual */
             font-weight: 400;
-            color: #5f5f5f;
+            color: #6a6a6a; /* Claude visual */
             margin-bottom: 2px;
         }
         
@@ -432,11 +433,11 @@
             border: none;
             border-bottom: 1px solid #e0e0e0;
             border-radius: 0;
-            font-size: 13px;
+            font-size: 14px; /* Claude visual */
             background: white;
             transition: all 0.2s;
             font-family: inherit;
-            color: #6b7280;
+            color: #909090; /* Claude visual */
         }
         
         .form-input:last-child,
@@ -451,18 +452,18 @@
         }
         
         .form-input::placeholder {
-            color: #6b7280;
+            color: #909090; /* Claude visual */
         }
         
         .form-select {
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23303030' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); /* Claude visual: larger/darker */
             background-repeat: no-repeat;
             background-position: right 16px center;
             padding-right: 48px;
         }
         
-        /* Payment Method Radio Buttons */
+        /* Payment Method (from mockup, adapted) */
         .payment-options {
             background: white;
             border: 1px solid #e0e0e0;
@@ -560,10 +561,14 @@
             padding: 16px;
         }
         
-        .payment-info {
+        .stripe-element-placeholder {
+            background: #fafafa;
+            border: 1px dashed #d0d0d0;
+            border-radius: 6px;
+            padding: 40px 20px;
+            text-align: center;
+            color: #999;
             font-size: 14px;
-            color: #6b7280;
-            line-height: 1.5;
             margin-bottom: 12px;
         }
         
@@ -593,6 +598,13 @@
         
         .billing-address-fields.visible {
             display: block;
+        }
+        
+        .payment-info {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.5;
+            margin-bottom: 12px;
         }
         
         /* Stripe Payment Element */
@@ -705,53 +717,52 @@
         }
         
         @media (max-width: 768px) {
+            .order-summary {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
 
-    .order-summary {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
+            .order-item {
+                display: contents;
+            }
 
-    .order-item {
-        display: contents;
-    }
+            .item-details {
+                display: contents;
+            }
 
-    .item-details {
-        display: contents;
-    }
+            .logo {
+                order: 1;
+            }
 
-    .logo {
-        order: 1;
-    }
+            .order-item .item-image {
+                order: 2;
+            }
 
-    .order-item .item-image {
-        order: 2;
-    }
+            .item-name {
+                order: 3;
+            }
 
-    .item-name {
-        order: 3;
-    }
+            .total-amount {
+                order: 4;
+            }
 
-    .total-amount {
-        order: 4;
-    }
+            .item-quantity {
+                order: 5;
+            }
 
-    .item-quantity {
-        order: 5;
-    }
+            .add-to-order {
+                order: 6;
+            }
 
-    .add-to-order {
-        order: 6;
-    }
+            .price-breakdown {
+                order: 7;
+            }
 
-    .price-breakdown {
-        order: 7;
-    }
-
-    .total-row {
-        order: 8;
-    }
+            .total-row {
+                order: 8;
+            }
 
             .checkout-container {
                 grid-template-columns: 1fr;
@@ -789,14 +800,12 @@
                 font-size: 32px;
                 text-align: center;
                 margin-bottom: 20px;
-                order: 2;
             }
             
             .order-item {
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
-                order: 1;
             }
             
             .item-image {
@@ -822,18 +831,6 @@
             
             .item-price {
                 display: none;
-            }
-            
-            .add-to-order {
-                order: 3;
-            }
-            
-            .price-breakdown {
-                order: 4;
-            }
-            
-            .total-row {
-                order: 5;
             }
             
             #payment-request-button {
@@ -993,11 +990,12 @@
                         </div>
                     </div>
                     
-                    <!-- Payment Method -->
+                    <!-- Payment Method (from mockup, adapted) -->
                     <div class="form-section">
                         <div class="section-title">Payment method</div>
                         
                         <div class="payment-options">
+                            <!-- Card Option -->
                             <div class="payment-option active" data-method="card" onclick="selectPayment('card')">
                                 <div class="payment-option-header">
                                     <div class="payment-radio">
@@ -1039,7 +1037,8 @@
                                 </div>
                             </div>
                             
-                            <div class="payment-option" data-method="zip" id="zip-option" style="display: none;" onclick="selectPayment('zip')">
+                            <!-- Zip Option -->
+                            <div class="payment-option" data-method="zip" onclick="selectPayment('zip')">
                                 <div class="payment-option-header">
                                     <div class="payment-radio">
                                         <div class="payment-radio-dot"></div>
@@ -1064,7 +1063,8 @@
                                 </div>
                             </div>
                             
-                            <div class="payment-option" data-method="klarna" id="klarna-option" style="display: none;" onclick="selectPayment('klarna')">
+                            <!-- Klarna Option -->
+                            <div class="payment-option" data-method="klarna" onclick="selectPayment('klarna')">
                                 <div class="payment-option-header">
                                     <div class="payment-radio">
                                         <div class="payment-radio-dot"></div>
@@ -1181,7 +1181,7 @@
         function updateBookImage() {
             const bookImage = document.getElementById('book-image');
             if (window.innerWidth <= 768) {
-                bookImage.src = 'https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/stripe_assets/Mockup-1ASF_paperback_MED.jpg';
+                bookImage.src = 'https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/stripe_assets/Mockup-1ASF_paperback_MED500px.jpg'; /* Claude visual */
             } else {
                 bookImage.src = 'https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/stripe_assets/Mockup-1ASF_paperback_SMALL.jpg';
             }
