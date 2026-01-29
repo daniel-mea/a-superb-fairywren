@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Superb Fairywren - Checkout</title>
     <script src="https://js.stripe.com/v3/"></script>
-    <link rel="icon" type="image/png" href="https://asuperbfairywren.com/favicon.png">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Fairywren_stamp_icon-CIRCLE_Small.png">
     <style>
         * {
             margin: 0;
@@ -21,7 +21,45 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        /* Main Container with side padding */
+        /* Skeleton Loading */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .skeleton-logo {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-bottom: 30px;
+        }
+        
+        .skeleton-text {
+            height: 16px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .skeleton-price {
+            height: 40px;
+            width: 150px;
+            border-radius: 4px;
+            margin-bottom: 32px;
+        }
+        
+        .skeleton-item {
+            height: 100px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+        
+        /* Main Container */
         .page-wrapper {
             max-width: 100%;
             margin: 0 auto;
@@ -40,12 +78,12 @@
         .checkout-container::before {
             content: '';
             position: absolute;
-            left: 50%;
+            left: 768px;
             top: 0;
             bottom: 0;
             width: 25px;
             background: linear-gradient(to right, rgba(248, 248, 248, 0) 0%, rgba(248, 248, 248, 1) 100%);
-            transform: translateX(-12.5px);
+            transform: translateX(-25px);
             pointer-events: none;
             z-index: 10;
         }
@@ -58,7 +96,7 @@
         }
         
         .logo {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
         
         .logo-image {
@@ -69,15 +107,15 @@
         }
         
         .merchant-name {
-            font-size: 15px;
-            font-weight: 500;
+            font-size: 17px;
+            font-weight: 600;
             color: #6a6a6a;
             margin-bottom: 8px;
         }
         
         .total-amount {
-            font-size: 40px;
-            font-weight: 500;
+            font-size: 37px;
+            font-weight: 600;
             color: #1a1a1a;
             margin-bottom: 32px;
             letter-spacing: -0.5px;
@@ -104,10 +142,10 @@
         }
         
         .item-name {
-            font-size: 15px;
-            font-weight: 400;
+            font-size: 14px;
+            font-weight: 500;
             color: #1a1a1a;
-            margin-bottom: 6px;
+            margin-bottom: 10px;
         }
         
         .item-quantity {
@@ -118,18 +156,18 @@
             gap: 6px;
         }
         
-        .quantity-select {
-            background: white;
-            border: 1px solid #d1d5db;
-            border-radius: 4px;
-            padding: 2px 24px 2px 6px;
+        .quantity-box {
+            background: #f4f4f4;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 28px 6px 10px;
             font-size: 14px;
             color: #1a1a1a;
             cursor: pointer;
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236b7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 6px center;
+            background-position: right 8px center;
         }
         
         .item-price {
@@ -141,13 +179,13 @@
         
         /* Price Breakdown */
         .price-breakdown {
-            padding: 20px 0;
+            padding: 15px 0;
         }
         
         .price-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
+            padding: 5px 0;
             font-size: 15px;
         }
         
@@ -156,9 +194,18 @@
             font-weight: 400;
         }
         
+        .price-label.bold {
+            font-weight: 600;
+        }
+        
         .price-value {
-            color: #1a1a1a;
+            color: #6b7280;
             font-weight: 400;
+        }
+        
+        .price-value.bold {
+            font-weight: 600;
+            color: #1a1a1a;
         }
         
         .shipping-calculating {
@@ -169,7 +216,7 @@
         .total-row {
             display: flex;
             justify-content: space-between;
-            padding: 20px 0;
+            padding: 5px 0;
             border-top: 1px solid #e0e0e0;
             font-size: 16px;
             font-weight: 500;
@@ -189,7 +236,7 @@
         
         .add-to-order-title {
             font-size: 15px;
-            font-weight: 400;
+            font-weight: 500;
             color: #1a1a1a;
         }
         
@@ -202,30 +249,41 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            border: 1px solid #d1d5db;
-            background: white;
+            border: none;
+            background: #f4f4f4;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.2s;
-            color: #6b7280;
+            color: white;
         }
         
         .carousel-button:hover:not(:disabled) {
-            background: #f6f9fc;
-            border-color: #9ca3af;
+            background: #e8e8e8;
         }
         
         .carousel-button:disabled {
             opacity: 0.3;
             cursor: not-allowed;
-            background: #f0f0f0;
+            background: #f4f4f4;
+        }
+        
+        .carousel-button.active {
+            background: #5e5e5e;
+        }
+        
+        .carousel-button.inactive {
+            background: #5e5e5e;
+        }
+        
+        .carousel-button.inactive:hover {
+            background: #757575;
         }
         
         .carousel-button svg {
-            width: 10px;
-            height: 10px;
+            width: 16px;
+            height: 16px;
         }
         
         .addon-item {
@@ -238,6 +296,7 @@
             background: white;
             transition: all 0.2s;
             position: relative;
+            min-height: 95px;
         }
         
         .addon-item.added {
@@ -246,8 +305,8 @@
         }
         
         .addon-image {
-            width: 56px;
-            height: 56px;
+            width: 45px;
+            height: 45px;
             border-radius: 8px;
             object-fit: cover;
             background: #f0f0f0;
@@ -268,27 +327,28 @@
         }
         
         .addon-name {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 500;
             color: #1a1a1a;
         }
         
         .addon-price {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 500;
             color: #1a1a1a;
             white-space: nowrap;
         }
         
         .addon-description {
-            font-size: 10px;
+            font-size: 13px;
             color: #6b7280;
+            margin-top: 7px;
             margin-bottom: 8px;
         }
         
         .addon-button-wrapper {
             display: flex;
-            justify-content: flex-end;
+            justify-content: flex-start;
         }
         
         .add-button {
@@ -325,7 +385,7 @@
         /* Express Checkout */
         #payment-request-button {
             margin-bottom: 24px;
-            height: 55px;
+            min-height: 55px;
         }
         
         .divider {
@@ -354,10 +414,17 @@
         }
         
         .section-title {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 500;
             color: #1a1a1a;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .section-subtitle {
+            font-size: 14px;
+            font-weight: 400;
+            color: #5f5f5f;
+            margin-bottom: 10px;
         }
         
         .form-card {
@@ -371,13 +438,15 @@
         .form-input,
         .form-select {
             width: 100%;
-            padding: 14px 16px;
+            height: 40px;
+            padding: 0 16px;
             border: none;
             border-bottom: 1px solid #e0e0e0;
             font-size: 15px;
             background: white;
             transition: all 0.2s;
             font-family: inherit;
+            color: #6b7280;
         }
         
         .form-input:last-child,
@@ -392,7 +461,7 @@
         }
         
         .form-input::placeholder {
-            color: #9ca3af;
+            color: #6b7280;
         }
         
         /* Payment Method Radio Buttons */
@@ -442,7 +511,7 @@
         .payment-radio {
             width: 20px;
             height: 20px;
-            border: 2px solid #d1d5db;
+            border: 1.5px solid #a3a3a3;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -451,14 +520,15 @@
         }
         
         .payment-option.active .payment-radio {
-            border-color: #635bff;
+            border-color: #000000;
+            border-width: 2px;
         }
         
         .payment-radio-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            background: #635bff;
+            background: white;
             display: none;
         }
         
@@ -467,11 +537,16 @@
         }
         
         .payment-option-icon {
-            width: 32px;
-            height: 20px;
+            width: 40px;
+            height: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        
+        .payment-option-icon img {
+            max-width: 100%;
+            max-height: 100%;
         }
         
         .payment-option-label {
@@ -492,9 +567,40 @@
             display: block;
         }
         
-        /* Stripe Payment Element */
+        .billing-same-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            font-size: 14px;
+            color: #1a1a1a;
+            cursor: pointer;
+        }
+        
+        .billing-same-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .billing-address-fields {
+            margin-top: 16px;
+            display: none;
+        }
+        
+        .billing-address-fields.visible {
+            display: block;
+        }
+        
+        /* Stripe Payment Element with custom focus colors */
         #payment-element {
             margin-bottom: 0;
+        }
+        
+        /* Override Stripe element focus colors */
+        .StripeElement--focus {
+            border-color: #68a5d4 !important;
+            box-shadow: 0 0 0 3px #a7cbe6 !important;
         }
         
         /* Pay Button */
@@ -527,11 +633,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 16px;
+            gap: 20px;
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid #e0e0e0;
-            font-size: 12px;
+            font-size: 11px;
             color: #6b7280;
         }
         
@@ -542,7 +648,7 @@
         }
         
         .powered-by img {
-            height: 14px;
+            height: 12px;
             margin-top: 1px;
         }
         
@@ -597,6 +703,10 @@
             .checkout-container {
                 padding: 0 100px;
             }
+            
+            .checkout-container::before {
+                left: 50%;
+            }
         }
         
         @media (max-width: 768px) {
@@ -619,8 +729,40 @@
                 padding: 28px 20px;
             }
             
+            .merchant-name {
+                display: none;
+            }
+            
             .total-amount {
-                font-size: 36px;
+                font-size: 32px;
+                text-align: center;
+                margin-bottom: 24px;
+            }
+            
+            .order-item {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .item-image {
+                width: 33.33vw;
+                height: auto;
+                aspect-ratio: 2/3;
+            }
+            
+            .item-details {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .item-quantity {
+                justify-content: center;
+            }
+            
+            #payment-request-button {
+                min-height: 75px;
             }
         }
     </style>
@@ -630,70 +772,81 @@
         <div class="checkout-container">
             <!-- Left Panel -->
             <div class="order-summary">
-                <div class="logo">
-                    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Fairywren_stamp_icon-CIRCLE_Small.png" alt="A Superb Fairywren" class="logo-image">
+                <div id="left-skeleton" style="display: none;">
+                    <div class="skeleton skeleton-logo"></div>
+                    <div class="skeleton skeleton-text" style="width: 60%;"></div>
+                    <div class="skeleton skeleton-price"></div>
+                    <div class="skeleton skeleton-item"></div>
+                    <div class="skeleton skeleton-item"></div>
                 </div>
                 
-                <div class="merchant-name">Buy: A Superb Fairywren</div>
-                <div class="total-amount" id="total-display">A$19.99</div>
-                
-                <!-- Main Product -->
-                <div class="order-item">
-                    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/stripe_assets/Mockup-1ASF_paperback_SMALL.jpg" alt="Book Cover" class="item-image">
-                    <div class="item-details">
-                        <div class="item-name">A Superb Fairywren (Paperback)</div>
-                        <div class="item-quantity">
-                            Qty 
-                            <select class="quantity-select" id="quantity-select">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
+                <div id="left-content">
+                    <div class="logo">
+                        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Fairywren_stamp_icon-CIRCLE_Small.png" alt="A Superb Fairywren" class="logo-image">
+                    </div>
+                    
+                    <div class="merchant-name">Buy: A Superb Fairywren</div>
+                    <div class="total-amount" id="total-display">A$19.99</div>
+                    
+                    <!-- Main Product -->
+                    <div class="order-item">
+                        <img id="book-image" src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/stripe_assets/Mockup-1ASF_paperback_SMALL.jpg" alt="Book Cover" class="item-image">
+                        <div class="item-details">
+                            <div class="item-name">A Superb Fairywren (Paperback)</div>
+                            <div class="item-quantity">
+                                <select class="quantity-box" id="quantity-select">
+                                    <option value="1">Qty 1</option>
+                                    <option value="2">Qty 2</option>
+                                    <option value="3">Qty 3</option>
+                                </select>
+                            </div>
                         </div>
+                        <div class="item-price" id="book-price">A$19.99</div>
                     </div>
-                    <div class="item-price" id="book-price">A$19.99</div>
-                </div>
-                
-                <!-- Price Breakdown -->
-                <div class="price-breakdown">
-                    <div class="price-row">
-                        <div class="price-label">Subtotal</div>
-                        <div class="price-value" id="subtotal">A$19.99</div>
-                    </div>
-                    <div class="price-row">
-                        <div class="price-label">Shipping</div>
-                        <div class="price-value shipping-calculating" id="shipping-cost">Enter address to calculate</div>
-                    </div>
-                    <div class="price-row">
-                        <div class="price-label">Tax</div>
-                        <div class="price-value">A$0.00</div>
-                    </div>
-                </div>
-                
-                <div class="total-row">
-                    <div>Total due</div>
-                    <div id="total-due">A$19.99</div>
-                </div>
-                
-                <!-- Add-ons -->
-                <div class="add-to-order">
-                    <div class="add-to-order-header">
-                        <div class="add-to-order-title">Add to your order</div>
-                        <div class="carousel-nav">
-                            <button class="carousel-button" id="prev-addon" disabled>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="15 18 9 12 15 6"></polyline>
-                                </svg>
-                            </button>
-                            <button class="carousel-button" id="next-addon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="9 18 15 12 9 6"></polyline>
-                                </svg>
-                            </button>
+                    
+                    <!-- Price Breakdown -->
+                    <div class="price-breakdown">
+                        <div class="price-row">
+                            <div class="price-label bold">Subtotal</div>
+                            <div class="price-value bold" id="subtotal">A$19.99</div>
+                        </div>
+                        <div class="price-row">
+                            <div class="price-label">Shipping</div>
+                            <div class="price-value shipping-calculating" id="shipping-cost">Enter address to calculate</div>
+                        </div>
+                        <div class="price-row">
+                            <div class="price-label">Tax</div>
+                            <div class="price-value">A$0.00</div>
                         </div>
                     </div>
                     
-                    <div id="addon-container"></div>
+                    <div class="total-row">
+                        <div>Total due</div>
+                        <div id="total-due">A$19.99</div>
+                    </div>
+                    
+                    <!-- Add-ons -->
+                    <div class="add-to-order">
+                        <div class="add-to-order-header">
+                            <div class="add-to-order-title">Add to your order</div>
+                            <div class="carousel-nav">
+                                <button class="carousel-button active" id="prev-addon" disabled>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                                        <polyline points="12 19 5 12 12 5"></polyline>
+                                    </svg>
+                                </button>
+                                <button class="carousel-button inactive" id="next-addon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="addon-container"></div>
+                    </div>
                 </div>
             </div>
             
@@ -716,13 +869,14 @@
                     <div class="form-section">
                         <div class="section-title">Order information</div>
                         
+                        <div class="section-subtitle">Email</div>
                         <div class="form-card">
                             <input type="email" class="form-input" id="email" placeholder="Email" required>
                         </div>
                     </div>
                     
                     <div class="form-section">
-                        <div class="section-title">Shipping address</div>
+                        <div class="section-subtitle">Shipping address</div>
                         
                         <div class="form-card">
                             <input type="text" class="form-input" id="full-name" placeholder="Full name" required>
@@ -759,8 +913,8 @@
                                 <option value="CH">Switzerland</option>
                                 <option value="PL">Poland</option>
                             </select>
-                            <input type="text" class="form-input" id="address-line1" placeholder="Address" required>
-                            <input type="text" class="form-input" id="address-line2" placeholder="Apartment, suite, etc. (optional)">
+                            <input type="text" class="form-input" id="address-line1" placeholder="Address line 1" required>
+                            <input type="text" class="form-input" id="address-line2" placeholder="Address line 2">
                             <input type="text" class="form-input" id="city" placeholder="Suburb or city" required>
                             <input type="text" class="form-input" id="state" placeholder="State/Province" required>
                             <input type="text" class="form-input" id="postal-code" placeholder="Postal code" required>
@@ -778,43 +932,76 @@
                                         <div class="payment-radio-dot"></div>
                                     </div>
                                     <div class="payment-option-icon">
-                                        <svg width="32" height="20" viewBox="0 0 32 20" fill="none">
-                                            <rect x="0.5" y="0.5" width="31" height="19" rx="2.5" fill="white" stroke="#d1d5db"/>
-                                            <rect x="2" y="4" width="8" height="6" rx="1" fill="#1a1a1a"/>
+                                        <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+                                            <rect x="0.5" y="0.5" width="39" height="23" rx="3" fill="white" stroke="#d1d5db"/>
+                                            <rect x="3" y="5" width="10" height="8" rx="1" fill="#1a1a1a"/>
                                         </svg>
                                     </div>
                                     <div class="payment-option-label">Card</div>
                                 </div>
                                 <div class="payment-option-content">
                                     <div id="payment-element"></div>
+                                    <label class="billing-same-checkbox">
+                                        <input type="checkbox" id="billing-same-card" checked onchange="toggleBillingAddress('card')">
+                                        <span>Billing info is same as shipping</span>
+                                    </label>
+                                    <div id="billing-address-card" class="billing-address-fields">
+                                        <div class="section-subtitle" style="margin-top: 16px;">Name</div>
+                                        <div class="form-card" style="margin-bottom: 12px;">
+                                            <input type="text" class="form-input" id="billing-name-card" placeholder="Name on card">
+                                        </div>
+                                        <div class="section-subtitle">Billing address</div>
+                                        <div class="form-card">
+                                            <input type="text" class="form-input" placeholder="Address line 1">
+                                            <input type="text" class="form-input" placeholder="Address line 2">
+                                            <input type="text" class="form-input" placeholder="City">
+                                            <input type="text" class="form-input" placeholder="State/Province">
+                                            <input type="text" class="form-input" placeholder="Postal code">
+                                            <select class="form-select">
+                                                <option>Country</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <div class="payment-option" data-method="zip">
+                            <div class="payment-option" data-method="zip" id="zip-option" style="display: none;">
                                 <div class="payment-option-header" onclick="selectPaymentMethod('zip')">
                                     <div class="payment-radio">
                                         <div class="payment-radio-dot"></div>
                                     </div>
                                     <div class="payment-option-icon">
-                                        <svg width="32" height="16" viewBox="0 0 32 16" fill="none">
-                                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1a1a">Zip</text>
-                                        </svg>
+                                        <img src="data:image/svg+xml,%3Csvg width='40' height='24' viewBox='0 0 40 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='24' rx='4' fill='%23000000'/%3E%3Ctext x='20' y='15' text-anchor='middle' fill='white' font-family='Arial' font-size='10' font-weight='bold'%3EZip%3C/text%3E%3C/svg%3E" alt="Zip">
                                     </div>
                                     <div class="payment-option-label">Zip</div>
                                 </div>
+                                <div class="payment-option-content">
+                                    <p>After submission, you will be redirected to securely complete next steps.</p>
+                                    <label class="billing-same-checkbox">
+                                        <input type="checkbox" id="billing-same-zip" checked onchange="toggleBillingAddress('zip')">
+                                        <span>Billing info is same as shipping</span>
+                                    </label>
+                                    <div id="billing-address-zip" class="billing-address-fields"></div>
+                                </div>
                             </div>
                             
-                            <div class="payment-option" data-method="klarna">
+                            <div class="payment-option" data-method="klarna" id="klarna-option" style="display: none;">
                                 <div class="payment-option-header" onclick="selectPaymentMethod('klarna')">
                                     <div class="payment-radio">
                                         <div class="payment-radio-dot"></div>
                                     </div>
                                     <div class="payment-option-icon">
-                                        <svg width="32" height="16" viewBox="0 0 32 16" fill="none">
-                                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="8" font-weight="600" fill="#FFB3C7">K</text>
-                                        </svg>
+                                        <img src="data:image/svg+xml,%3Csvg width='40' height='24' viewBox='0 0 40 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='24' rx='4' fill='%23FFB3C7'/%3E%3Ctext x='20' y='16' text-anchor='middle' fill='white' font-family='Arial' font-size='12' font-weight='bold'%3EK%3C/text%3E%3C/svg%3E" alt="Klarna">
                                     </div>
                                     <div class="payment-option-label">Klarna</div>
+                                </div>
+                                <div class="payment-option-content">
+                                    <p>After submission, you will be redirected to securely complete next steps.</p>
+                                    <label class="billing-same-checkbox">
+                                        <input type="checkbox" id="billing-same-klarna" checked onchange="toggleBillingAddress('klarna')">
+                                        <span>Billing info is same as shipping</span>
+                                    </label>
+                                    <div id="billing-address-klarna" class="billing-address-fields"></div>
                                 </div>
                             </div>
                         </div>
@@ -830,7 +1017,7 @@
                     <div class="footer-links">
                         <div class="powered-by">
                             Powered by
-                            <img src="data:image/svg+xml,%3Csvg width='33' height='14' viewBox='0 0 33 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.3 6.8c0-.8.6-1.4 1.4-1.4h.2c.8 0 1.4.6 1.4 1.4v.2c0 .8-.6 1.4-1.4 1.4h-.2c-.8 0-1.4-.6-1.4-1.4v-.2zm5.5-1.4c-.8 0-1.4.6-1.4 1.4v.2c0 .8.6 1.4 1.4 1.4h.2c.8 0 1.4-.6 1.4-1.4v-.2c0-.8-.6-1.4-1.4-1.4h-.2zm4.1 1.4c0-.8.6-1.4 1.4-1.4h.2c.8 0 1.4.6 1.4 1.4v.2c0 .8-.6 1.4-1.4 1.4h-.2c-.8 0-1.4-.6-1.4-1.4v-.2zm6.9 0c0-.8-.6-1.4-1.4-1.4h-.2c-.8 0-1.4.6-1.4 1.4v.2c0 .8.6 1.4 1.4 1.4h.2c.8 0 1.4-.6 1.4-1.4v-.2zm1.4-1.4c.8 0 1.4.6 1.4 1.4v.2c0 .8-.6 1.4-1.4 1.4h-.2c-.8 0-1.4-.6-1.4-1.4v-.2c0-.8.6-1.4 1.4-1.4h.2zm5.5 0c-.8 0-1.4.6-1.4 1.4v.2c0 .8.6 1.4 1.4 1.4h.2c.8 0 1.4-.6 1.4-1.4v-.2c0-.8-.6-1.4-1.4-1.4h-.2zm4.1 1.4c0-.8.6-1.4 1.4-1.4h.2c.8 0 1.4.6 1.4 1.4v.2c0 .8-.6 1.4-1.4 1.4h-.2c-.8 0-1.4-.6-1.4-1.4v-.2z' fill='%236b7280'/%3E%3C/svg%3E" alt="Stripe">
+                            <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/stripe_assets/Stripe%20logo.png" alt="Stripe">
                         </div>
                         <span class="footer-separator">|</span>
                         <a href="https://asuperbfairywren.com/terms">Terms</a>
@@ -904,12 +1091,22 @@
             'DEFAULT': { 1: 60.50, 2: 78.55, 3: 96.65 }
         };
         
+        // Update book image for mobile
+        function updateBookImage() {
+            const bookImage = document.getElementById('book-image');
+            if (window.innerWidth <= 768) {
+                bookImage.src = 'https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/stripe_assets/Mockup-1ASF_paperback_MED.jpg';
+            } else {
+                bookImage.src = 'https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/stripe_assets/Mockup-1ASF_paperback_SMALL.jpg';
+            }
+        }
+        
+        window.addEventListener('resize', updateBookImage);
+        updateBookImage();
+        
         initialize();
         
         async function initialize() {
-            // Auto-detect country
-            detectCountry();
-            
             // Render addons
             renderAddon();
             
@@ -931,18 +1128,42 @@
             
             const { clientSecret } = await response.json();
             
-            // Setup Stripe Elements
+            // Setup Stripe Elements with custom appearance
             const appearance = {
                 theme: 'stripe',
                 variables: {
-                    colorPrimary: '#635bff',
-                    borderRadius: '6px'
+                    colorPrimary: '#68a5d4',
+                    borderRadius: '6px',
+                    focusBoxShadow: '0 0 0 3px #a7cbe6'
                 }
             };
             
             elements = stripe.elements({ clientSecret, appearance });
-            paymentElement = elements.create('payment');
+            paymentElement = elements.create('payment', {
+                layout: {
+                    type: 'accordion',
+                    defaultCollapsed: false,
+                    radios: false,
+                    spacedAccordionItems: true
+                }
+            });
             paymentElement.mount('#payment-element');
+            
+            // Listen for available payment methods
+            paymentElement.on('ready', () => {
+                // Check which payment methods are available and show/hide accordingly
+                const availableMethods = paymentElement._commonOptions?.paymentMethodOrder || [];
+                
+                // Show Zip option if available
+                if (availableMethods.includes('zip')) {
+                    document.getElementById('zip-option').style.display = 'block';
+                }
+                
+                // Show Klarna option if available
+                if (availableMethods.includes('klarna')) {
+                    document.getElementById('klarna-option').style.display = 'block';
+                }
+            });
             
             // Setup Payment Request Button
             const paymentRequest = stripe.paymentRequest({
@@ -958,30 +1179,26 @@
                 shippingOptions: []
             });
             
-            const prButton = elements.create('paymentRequestButton', { paymentRequest });
-            const result = await paymentRequest.canMakePayment();
-            if (result) {
-                prButton.mount('#payment-request-button');
-                document.getElementById('divider').style.display = 'flex';
-            }
+            const prButton = elements.create('paymentRequestButton', { 
+                paymentRequest,
+                style: {
+                    paymentRequestButton: {
+                        height: '55px'
+                    }
+                }
+            });
+            
+            // Check if payment request is available
+            paymentRequest.canMakePayment().then(result => {
+                if (result) {
+                    prButton.mount('#payment-request-button');
+                    document.getElementById('divider').style.display = 'flex';
+                }
+            });
             
             document.getElementById('loading-state').style.display = 'none';
             document.getElementById('checkout-form').style.display = 'block';
             document.getElementById('submit-button').addEventListener('click', handleSubmit);
-        }
-        
-        async function detectCountry() {
-            try {
-                const response = await fetch('https://ipapi.co/json/');
-                const data = await response.json();
-                if (data.country_code) {
-                    const countrySelect = document.getElementById('country');
-                    countrySelect.value = data.country_code;
-                    calculateShipping();
-                }
-            } catch (error) {
-                console.log('Could not detect country');
-            }
         }
         
         function selectPaymentMethod(method) {
@@ -991,8 +1208,21 @@
             document.querySelector(`[data-method="${method}"]`).classList.add('active');
         }
         
+        function toggleBillingAddress(method) {
+            const checkbox = document.getElementById(`billing-same-${method}`);
+            const fields = document.getElementById(`billing-address-${method}`);
+            
+            if (checkbox.checked) {
+                fields.classList.remove('visible');
+            } else {
+                fields.classList.add('visible');
+            }
+        }
+        
         function renderAddon() {
             const addon = addons[currentAddonIndex];
+            const hasDescription = addon.description ? true : false;
+            
             document.getElementById('addon-container').innerHTML = `
                 <div class="addon-item ${addon.added ? 'added' : ''}">
                     <img src="${addon.image}" alt="${addon.name}" class="addon-image">
@@ -1001,7 +1231,7 @@
                             <div class="addon-name">${addon.name}</div>
                             <div class="addon-price">A$${addon.price.toFixed(2)}</div>
                         </div>
-                        ${addon.description ? `<div class="addon-description">${addon.description}</div>` : ''}
+                        ${hasDescription ? `<div class="addon-description">${addon.description}</div>` : '<div style="height: 28px;"></div>'}
                         <div class="addon-button-wrapper">
                             <button class="add-button ${addon.added ? 'added' : ''}" onclick="toggleAddon('${addon.id}')">
                                 ${addon.added ? '− Remove' : '+ Add'}
@@ -1011,8 +1241,23 @@
                 </div>
             `;
             
-            document.getElementById('prev-addon').disabled = currentAddonIndex === 0;
-            document.getElementById('next-addon').disabled = currentAddonIndex === addons.length - 1;
+            const prevBtn = document.getElementById('prev-addon');
+            const nextBtn = document.getElementById('next-addon');
+            
+            prevBtn.disabled = currentAddonIndex === 0;
+            nextBtn.disabled = currentAddonIndex === addons.length - 1;
+            
+            if (currentAddonIndex === 0) {
+                prevBtn.classList.add('active');
+                prevBtn.classList.remove('inactive');
+                nextBtn.classList.remove('active');
+                nextBtn.classList.add('inactive');
+            } else {
+                prevBtn.classList.remove('active');
+                prevBtn.classList.add('inactive');
+                nextBtn.classList.add('active');
+                nextBtn.classList.remove('inactive');
+            }
         }
         
         function navigateAddon(direction) {
