@@ -16,47 +16,32 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
             background-color: white;
-            color: #1a1a1a;
+            color: #303030;
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
         }
         
         /* Skeleton Loading */
         .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
+            background: #e8e8e8;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skeleton::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.33), transparent);
             animation: loading 1.5s infinite;
         }
-        
+
         @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        
-        .skeleton-logo {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin-bottom: 30px;
-        }
-        
-        .skeleton-text {
-            height: 16px;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-        
-        .skeleton-price {
-            height: 40px;
-            width: 150px;
-            border-radius: 4px;
-            margin-bottom: 32px;
-        }
-        
-        .skeleton-item {
-            height: 100px;
-            border-radius: 8px;
-            margin-bottom: 16px;
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
         
         /* Main Container */
@@ -96,7 +81,7 @@
         }
         
         .logo {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         
         .logo-image {
@@ -110,14 +95,14 @@
             font-size: 17px;
             font-weight: 600;
             color: #6a6a6a;
-            margin-bottom: 8px;
+            margin-bottom: -2px;
         }
         
         .total-amount {
             font-size: 37px;
             font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 32px;
+            color: #303030;
+            margin-bottom: 17px;
             letter-spacing: -0.5px;
         }
         
@@ -144,7 +129,7 @@
         .item-name {
             font-size: 14px;
             font-weight: 500;
-            color: #1a1a1a;
+            color: #303030;
             margin-bottom: 10px;
         }
         
@@ -162,7 +147,7 @@
             border-radius: 6px;
             padding: 6px 28px 6px 10px;
             font-size: 14px;
-            color: #1a1a1a;
+            color: #303030;
             cursor: pointer;
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236b7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -173,13 +158,13 @@
         .item-price {
             font-size: 15px;
             font-weight: 400;
-            color: #1a1a1a;
+            color: #303030;
             white-space: nowrap;
         }
         
         /* Price Breakdown */
         .price-breakdown {
-            padding: 15px 0;
+            padding: 10px 0;
         }
         
         .price-row {
@@ -190,7 +175,7 @@
         }
         
         .price-label {
-            color: #6b7280;
+            color: #6a6a6a;
             font-weight: 400;
         }
         
@@ -199,17 +184,17 @@
         }
         
         .price-value {
-            color: #6b7280;
+            color: #6a6a6a;
             font-weight: 400;
         }
         
         .price-value.bold {
             font-weight: 600;
-            color: #1a1a1a;
+            color: #303030;
         }
         
         .shipping-calculating {
-            color: #6b7280;
+            color: #6a6a6a;
             font-size: 14px;
         }
         
@@ -231,13 +216,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 9px;
         }
         
         .add-to-order-title {
-            font-size: 15px;
+            font-size: 17px;
             font-weight: 500;
-            color: #1a1a1a;
+            color: #303030;
         }
         
         .carousel-nav {
@@ -246,8 +231,8 @@
         }
         
         .carousel-button {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             border: none;
             background: #f4f4f4;
@@ -256,7 +241,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.2s;
-            color: white;
+            color: #303030;
         }
         
         .carousel-button:hover:not(:disabled) {
@@ -264,17 +249,19 @@
         }
         
         .carousel-button:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
+            opacity: 0.5;
+            cursor: default;
             background: #f4f4f4;
         }
         
         .carousel-button.active {
-            background: #5e5e5e;
+            background: #f4f4f4 !important;
+            color: #FFFFFF;
         }
         
         .carousel-button.inactive {
             background: #5e5e5e;
+            color: white;
         }
         
         .carousel-button.inactive:hover {
@@ -282,26 +269,23 @@
         }
         
         .carousel-button svg {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
+            stroke-width: 2;
         }
         
         .addon-item {
             display: flex;
             align-items: flex-start;
             gap: 16px;
-            padding: 16px;
+            padding: 12px 16px;
             border: 1px solid #e0e0e0;
             border-radius: 6px;
             background: white;
             transition: all 0.2s;
             position: relative;
-            min-height: 95px;
-        }
-        
-        .addon-item.added {
-            border-color: #10b981;
-            background: #f0fdf4;
+            height: 100px;
+            overflow: hidden;
         }
         
         .addon-image {
@@ -329,33 +313,38 @@
         .addon-name {
             font-size: 14px;
             font-weight: 500;
-            color: #1a1a1a;
+            color: #303030;
         }
         
         .addon-price {
             font-size: 14px;
             font-weight: 500;
-            color: #1a1a1a;
+            color: #303030;
             white-space: nowrap;
         }
         
         .addon-description {
             font-size: 13px;
             color: #6b7280;
-            margin-top: 7px;
-            margin-bottom: 8px;
+            margin-top: -5px;
+            margin-bottom: 6px;
+        }
+        
+        .addon-spacer {
+            height: 3px;
         }
         
         .addon-button-wrapper {
-            display: flex;
-            justify-content: flex-start;
+            position: absolute;
+            bottom: 10px;
+            left: 77px;
         }
         
         .add-button {
             background: #f4f4f4;
             border: none;
             border-radius: 6px;
-            padding: 8px 16px;
+            padding: 6px 14px;
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
@@ -371,8 +360,8 @@
         }
         
         .add-button.added {
-            background: #10b981;
-            color: white;
+            background: #e8e8e8;
+            color: #303030;
         }
         
         /* Right Panel */
@@ -410,21 +399,21 @@
         
         /* Form */
         .form-section {
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
         
         .section-title {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 500;
-            color: #1a1a1a;
-            margin-bottom: 10px;
+            color: #303030;
+            margin-bottom: 16px;
         }
         
         .section-subtitle {
             font-size: 14px;
             font-weight: 400;
             color: #5f5f5f;
-            margin-bottom: 10px;
+            margin-bottom: 2px;
         }
         
         .form-card {
@@ -438,11 +427,12 @@
         .form-input,
         .form-select {
             width: 100%;
-            height: 40px;
+            height: 30px;
             padding: 0 16px;
             border: none;
             border-bottom: 1px solid #e0e0e0;
-            font-size: 15px;
+            border-radius: 0;
+            font-size: 13px;
             background: white;
             transition: all 0.2s;
             font-family: inherit;
@@ -462,6 +452,14 @@
         
         .form-input::placeholder {
             color: #6b7280;
+        }
+        
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 48px;
         }
         
         /* Payment Method Radio Buttons */
@@ -486,47 +484,36 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 16px;
+            padding: 14px 16px;
             cursor: pointer;
-            position: relative;
+            transition: background 0.2s;
         }
         
         .payment-option-header:hover {
-            background: #f9f9f9;
-        }
-        
-        .payment-option-header:hover .payment-option-label {
-            font-weight: 500;
-        }
-        
-        .payment-option.active .payment-option-header {
-            border: 3px solid white;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .payment-option:last-child.active .payment-option-header {
-            border-bottom: none;
+            background: #fafafa;
         }
         
         .payment-radio {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border: 1.5px solid #a3a3a3;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            transition: all 0.2s;
         }
         
         .payment-option.active .payment-radio {
-            border-color: #000000;
+            border-color: #303030;
             border-width: 2px;
+            background: #303030;
         }
         
         .payment-radio-dot {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: white;
             display: none;
@@ -537,13 +524,14 @@
         }
         
         .payment-option-icon {
-            width: 40px;
-            height: 24px;
+            width: 32px;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         
+        .payment-option-icon svg,
         .payment-option-icon img {
             max-width: 100%;
             max-height: 100%;
@@ -552,35 +540,50 @@
         .payment-option-label {
             flex: 1;
             font-size: 15px;
-            color: #1a1a1a;
-            transition: font-weight 0.2s;
+            color: #303030;
+            font-weight: 400;
         }
         
         .payment-option-content {
-            display: none;
-            padding: 16px;
-            border-top: 1px solid #e0e0e0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
             background: white;
         }
         
         .payment-option.active .payment-option-content {
-            display: block;
+            max-height: 2000px;
+            border-top: 1px solid #e0e0e0;
         }
         
-        .billing-same-checkbox {
+        .payment-option-content-inner {
+            padding: 16px;
+        }
+        
+        .payment-info {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+        
+        .billing-checkbox {
             display: flex;
             align-items: center;
             gap: 8px;
             margin-top: 12px;
-            font-size: 14px;
-            color: #1a1a1a;
             cursor: pointer;
         }
         
-        .billing-same-checkbox input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
+        .billing-checkbox input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
             cursor: pointer;
+        }
+        
+        .billing-checkbox span {
+            font-size: 14px;
+            color: #303030;
         }
         
         .billing-address-fields {
@@ -592,15 +595,9 @@
             display: block;
         }
         
-        /* Stripe Payment Element with custom focus colors */
+        /* Stripe Payment Element */
         #payment-element {
             margin-bottom: 0;
-        }
-        
-        /* Override Stripe element focus colors */
-        .StripeElement--focus {
-            border-color: #68a5d4 !important;
-            box-shadow: 0 0 0 3px #a7cbe6 !important;
         }
         
         /* Pay Button */
@@ -609,7 +606,7 @@
             height: 55px;
             padding: 14px;
             background: #FFE555;
-            color: #1a1a1a;
+            color: #303030;
             border: none;
             border-radius: 6px;
             font-size: 16px;
@@ -658,7 +655,7 @@
         }
         
         .footer-links a:hover {
-            color: #1a1a1a;
+            color: #303030;
         }
         
         .footer-separator {
@@ -667,9 +664,7 @@
         
         /* Loading */
         .loading {
-            text-align: center;
-            padding: 40px;
-            color: #6b7280;
+            padding: 0;
         }
         
         .spinner {
@@ -729,6 +724,15 @@
                 padding: 28px 20px;
             }
             
+            .logo {
+                margin-bottom: 20px;
+            }
+            
+            .logo-image {
+                width: 24px;
+                height: 24px;
+            }
+            
             .merchant-name {
                 display: none;
             }
@@ -736,19 +740,22 @@
             .total-amount {
                 font-size: 32px;
                 text-align: center;
-                margin-bottom: 24px;
+                margin-bottom: 20px;
+                order: 2;
             }
             
             .order-item {
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
+                order: 1;
             }
             
             .item-image {
                 width: 33.33vw;
-                height: auto;
-                aspect-ratio: 2/3;
+                height: 33.33vw;
+                aspect-ratio: 1/1;
+                object-fit: cover;
             }
             
             .item-details {
@@ -757,12 +764,33 @@
                 align-items: center;
             }
             
+            .item-name {
+                font-size: 16px;
+            }
+            
             .item-quantity {
                 justify-content: center;
             }
             
+            .item-price {
+                display: none;
+            }
+            
+            .add-to-order {
+                order: 3;
+            }
+            
+            .price-breakdown {
+                order: 4;
+            }
+            
+            .total-row {
+                order: 5;
+            }
+            
             #payment-request-button {
-                min-height: 75px;
+                min-height: 60px;
+                border-radius: 10px;
             }
         }
     </style>
@@ -772,89 +800,85 @@
         <div class="checkout-container">
             <!-- Left Panel -->
             <div class="order-summary">
-                <div id="left-skeleton" style="display: none;">
-                    <div class="skeleton skeleton-logo"></div>
-                    <div class="skeleton skeleton-text" style="width: 60%;"></div>
-                    <div class="skeleton skeleton-price"></div>
-                    <div class="skeleton skeleton-item"></div>
-                    <div class="skeleton skeleton-item"></div>
+                <div class="logo">
+                    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Fairywren_stamp_icon-CIRCLE_Small.png" alt="A Superb Fairywren" class="logo-image">
                 </div>
                 
-                <div id="left-content">
-                    <div class="logo">
-                        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Fairywren_stamp_icon-CIRCLE_Small.png" alt="A Superb Fairywren" class="logo-image">
-                    </div>
-                    
-                    <div class="merchant-name">Buy: A Superb Fairywren</div>
-                    <div class="total-amount" id="total-display">A$19.99</div>
-                    
-                    <!-- Main Product -->
-                    <div class="order-item">
-                        <img id="book-image" src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/stripe_assets/Mockup-1ASF_paperback_SMALL.jpg" alt="Book Cover" class="item-image">
-                        <div class="item-details">
-                            <div class="item-name">A Superb Fairywren (Paperback)</div>
-                            <div class="item-quantity">
-                                <select class="quantity-box" id="quantity-select">
-                                    <option value="1">Qty 1</option>
-                                    <option value="2">Qty 2</option>
-                                    <option value="3">Qty 3</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="item-price" id="book-price">A$19.99</div>
-                    </div>
-                    
-                    <!-- Price Breakdown -->
-                    <div class="price-breakdown">
-                        <div class="price-row">
-                            <div class="price-label bold">Subtotal</div>
-                            <div class="price-value bold" id="subtotal">A$19.99</div>
-                        </div>
-                        <div class="price-row">
-                            <div class="price-label">Shipping</div>
-                            <div class="price-value shipping-calculating" id="shipping-cost">Enter address to calculate</div>
-                        </div>
-                        <div class="price-row">
-                            <div class="price-label">Tax</div>
-                            <div class="price-value">A$0.00</div>
+                <div class="merchant-name">Buy: A Superb Fairywren</div>
+                <div class="total-amount" id="total-display">A$19.99</div>
+                
+                <!-- Main Product -->
+                <div class="order-item">
+                    <img id="book-image" src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/stripe_assets/Mockup-1ASF_paperback_SMALL.jpg" alt="Book Cover" class="item-image">
+                    <div class="item-details">
+                        <div class="item-name">A Superb Fairywren (Paperback)</div>
+                        <div class="item-quantity">
+                            <select class="quantity-box" id="quantity-select">
+                                <option value="1">Qty 1</option>
+                                <option value="2">Qty 2</option>
+                                <option value="3">Qty 3</option>
+                            </select>
                         </div>
                     </div>
-                    
-                    <div class="total-row">
-                        <div>Total due</div>
-                        <div id="total-due">A$19.99</div>
+                    <div class="item-price" id="book-price">A$19.99</div>
+                </div>
+                
+                <!-- Price Breakdown -->
+                <div class="price-breakdown">
+                    <div class="price-row">
+                        <div class="price-label bold">Subtotal</div>
+                        <div class="price-value bold" id="subtotal">A$19.99</div>
                     </div>
-                    
-                    <!-- Add-ons -->
-                    <div class="add-to-order">
-                        <div class="add-to-order-header">
-                            <div class="add-to-order-title">Add to your order</div>
-                            <div class="carousel-nav">
-                                <button class="carousel-button active" id="prev-addon" disabled>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                                        <polyline points="12 19 5 12 12 5"></polyline>
-                                    </svg>
-                                </button>
-                                <button class="carousel-button inactive" id="next-addon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        <polyline points="12 5 19 12 12 19"></polyline>
-                                    </svg>
-                                </button>
-                            </div>
+                    <div class="price-row">
+                        <div class="price-label">Shipping</div>
+                        <div class="price-value shipping-calculating" id="shipping-cost">Enter address to calculate</div>
+                    </div>
+                    <div class="price-row">
+                        <div class="price-label">Tax</div>
+                        <div class="price-value">A$0.00</div>
+                    </div>
+                </div>
+                
+                <div class="total-row">
+                    <div>Total due</div>
+                    <div id="total-due">A$19.99</div>
+                </div>
+                
+                <!-- Add-ons -->
+                <div class="add-to-order">
+                    <div class="add-to-order-header">
+                        <div class="add-to-order-title">Add to your order</div>
+                        <div class="carousel-nav">
+                            <button class="carousel-button active" id="prev-addon" disabled>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                                    <polyline points="12 19 5 12 12 5"></polyline>
+                                </svg>
+                            </button>
+                            <button class="carousel-button inactive" id="next-addon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </button>
                         </div>
-                        
-                        <div id="addon-container"></div>
                     </div>
+                    
+                    <div id="addon-container"></div>
                 </div>
             </div>
             
             <!-- Right Panel -->
             <div class="payment-panel">
                 <div id="loading-state" class="loading">
-                    <div class="spinner"></div>
-                    <p>Loading checkout...</p>
+                    <div class="skeleton" style="height: 55px; border-radius: 8px; margin-bottom: 24px;"></div>
+                    <div class="skeleton" style="height: 20px; width: 60%; border-radius: 4px; margin-bottom: 16px;"></div>
+                    <div class="skeleton" style="height: 40px; border-radius: 8px; margin-bottom: 24px;"></div>
+                    <div class="skeleton" style="height: 20px; width: 50%; border-radius: 4px; margin-bottom: 16px;"></div>
+                    <div class="skeleton" style="height: 200px; border-radius: 8px; margin-bottom: 24px;"></div>
+                    <div class="skeleton" style="height: 20px; width: 40%; border-radius: 4px; margin-bottom: 16px;"></div>
+                    <div class="skeleton" style="height: 150px; border-radius: 8px; margin-bottom: 24px;"></div>
+                    <div class="skeleton" style="height: 55px; border-radius: 8px;"></div>
                 </div>
                 
                 <div id="checkout-form" style="display: none;">
@@ -871,7 +895,7 @@
                         
                         <div class="section-subtitle">Email</div>
                         <div class="form-card">
-                            <input type="email" class="form-input" id="email" placeholder="Email" required>
+                            <input type="email" class="form-input" id="email" placeholder="email@example.com" required>
                         </div>
                     </div>
                     
@@ -926,82 +950,94 @@
                         <div class="section-title">Payment method</div>
                         
                         <div class="payment-options">
-                            <div class="payment-option active" data-method="card">
-                                <div class="payment-option-header" onclick="selectPaymentMethod('card')">
+                            <div class="payment-option active" data-method="card" onclick="selectPayment('card')">
+                                <div class="payment-option-header">
                                     <div class="payment-radio">
                                         <div class="payment-radio-dot"></div>
                                     </div>
                                     <div class="payment-option-icon">
-                                        <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
-                                            <rect x="0.5" y="0.5" width="39" height="23" rx="3" fill="white" stroke="#d1d5db"/>
-                                            <rect x="3" y="5" width="10" height="8" rx="1" fill="#1a1a1a"/>
+                                        <svg width="32" height="20" viewBox="0 0 32 20" fill="none">
+                                            <rect x="0.5" y="0.5" width="31" height="19" rx="2.5" fill="white" stroke="#d1d5db"/>
+                                            <rect x="2" y="4" width="8" height="6" rx="1" fill="#303030"/>
                                         </svg>
                                     </div>
                                     <div class="payment-option-label">Card</div>
                                 </div>
                                 <div class="payment-option-content">
-                                    <div id="payment-element"></div>
-                                    <label class="billing-same-checkbox">
-                                        <input type="checkbox" id="billing-same-card" checked onchange="toggleBillingAddress('card')">
-                                        <span>Billing info is same as shipping</span>
-                                    </label>
-                                    <div id="billing-address-card" class="billing-address-fields">
-                                        <div class="section-subtitle" style="margin-top: 16px;">Name</div>
-                                        <div class="form-card" style="margin-bottom: 12px;">
-                                            <input type="text" class="form-input" id="billing-name-card" placeholder="Name on card">
-                                        </div>
-                                        <div class="section-subtitle">Billing address</div>
-                                        <div class="form-card">
-                                            <input type="text" class="form-input" placeholder="Address line 1">
-                                            <input type="text" class="form-input" placeholder="Address line 2">
-                                            <input type="text" class="form-input" placeholder="City">
-                                            <input type="text" class="form-input" placeholder="State/Province">
-                                            <input type="text" class="form-input" placeholder="Postal code">
-                                            <select class="form-select">
-                                                <option>Country</option>
-                                            </select>
+                                    <div class="payment-option-content-inner">
+                                        <div id="payment-element"></div>
+                                        <label class="billing-checkbox">
+                                            <input type="checkbox" id="billing-same-card" checked onchange="toggleBillingAddress('card')">
+                                            <span>Billing info is same as shipping</span>
+                                        </label>
+                                        <div id="billing-address-card" class="billing-address-fields">
+                                            <div class="section-subtitle" style="margin-top: 16px;">Name</div>
+                                            <div class="form-card" style="margin-bottom: 12px;">
+                                                <input type="text" class="form-input" placeholder="Name on card">
+                                            </div>
+                                            <div class="section-subtitle">Billing address</div>
+                                            <div class="form-card">
+                                                <input type="text" class="form-input" placeholder="Address line 1">
+                                                <input type="text" class="form-input" placeholder="Address line 2">
+                                                <input type="text" class="form-input" placeholder="City">
+                                                <input type="text" class="form-input" placeholder="State/Province">
+                                                <input type="text" class="form-input" placeholder="Postal code">
+                                                <select class="form-select">
+                                                    <option>Country</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             
-                            <div class="payment-option" data-method="zip" id="zip-option" style="display: none;">
-                                <div class="payment-option-header" onclick="selectPaymentMethod('zip')">
+                            <div class="payment-option" data-method="zip" id="zip-option" style="display: none;" onclick="selectPayment('zip')">
+                                <div class="payment-option-header">
                                     <div class="payment-radio">
                                         <div class="payment-radio-dot"></div>
                                     </div>
                                     <div class="payment-option-icon">
-                                        <img src="data:image/svg+xml,%3Csvg width='40' height='24' viewBox='0 0 40 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='24' rx='4' fill='%23000000'/%3E%3Ctext x='20' y='15' text-anchor='middle' fill='white' font-family='Arial' font-size='10' font-weight='bold'%3EZip%3C/text%3E%3C/svg%3E" alt="Zip">
+                                        <svg width="32" height="16" viewBox="0 0 32 16" fill="none">
+                                            <rect width="32" height="16" rx="2" fill="#000000"/>
+                                            <text x="16" y="11" text-anchor="middle" fill="white" font-family="Arial" font-size="8" font-weight="bold">Zip</text>
+                                        </svg>
                                     </div>
                                     <div class="payment-option-label">Zip</div>
                                 </div>
                                 <div class="payment-option-content">
-                                    <p>After submission, you will be redirected to securely complete next steps.</p>
-                                    <label class="billing-same-checkbox">
-                                        <input type="checkbox" id="billing-same-zip" checked onchange="toggleBillingAddress('zip')">
-                                        <span>Billing info is same as shipping</span>
-                                    </label>
-                                    <div id="billing-address-zip" class="billing-address-fields"></div>
+                                    <div class="payment-option-content-inner">
+                                        <p class="payment-info">After submission, you will be redirected to securely complete next steps.</p>
+                                        <label class="billing-checkbox">
+                                            <input type="checkbox" id="billing-same-zip" checked onchange="toggleBillingAddress('zip')">
+                                            <span>Billing info is same as shipping</span>
+                                        </label>
+                                        <div id="billing-address-zip" class="billing-address-fields"></div>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <div class="payment-option" data-method="klarna" id="klarna-option" style="display: none;">
-                                <div class="payment-option-header" onclick="selectPaymentMethod('klarna')">
+                            <div class="payment-option" data-method="klarna" id="klarna-option" style="display: none;" onclick="selectPayment('klarna')">
+                                <div class="payment-option-header">
                                     <div class="payment-radio">
                                         <div class="payment-radio-dot"></div>
                                     </div>
                                     <div class="payment-option-icon">
-                                        <img src="data:image/svg+xml,%3Csvg width='40' height='24' viewBox='0 0 40 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='24' rx='4' fill='%23FFB3C7'/%3E%3Ctext x='20' y='16' text-anchor='middle' fill='white' font-family='Arial' font-size='12' font-weight='bold'%3EK%3C/text%3E%3C/svg%3E" alt="Klarna">
+                                        <svg width="32" height="16" viewBox="0 0 32 16" fill="none">
+                                            <rect width="32" height="16" rx="2" fill="#FFB3C7"/>
+                                            <text x="16" y="12" text-anchor="middle" fill="white" font-family="Arial" font-size="10" font-weight="bold">K</text>
+                                        </svg>
                                     </div>
                                     <div class="payment-option-label">Klarna</div>
                                 </div>
                                 <div class="payment-option-content">
-                                    <p>After submission, you will be redirected to securely complete next steps.</p>
-                                    <label class="billing-same-checkbox">
-                                        <input type="checkbox" id="billing-same-klarna" checked onchange="toggleBillingAddress('klarna')">
-                                        <span>Billing info is same as shipping</span>
-                                    </label>
-                                    <div id="billing-address-klarna" class="billing-address-fields"></div>
+                                    <div class="payment-option-content-inner">
+                                        <p class="payment-info">After submission, you will be redirected to securely complete next steps.</p>
+                                        <label class="billing-checkbox">
+                                            <input type="checkbox" id="billing-same-klarna" checked onchange="toggleBillingAddress('klarna')">
+                                            <span>Billing info is same as shipping</span>
+                                        </label>
+                                        <div id="billing-address-klarna" class="billing-address-fields"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1042,7 +1078,8 @@
                 name: 'Signed by Daniel MEA',
                 price: 10.00,
                 image: 'https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/stripe_assets/Mockup-Signature_SMALL.jpg',
-                added: false
+                added: false,
+                hasSpacer: true
             },
             {
                 id: 'donation',
@@ -1051,7 +1088,8 @@
                 description: 'For the cause. Or just because.',
                 price: 5.00,
                 image: 'https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/stripe_assets/Sparkly%20Heart.jpg',
-                added: false
+                added: false,
+                hasSpacer: false
             }
         ];
         let currentAddonIndex = 0;
@@ -1128,7 +1166,7 @@
             
             const { clientSecret } = await response.json();
             
-            // Setup Stripe Elements with custom appearance
+            // Setup Stripe Elements
             const appearance = {
                 theme: 'stripe',
                 variables: {
@@ -1148,22 +1186,6 @@
                 }
             });
             paymentElement.mount('#payment-element');
-            
-            // Listen for available payment methods
-            paymentElement.on('ready', () => {
-                // Check which payment methods are available and show/hide accordingly
-                const availableMethods = paymentElement._commonOptions?.paymentMethodOrder || [];
-                
-                // Show Zip option if available
-                if (availableMethods.includes('zip')) {
-                    document.getElementById('zip-option').style.display = 'block';
-                }
-                
-                // Show Klarna option if available
-                if (availableMethods.includes('klarna')) {
-                    document.getElementById('klarna-option').style.display = 'block';
-                }
-            });
             
             // Setup Payment Request Button
             const paymentRequest = stripe.paymentRequest({
@@ -1188,7 +1210,6 @@
                 }
             });
             
-            // Check if payment request is available
             paymentRequest.canMakePayment().then(result => {
                 if (result) {
                     prButton.mount('#payment-request-button');
@@ -1201,7 +1222,7 @@
             document.getElementById('submit-button').addEventListener('click', handleSubmit);
         }
         
-        function selectPaymentMethod(method) {
+        function selectPayment(method) {
             document.querySelectorAll('.payment-option').forEach(opt => {
                 opt.classList.remove('active');
             });
@@ -1221,20 +1242,19 @@
         
         function renderAddon() {
             const addon = addons[currentAddonIndex];
-            const hasDescription = addon.description ? true : false;
             
             document.getElementById('addon-container').innerHTML = `
-                <div class="addon-item ${addon.added ? 'added' : ''}">
+                <div class="addon-item">
                     <img src="${addon.image}" alt="${addon.name}" class="addon-image">
                     <div class="addon-info">
                         <div class="addon-header">
                             <div class="addon-name">${addon.name}</div>
                             <div class="addon-price">A$${addon.price.toFixed(2)}</div>
                         </div>
-                        ${hasDescription ? `<div class="addon-description">${addon.description}</div>` : '<div style="height: 28px;"></div>'}
+                        ${addon.description ? `<div class="addon-description">${addon.description}</div>` : '<div class="addon-spacer"></div>'}
                         <div class="addon-button-wrapper">
                             <button class="add-button ${addon.added ? 'added' : ''}" onclick="toggleAddon('${addon.id}')">
-                                ${addon.added ? '− Remove' : '+ Add'}
+                                ${addon.added ? 'Remove' : '+ Add'}
                             </button>
                         </div>
                     </div>
