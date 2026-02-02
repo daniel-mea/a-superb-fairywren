@@ -1706,13 +1706,13 @@
         
         let quantity = 1;
         let bookPrice = 19.99;
-        let bookPriceId = 'price_1SwKnUK70oIXhMLJHCzUV0hW';
+        let bookPriceId = 'price_1SurYMK70oIXhMLJcdTma7yS';
         let shippingCost = 0;
         
         let addons = [
             {
                 id: 'signed',
-                priceId: 'price_1SwKpkK70oIXhMLJR0dpf0rM',
+                priceId: 'price_1SuObOK70oIXhMLJyoE8zZe9',
                 name: 'Signed by Daniel MEA',
                 price: 10.00,
                 image: 'https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/stripe_assets/Mockup-Signature_SMALL.jpg',
@@ -1721,7 +1721,7 @@
             },
             {
                 id: 'donation',
-                priceId: 'price_1SwKoSK70oIXhMLJxE4uLEvo',
+                priceId: 'price_1SuNq1K70oIXhMLJcgS2dRKg',
                 name: 'Extra Donation',
                 description: 'For the cause. Or just because.',
                 price: 5.00,
@@ -2119,10 +2119,10 @@ elements = stripe.elements({ appearance });
                     
                     const data = await response.json();
                     
-                    // Confirm the payment
-                    const { error, paymentIntent } = await stripe.confirmCardPayment(
-                        data.client_secret,
-                        {
+                    // Confirm the payment using the payment method from the wallet
+                    const { error, paymentIntent } = await stripe.confirmPayment({
+                        clientSecret: data.client_secret,
+                        confirmParams: {
                             payment_method: ev.paymentMethod.id,
                             shipping: {
                                 name: ev.shippingAddress.recipient || ev.payerName,
@@ -2136,8 +2136,8 @@ elements = stripe.elements({ appearance });
                                 }
                             }
                         },
-                        { handleActions: false }
-                    );
+                        redirect: 'if_required'
+                    });
                     
                     if (error) {
                         ev.complete('fail');
@@ -2147,17 +2147,16 @@ elements = stripe.elements({ appearance });
                     
                     ev.complete('success');
                     
-                    // Handle any required actions (3D Secure, etc.)
-                    if (paymentIntent.status === 'requires_action') {
-                        const { error: actionError } = await stripe.confirmCardPayment(data.client_secret);
-                        if (actionError) {
-                            showError(actionError.message);
-                            return;
-                        }
+                    // Handle any required actions (3D Secure, etc.) - already handled by redirect: 'if_required'
+                    if (paymentIntent && paymentIntent.status === 'succeeded') {
+                        window.location.href = 'https://asuperbfairywren.com/danny-paymentsuccess';
+                    } else if (paymentIntent && paymentIntent.status === 'requires_action') {
+                        // This shouldn't happen with redirect: 'if_required', but just in case
+                        window.location.href = 'https://asuperbfairywren.com/danny-paymentsuccess';
+                    } else {
+                        // Payment succeeded or is processing
+                        window.location.href = 'https://asuperbfairywren.com/danny-paymentsuccess';
                     }
-                    
-                    // Success - redirect
-                    window.location.href = 'https://asuperbfairywren.com/danny-paymentsuccess';
                     
                 } catch (err) {
                     console.error('Payment error:', err);
