@@ -1725,7 +1725,7 @@
             }
         ];
         let currentAddonIndex = 0;
-        let elements, cardNumberElement, cardExpiryElement, cardCvcElement;
+        let elements, cardNumberElement, cardExpiryElement, cardCvcElement, clientSecret;
         
         const shippingRates = {
             'AU': { 1: 10.05, 2: 11.50, 3: 15.65 },
@@ -1998,7 +1998,7 @@
             });
             
             const data = await response.json();
-            const clientSecret = data.client_secret;
+            clientSecret = data.client_secret;
 
             // Setup Stripe Elements
             const appearance = {
