@@ -2119,44 +2119,34 @@ elements = stripe.elements({ appearance });
                     
                     const data = await response.json();
                     
-                    // Confirm the payment using the payment method from the wallet
-                    const { error, paymentIntent } = await stripe.confirmPayment({
-                        clientSecret: data.client_secret,
-                        confirmParams: {
-                            payment_method: ev.paymentMethod.id,
-                            shipping: {
-                                name: ev.shippingAddress.recipient || ev.payerName,
-                                address: {
-                                    line1: ev.shippingAddress.addressLine[0] || '',
-                                    line2: ev.shippingAddress.addressLine[1] || '',
-                                    city: ev.shippingAddress.city || '',
-                                    state: ev.shippingAddress.region || '',
-                                    postal_code: ev.shippingAddress.postalCode || '',
-                                    country: ev.shippingAddress.country
-                                }
-                            }
-                        },
-                        redirect: 'if_required'
-                    });
+                    // Confirm the PaymentIntent without handling potential next actions (yet)
+                    const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
+                        data.client_secret,
+                        { payment_method: ev.paymentMethod.id },
+                        { handleActions: false }
+                    );
                     
-                    if (error) {
+                    if (confirmError) {
+                        // Report to the browser that the payment failed
                         ev.complete('fail');
-                        showError(error.message);
+                        showError(confirmError.message);
                         return;
                     }
                     
+                    // Report to the browser that the confirmation was successful
                     ev.complete('success');
                     
-                    // Handle any required actions (3D Secure, etc.) - already handled by redirect: 'if_required'
-                    if (paymentIntent && paymentIntent.status === 'succeeded') {
-                        window.location.href = 'https://asuperbfairywren.com/danny-paymentsuccess';
-                    } else if (paymentIntent && paymentIntent.status === 'requires_action') {
-                        // This shouldn't happen with redirect: 'if_required', but just in case
-                        window.location.href = 'https://asuperbfairywren.com/danny-paymentsuccess';
-                    } else {
-                        // Payment succeeded or is processing
-                        window.location.href = 'https://asuperbfairywren.com/danny-paymentsuccess';
+                    // Check if the PaymentIntent requires any actions (3D Secure, etc.)
+                    if (paymentIntent.status === 'requires_action') {
+                        const { error: actionError } = await stripe.confirmCardPayment(data.client_secret);
+                        if (actionError) {
+                            showError(actionError.message);
+                            return;
+                        }
                     }
+                    
+                    // Success - redirect
+                    window.location.href = 'https://asuperbfairywren.com/danny-paymentsuccess';
                     
                 } catch (err) {
                     console.error('Payment error:', err);
