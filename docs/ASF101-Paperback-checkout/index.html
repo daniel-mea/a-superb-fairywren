@@ -1975,30 +1975,6 @@
             document.getElementById('country').addEventListener('change', calculateShipping);
             document.getElementById('prev-addon').addEventListener('click', () => navigateAddon(-1));
             document.getElementById('next-addon').addEventListener('click', () => navigateAddon(1));
-            
-            // Build line items
-            const lineItems = [
-                { price: bookPriceId, quantity: quantity }
-            ];
-
-            // Add addons if selected
-            addons.forEach(addon => {
-                if (addon.added) {
-                    lineItems.push({ price: addon.priceId, quantity: 1 });
-                }
-            });
-
-            // Create PaymentIntent
-            const response = await fetch('https://asf101-create-payment-intent.daniel-d-mea.workers.dev', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    line_items: lineItems
-                })
-            });
-            
-            const data = await response.json();
-            clientSecret = data.client_secret;
 
             // Setup Stripe Elements
             const appearance = {
@@ -2009,8 +1985,8 @@
                     focusBoxShadow: '0 0 0 3px #a7cbe6'
                 }
             };
-            
-            elements = stripe.elements({ clientSecret, appearance });
+
+elements = stripe.elements({ appearance });
             
             // Create individual card elements
             cardNumberElement = elements.create('cardNumber', {
@@ -2237,7 +2213,31 @@
             }
             
             setLoading(true);
-            
+
+            // Build line items with current values
+const lineItems = [
+    { price: bookPriceId, quantity: quantity }
+];
+
+addons.forEach(addon => {
+    if (addon.added) {
+        lineItems.push({ price: addon.priceId, quantity: 1 });
+    }
+});
+
+// Create PaymentIntent with final amounts
+const response = await fetch('https://asf101-create-payment-intent.daniel-d-mea.workers.dev', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        line_items: lineItems,
+        shipping_amount: Math.round(shippingCost * 100)
+    })
+});
+
+const data = await response.json();
+clientSecret = data.client_secret;
+
             const { error } = await stripe.confirmCardPayment(
                 clientSecret,
                 {
