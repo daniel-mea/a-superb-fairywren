@@ -2239,7 +2239,7 @@
             setLoading(true);
             
             const { error } = await stripe.confirmCardPayment(
-                elements._clientSecret,
+                clientSecret,
                 {
                     payment_method: {
                         card: cardNumberElement,
