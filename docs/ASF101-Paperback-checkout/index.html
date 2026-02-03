@@ -2254,44 +2254,46 @@ elements = stripe.elements({ appearance });
         }
         
         function renderAddon() {
-            const addon = addons[currentAddonIndex];
-            
-            document.getElementById('addon-container').innerHTML = `
-                <div class="addon-item">
-                    <img src="${addon.image}" alt="${addon.name}" class="addon-image">
-                    <div class="addon-info">
-                        <div class="addon-header">
-                            <div class="addon-name">${addon.name}</div>
-                            <div class="addon-price">A$${addon.price.toFixed(2)}</div>
-                        </div>
-                        ${addon.description ? `<div class="addon-description">${addon.description}</div>` : '<div class="addon-spacer"></div>'}
-                        <div class="addon-button-wrapper">
-                            <button class="add-button ${addon.added ? 'added' : ''}" onclick="toggleAddon('${addon.id}')">
-                                ${addon.added ? 'Remove' : '+ Add'}
-                            </button>
-                        </div>
-                    </div>
+    const addon = addons[currentAddonIndex];
+    
+    document.getElementById('addon-container').innerHTML = `
+        <div class="addon-item">
+            <img src="${addon.image}" alt="${addon.name}" class="addon-image">
+            <div class="addon-info">
+                <div class="addon-header">
+                    <div class="addon-name">${addon.name}</div>
+                    <div class="addon-price">${currencySymbol}${addon.price.toFixed(2)}</div>
                 </div>
-            `;
-            
-            const prevBtn = document.getElementById('prev-addon');
-            const nextBtn = document.getElementById('next-addon');
-            
-            prevBtn.disabled = currentAddonIndex === 0;
-            nextBtn.disabled = currentAddonIndex === addons.length - 1;
-            
-            if (currentAddonIndex === 0) {
-                prevBtn.classList.add('active');
-                prevBtn.classList.remove('inactive');
-                nextBtn.classList.remove('active');
-                nextBtn.classList.add('inactive');
-            } else {
-                prevBtn.classList.remove('active');
-                prevBtn.classList.add('inactive');
-                nextBtn.classList.add('active');
-                nextBtn.classList.remove('inactive');
-            }
-        }
+                ${addon.description ? `<div class="addon-description">${addon.description}</div>` : '<div class="addon-spacer"></div>'}
+                <div class="addon-button-wrapper">
+                    <button class="add-button ${addon.added ? 'added' : ''}" onclick="toggleAddon('${addon.id}')">
+                        ${addon.added ? 'Remove' : '+ Add'}
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    updateAllPriceDisplays();
+
+    const prevBtn = document.getElementById('prev-addon');
+    const nextBtn = document.getElementById('next-addon');
+    
+    prevBtn.disabled = currentAddonIndex === 0;
+    nextBtn.disabled = currentAddonIndex === addons.length - 1;
+    
+    if (currentAddonIndex === 0) {
+        prevBtn.classList.add('active');
+        prevBtn.classList.remove('inactive');
+        nextBtn.classList.remove('active');
+        nextBtn.classList.add('inactive');
+    } else {
+        prevBtn.classList.remove('active');
+        prevBtn.classList.add('inactive');
+        nextBtn.classList.add('active');
+        nextBtn.classList.remove('inactive');
+    }
+}
         
         function navigateAddon(direction) {
             currentAddonIndex += direction;
@@ -2485,14 +2487,15 @@ clientSecret = data.client_secret;
             document.getElementById('button-spinner').style.display = loading ? 'block' : 'none';
         }
         
-// Auto-select Card payment method on page load
-document.addEventListener('DOMContentLoaded', function() {
-    initializeCurrency();
+// Auto-select Card + load correct currency first
+document.addEventListener('DOMContentLoaded', async function() {
     const cardOption = document.querySelector('.payment-option[data-method="card"]');
-    if (cardOption) {
-        cardOption.classList.add('active');
-    }
+    if (cardOption) cardOption.classList.add('active');
+
+    await initializeCurrency();   // ← waits for € / US$ etc.
+    initialize();                 // ← then renders everything correctly
 });
+
     </script>
 </body>
 </html>
