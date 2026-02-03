@@ -1706,13 +1706,13 @@
         
         let quantity = 1;
         let bookPrice = 19.99;
-        let bookPriceId = 'price_1SwKnUK70oIXhMLJHCzUV0hW';
+        let bookPriceId = 'price_1SurYMK70oIXhMLJcdTma7yS';
         let shippingCost = 0;
         
         let addons = [
             {
                 id: 'signed',
-                priceId: 'price_1SwKpkK70oIXhMLJR0dpf0rM',
+                priceId: 'price_1SuObOK70oIXhMLJyoE8zZe9',
                 name: 'Signed by Daniel MEA',
                 price: 10.00,
                 image: 'https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/stripe_assets/Mockup-Signature_SMALL.jpg',
@@ -1721,7 +1721,7 @@
             },
             {
                 id: 'donation',
-                priceId: 'price_1SwKoSK70oIXhMLJxE4uLEvo',
+                priceId: 'price_1SuNq1K70oIXhMLJcgS2dRKg',
                 name: 'Extra Donation',
                 description: 'For the cause. Or just because.',
                 price: 5.00,
@@ -1732,6 +1732,9 @@
         ];
         let currentAddonIndex = 0;
         let elements, cardNumberElement, cardExpiryElement, cardCvcElement, clientSecret;
+        let userCurrency = 'AUD';
+        let currencySymbol = 'A$';
+        let exchangeRate = 1;
         let paymentRequest = null;
         
         const shippingRates = {
@@ -1957,7 +1960,59 @@
     'ZM': { 1: 60.50, 2: 78.55, 3: 96.65 },
     'ZW': { 1: 60.50, 2: 78.55, 3: 96.65 }
         };
+
+        // Initialize currency and prices on page load
+        async function initializeCurrency() {
+            try {
+                // Detect user's country/currency
+                const detectResponse = await fetch('https://asf101-create-payment-intent.daniel-d-mea.workers.dev/detect-country');
+                const { currency } = await detectResponse.json();
+                userCurrency = currency;
+                
+                // Get prices in user's currency
+                const pricesResponse = await fetch(`https://asf101-create-payment-intent.daniel-d-mea.workers.dev/get-prices?currency=${currency}`);
+                const pricesData = await pricesResponse.json();
+                
+                currencySymbol = pricesData.currencySymbol;
+                exchangeRate = pricesData.exchangeRate;
+                
+                // Update product prices
+                bookPrice = pricesData.prices.book / 100;
+                addons[0].price = pricesData.prices.signed / 100;
+                addons[1].price = pricesData.prices.donation / 100;
+                
+                // Update all price displays
+                updateAllPriceDisplays();
+                
+            } catch (error) {
+                console.error('Failed to initialize currency:', error);
+                // Fallback to AUD
+                userCurrency = 'AUD';
+                currencySymbol = 'A$';
+            }
+        }
         
+        function updateAllPriceDisplays() {
+            // Update book price display
+            document.getElementById('book-price').textContent = `${currencySymbol}${(bookPrice * quantity).toFixed(2)}`;
+            
+            // Update addon prices in the carousel
+            const addonPriceElements = document.querySelectorAll('.addon-price');
+            addonPriceElements.forEach((el, index) => {
+                if (addons[index]) {
+                    el.textContent = `+ ${currencySymbol}${addons[index].price.toFixed(2)}`;
+                }
+            });
+            
+            // Update totals
+            updateTotals();
+        }
+        
+        function convertShipping(audAmount) {
+            if (userCurrency === 'AUD') return audAmount;
+            return Math.round(audAmount * exchangeRate * 100) / 100;
+        }
+
         // Update book image for mobile
         function updateBookImage() {
             const bookImage = document.getElementById('book-image');
@@ -2042,7 +2097,7 @@ elements = stripe.elements({ appearance });
             // Setup Payment Request Button
             paymentRequest = stripe.paymentRequest({
                 country: 'AU',
-                currency: 'aud',
+                currency: userCurrency.toLowerCase(),
                 total: {
                     label: 'A Superb Fairywren',
                     amount: Math.round(getTotal() * 100) || 3004
@@ -2108,7 +2163,8 @@ elements = stripe.elements({ appearance });
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             line_items: lineItems,
-                            shipping_amount: Math.round(finalShipping * 100)
+                            shipping_amount: Math.round(finalShipping * 100),
+                            currency: userCurrency
                         })
                     });
                     
@@ -2265,8 +2321,9 @@ elements = stripe.elements({ appearance });
                 document.getElementById('shipping-cost').className = 'price-value shipping-calculating';
             } else {
                 const rates = shippingRates[country] || shippingRates['DEFAULT'];
-                shippingCost = rates[quantity] || rates[3];
-                document.getElementById('shipping-cost').textContent = `A$${shippingCost.toFixed(2)}`;
+                const audShipping = rates[quantity] || rates[3];
+                shippingCost = convertShipping(audShipping);
+                document.getElementById('shipping-cost').textContent = `${currencySymbol}${shippingCost.toFixed(2)}`;
                 document.getElementById('shipping-cost').className = 'price-value';
             }
             updateTotals();
@@ -2321,14 +2378,14 @@ elements = stripe.elements({ appearance });
             const addonsCost = getAddonsCost();
             const total = getTotal();
             
-            document.getElementById('book-price').textContent = `A$${(bookPrice * quantity).toFixed(2)}`;
-            document.getElementById('subtotal').textContent = `A$${subtotal.toFixed(2)}`;
-            document.getElementById('addons-cost').textContent = `A$${addonsCost.toFixed(2)}`;
-            document.getElementById('total-due').textContent = `A$${total.toFixed(2)}`;
+            document.getElementById('book-price').textContent = `${currencySymbol}${(bookPrice * quantity).toFixed(2)}`;
+            document.getElementById('subtotal').textContent = `${currencySymbol}${subtotal.toFixed(2)}`;
+            document.getElementById('addons-cost').textContent = `${currencySymbol}${addonsCost.toFixed(2)}`;
+            document.getElementById('total-due').textContent = `${currencySymbol}${total.toFixed(2)}`;
             
             // Update both desktop and mobile price displays
-            document.getElementById('total-display-desktop').textContent = `A$${total.toFixed(2)}`;
-            document.getElementById('total-display-mobile').textContent = `A$${total.toFixed(2)}`;
+            document.getElementById('total-display-desktop').textContent = `${currencySymbol}${total.toFixed(2)}`;
+            document.getElementById('total-display-mobile').textContent = `${currencySymbol}${total.toFixed(2)}`;
             
             // Update Payment Request button total
             updatePaymentRequest();
@@ -2374,7 +2431,8 @@ const response = await fetch('https://asf101-create-payment-intent.daniel-d-mea.
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
         line_items: lineItems,
-        shipping_amount: Math.round(shippingCost * 100)
+        shipping_amount: Math.round(shippingCost * 100),
+        currency: userCurrency
     })
 });
 
@@ -2429,6 +2487,7 @@ clientSecret = data.client_secret;
         
 // Auto-select Card payment method on page load
 document.addEventListener('DOMContentLoaded', function() {
+    initializeCurrency();
     const cardOption = document.querySelector('.payment-option[data-method="card"]');
     if (cardOption) {
         cardOption.classList.add('active');
