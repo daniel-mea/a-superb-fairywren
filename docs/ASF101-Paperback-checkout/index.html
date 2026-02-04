@@ -887,16 +887,6 @@
     display: none !important;
 }
 
-/* Hide all prices on left side until currency is loaded */
-.order-summary .total-amount,
-.order-summary .item-price,
-.order-summary .price-value,
-.order-summary .total-row > div:last-child,
-#total-display-desktop,
-#total-display-mobile {
-  visibility: hidden;
-}
-
     </style>
 </head>
 <body>
@@ -991,9 +981,7 @@
                 
                 <div id="checkout-form" style="display: none;">
                     <!-- Express Checkout -->
-                    <div id="payment-request-button">
-                        <div id="pr-button-skeleton" class="skeleton" style="height: 55px; border-radius: 8px;"></div>
-                    </div>
+                    <div id="payment-request-button"></div>
                     
                     <div class="divider" id="divider" style="display: none;">
                         <span>OR</span>
@@ -2233,19 +2221,11 @@ elements = stripe.elements({ appearance });
             });
             
             paymentRequest.canMakePayment().then(result => {
-                // Remove the skeleton loader once the check is finished
-                const skeleton = document.getElementById('pr-button-skeleton');
-                if (skeleton) {
-                    skeleton.style.display = 'none';
-                }
-
                 if (result) {
                     prButton.mount('#payment-request-button');
                     document.getElementById('divider').style.display = 'flex';
                     console.log('Express checkout available:', result);
                 } else {
-                    // Hide the container if Express checkout isn't supported for this user
-                    document.getElementById('payment-request-button').style.display = 'none';
                     console.log('Express checkout not available');
                 }
             });
@@ -2506,28 +2486,13 @@ clientSecret = data.client_secret;
         }
         
 // Auto-select Card payment method on page load
-document.addEventListener('DOMContentLoaded', async function() {
-    // Show skeleton while we load currency & prices
-    document.getElementById('loading-state').style.display = 'block';
-    document.getElementById('checkout-form').style.display = 'none';
-
-    await initializeCurrency();   // wait for prices + correct currency
-
-    // Hide skeleton, show right panel
-    document.getElementById('loading-state').style.display = 'none';
-    document.getElementById('checkout-form').style.display = 'block';
-
-    // NOW reveal the prices on the left side (in correct currency)
-    document.querySelectorAll('.order-summary .total-amount, .order-summary .item-price, .order-summary .price-value, .order-summary .total-row > div:last-child, #total-display-desktop, #total-display-mobile').forEach(el => {
-        el.style.visibility = 'visible';
-    });
-
+document.addEventListener('DOMContentLoaded', function() {
+    initializeCurrency();
     const cardOption = document.querySelector('.payment-option[data-method="card"]');
     if (cardOption) {
         cardOption.classList.add('active');
     }
 });
-
     </script>
 </body>
 </html>
