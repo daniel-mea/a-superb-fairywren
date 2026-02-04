@@ -887,6 +887,16 @@
     display: none !important;
 }
 
+/* Hide all prices on left side until currency is loaded */
+.order-summary .total-amount,
+.order-summary .item-price,
+.order-summary .price-value,
+.order-summary .total-row > div:last-child,
+#total-display-desktop,
+#total-display-mobile {
+  visibility: hidden;
+}
+
     </style>
 </head>
 <body>
@@ -2491,11 +2501,16 @@ document.addEventListener('DOMContentLoaded', async function() {
     document.getElementById('loading-state').style.display = 'block';
     document.getElementById('checkout-form').style.display = 'none';
 
-    await initializeCurrency();   // ← wait for prices to load
+    await initializeCurrency();   // wait for prices + correct currency
 
-    // Now hide skeleton and show the real form
+    // Hide skeleton, show right panel
     document.getElementById('loading-state').style.display = 'none';
     document.getElementById('checkout-form').style.display = 'block';
+
+    // NOW reveal the prices on the left side (in correct currency)
+    document.querySelectorAll('.order-summary .total-amount, .order-summary .item-price, .order-summary .price-value, .order-summary .total-row > div:last-child, #total-display-desktop, #total-display-mobile').forEach(el => {
+        el.style.visibility = 'visible';
+    });
 
     const cardOption = document.querySelector('.payment-option[data-method="card"]');
     if (cardOption) {
