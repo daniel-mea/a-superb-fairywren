@@ -2486,13 +2486,23 @@ clientSecret = data.client_secret;
         }
         
 // Auto-select Card payment method on page load
-document.addEventListener('DOMContentLoaded', function() {
-    initializeCurrency();
+document.addEventListener('DOMContentLoaded', async function() {
+    // Show skeleton while we load currency & prices
+    document.getElementById('loading-state').style.display = 'block';
+    document.getElementById('checkout-form').style.display = 'none';
+
+    await initializeCurrency();   // ← wait for prices to load
+
+    // Now hide skeleton and show the real form
+    document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('checkout-form').style.display = 'block';
+
     const cardOption = document.querySelector('.payment-option[data-method="card"]');
     if (cardOption) {
         cardOption.classList.add('active');
     }
 });
+
     </script>
 </body>
 </html>
