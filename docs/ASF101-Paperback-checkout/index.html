@@ -2262,7 +2262,7 @@ elements = stripe.elements({ appearance });
                     <div class="addon-info">
                         <div class="addon-header">
                             <div class="addon-name">${addon.name}</div>
-                            <div class="addon-price">A$${addon.price.toFixed(2)}</div>
+                            <div class="addon-price">${currencySymbol}${addon.price.toFixed(2)}</div>
                         </div>
                         ${addon.description ? `<div class="addon-description">${addon.description}</div>` : '<div class="addon-spacer"></div>'}
                         <div class="addon-button-wrapper">
