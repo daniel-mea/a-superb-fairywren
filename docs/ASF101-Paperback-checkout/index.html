@@ -904,6 +904,21 @@
         <div class="checkout-container">
             <!-- Left Panel -->
             <div class="order-summary">
+
+                <!-- LEFT SIDE SKELETON (shows while currency loads) -->
+                <div id="left-loading" class="loading" style="padding: 48px 81px 48px 0;">
+                    <div class="skeleton" style="height: 30px; width: 140px; margin-bottom: 20px;"></div>
+                    <div class="skeleton" style="height: 37px; width: 180px; margin-bottom: 40px;"></div>
+                    
+                    <div class="skeleton" style="height: 64px; width: 100%; border-radius: 8px; margin-bottom: 30px;"></div>
+                    
+                    <div class="skeleton" style="height: 20px; width: 100%; margin-bottom: 8px;"></div>
+                    <div class="skeleton" style="height: 20px; width: 100%; margin-bottom: 8px;"></div>
+                    <div class="skeleton" style="height: 20px; width: 100%; margin-bottom: 30px;"></div>
+                    
+                    <div class="skeleton" style="height: 55px; width: 100%; border-radius: 8px;"></div>
+                </div>
+
                 <div class="logo">
                     <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Fairywren_stamp_icon-CIRCLE_Small.png" alt="A Superb Fairywren" class="logo-image">
                 </div>
@@ -2497,17 +2512,19 @@ clientSecret = data.client_secret;
         
 // Auto-select Card payment method on page load
 document.addEventListener('DOMContentLoaded', async function() {
-    // Show skeleton while we load currency & prices
+    // Show skeletons
     document.getElementById('loading-state').style.display = 'block';
+    document.getElementById('left-loading').style.display = 'block';
     document.getElementById('checkout-form').style.display = 'none';
 
-    await initializeCurrency();   // wait for prices + correct currency
+    await initializeCurrency();
 
-    // Hide skeleton, show right panel
+    // Hide skeletons, show everything
     document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('left-loading').style.display = 'none';
     document.getElementById('checkout-form').style.display = 'block';
 
-    // NOW reveal the prices on the left side (in correct currency)
+    // Reveal left-side prices
     document.querySelectorAll('.order-summary .total-amount, .order-summary .item-price, .order-summary .price-value, .order-summary .total-row > div:last-child, #total-display-desktop, #total-display-mobile').forEach(el => {
         el.style.visibility = 'visible';
     });
