@@ -43,6 +43,22 @@
             0% { left: -100%; }
             100% { left: 100%; }
         }
+
+        /* Left panel skeleton loading */
+        .order-summary.loading .order-summary-content {
+            display: none;
+        }
+        .order-summary-skeleton-content {
+            display: none;
+        }
+        .order-summary.loading .order-summary-skeleton-content {
+            display: block;
+        }
+
+        /* Express checkout skeleton */
+        .express-checkout-skeleton {
+            margin-bottom: 24px;
+        }
         
         /* Main Container */
         .page-wrapper {
@@ -893,10 +909,52 @@
     <div class="page-wrapper">
         <div class="checkout-container">
             <!-- Left Panel -->
-            <div class="order-summary">
-                <div class="logo">
-                    <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Fairywren_stamp_icon-CIRCLE_Small.png" alt="A Superb Fairywren" class="logo-image">
+            <div class="order-summary loading" id="order-summary">
+                <!-- Skeleton Content (shown while loading) -->
+                <div class="order-summary-skeleton-content">
+                    <div class="logo">
+                        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Fairywren_stamp_icon-CIRCLE_Small.png" alt="A Superb Fairywren" class="logo-image">
+                    </div>
+                    <div class="merchant-name">Buy: A Superb Fairywren</div>
+                    <div class="total-amount desktop-only"><div class="skeleton" style="width: 140px; height: 37px; display: inline-block; border-radius: 4px;"></div></div>
+                    <div class="order-item">
+                        <div class="skeleton" style="width: 64px; height: 64px; border-radius: 8px; flex-shrink: 0;"></div>
+                        <div class="item-details" style="flex: 1;">
+                            <div class="item-name">A Superb Fairywren (Paperback)</div>
+                            <div class="total-amount mobile-only"><div class="skeleton" style="width: 120px; height: 32px; margin: 0 auto; border-radius: 4px;"></div></div>
+                            <div class="item-quantity"><div class="skeleton" style="width: 70px; height: 32px; border-radius: 6px;"></div></div>
+                        </div>
+                        <div class="skeleton" style="width: 70px; height: 16px; border-radius: 4px;"></div>
+                    </div>
+                    <div class="price-breakdown">
+                        <div class="price-row"><div class="price-label bold">Subtotal</div><div class="skeleton" style="width: 70px; height: 16px; border-radius: 4px;"></div></div>
+                        <div class="price-row"><div class="price-label">Shipping</div><div class="skeleton" style="width: 140px; height: 16px; border-radius: 4px;"></div></div>
+                        <div class="price-row"><div class="price-label">Add-ons</div><div class="skeleton" style="width: 60px; height: 16px; border-radius: 4px;"></div></div>
+                    </div>
+                    <div class="total-row"><div>Total due</div><div class="skeleton" style="width: 80px; height: 16px; border-radius: 4px;"></div></div>
+                    <div class="add-to-order">
+                        <div class="add-to-order-header">
+                            <div class="add-to-order-title">Add to your order</div>
+                            <div class="carousel-nav">
+                                <button class="carousel-button active" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
+                                <button class="carousel-button inactive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
+                            </div>
+                        </div>
+                        <div class="addon-item">
+                            <div class="skeleton" style="width: 45px; height: 45px; border-radius: 8px; flex-shrink: 0;"></div>
+                            <div class="addon-info">
+                                <div class="addon-header"><div class="skeleton" style="width: 120px; height: 16px; border-radius: 4px;"></div><div class="skeleton" style="width: 60px; height: 16px; border-radius: 4px;"></div></div>
+                                <div class="skeleton" style="width: 60px; height: 32px; border-radius: 6px; margin-top: 20px;"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Actual Content (hidden while loading) -->
+                <div class="order-summary-content">
+                    <div class="logo">
+                        <img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Fairywren_stamp_icon-CIRCLE_Small.png" alt="A Superb Fairywren" class="logo-image">
+                    </div>
                 
                 <div class="merchant-name">Buy: A Superb Fairywren</div>
                 
@@ -965,6 +1023,7 @@
                     <div id="addon-container"></div>
                 </div>
             </div>
+            </div>
             
             <!-- Right Panel -->
             <div class="payment-panel">
@@ -980,8 +1039,15 @@
                 </div>
                 
                 <div id="checkout-form" style="display: none;">
-                    <!-- Express Checkout -->
-                    <div id="payment-request-button"></div>
+                    <!-- Express Checkout Skeleton -->
+                    <div class="express-checkout-skeleton" id="express-checkout-skeleton">
+                        <div class="skeleton" style="height: 55px; border-radius: 8px;"></div>
+                    </div>
+                    
+                    <!-- Express Checkout (hidden until ready) -->
+                    <div id="express-checkout-wrapper" style="display: none;">
+                        <div id="payment-request-button"></div>
+                    </div>
                     
                     <div class="divider" id="divider" style="display: none;">
                         <span>OR</span>
@@ -1989,6 +2055,8 @@
                 // Fallback to AUD
                 userCurrency = 'AUD';
                 currencySymbol = 'A$';
+                // Still show the left panel with AUD prices
+                document.getElementById('order-summary').classList.remove('loading');
             }
         }
         
@@ -2006,6 +2074,9 @@
             
             // Update totals
             updateTotals();
+            
+            // Show the left panel content now that prices are ready
+            document.getElementById('order-summary').classList.remove('loading');
         }
         
         function convertShipping(audAmount) {
@@ -2221,7 +2292,12 @@ elements = stripe.elements({ appearance });
             });
             
             paymentRequest.canMakePayment().then(result => {
+                // Hide skeleton
+                document.getElementById('express-checkout-skeleton').style.display = 'none';
+                
                 if (result) {
+                    // Show the wrapper and mount button
+                    document.getElementById('express-checkout-wrapper').style.display = 'block';
                     prButton.mount('#payment-request-button');
                     document.getElementById('divider').style.display = 'flex';
                     console.log('Express checkout available:', result);
