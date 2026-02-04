@@ -895,7 +895,7 @@
             
             #payment-request-button {
                 min-height: 65px;
-                border-radius: 10px;
+                border-radius: 6px;
             }
             
             .divider {
@@ -2297,7 +2297,8 @@ elements = stripe.elements({ appearance });
                 paymentRequest,
                 style: {
                     paymentRequestButton: {
-                        height: '55px'
+                        height: '55px',
+                        borderRadius: '6px'
                     }
                 }
             });
