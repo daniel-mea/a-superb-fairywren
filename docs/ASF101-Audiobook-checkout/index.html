@@ -1971,9 +1971,38 @@
         window.addEventListener('resize', updateBookImage);
         updateBookImage();
         
-        initialize();
+initialize();
         
         async function initialize() {
+            // Show skeleton loading on prices
+            document.getElementById('total-display-desktop').classList.add('skeleton');
+            document.getElementById('total-display-mobile').classList.add('skeleton');
+            document.getElementById('book-price').classList.add('skeleton');
+            
+            // Detect currency and fetch prices
+            try {
+                const detectResponse = await fetch('https://asf101-create-payment-intent.daniel-d-mea.workers.dev/detect-country');
+                const { currency } = await detectResponse.json();
+                userCurrency = currency;
+                
+                const pricesResponse = await fetch(`https://asf101-create-payment-intent.daniel-d-mea.workers.dev/get-prices?currency=${currency}`);
+                const pricesData = await pricesResponse.json();
+                
+                currencySymbol = pricesData.currencySymbol;
+                exchangeRate = pricesData.exchangeRate;
+                
+                bookPrice = pricesData.prices.book / 100;
+                addons[0].price = pricesData.prices.signed / 100;
+                addons[1].price = pricesData.prices.donation / 100;
+            } catch (error) {
+                console.error('Failed to initialize currency:', error);
+            }
+            
+            // Remove skeleton loading
+            document.getElementById('total-display-desktop').classList.remove('skeleton');
+            document.getElementById('total-display-mobile').classList.remove('skeleton');
+            document.getElementById('book-price').classList.remove('skeleton');
+            
             // Render addons
             renderAddon();
             
@@ -2206,7 +2235,7 @@ elements = stripe.elements({ appearance });
                     <div class="addon-info">
                         <div class="addon-header">
                             <div class="addon-name">${addon.name}</div>
-                            <div class="addon-price">A$${addon.price.toFixed(2)}</div>
+                            <div class=\"addon-price\">${currencySymbol}${addon.price.toFixed(2)}</div>
                         </div>
                         ${addon.description ? `<div class="addon-description">${addon.description}</div>` : '<div class="addon-spacer"></div>'}
                         <div class="addon-button-wrapper">
