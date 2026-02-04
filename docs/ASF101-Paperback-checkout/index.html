@@ -45,13 +45,13 @@
         }
 
         /* Left panel skeleton loading */
-        .order-summary.loading .order-summary-content {
+        .order-summary.is-loading .order-summary-content {
             display: none;
         }
         .order-summary-skeleton-content {
             display: none;
         }
-        .order-summary.loading .order-summary-skeleton-content {
+        .order-summary.is-loading .order-summary-skeleton-content {
             display: block;
         }
 
@@ -909,7 +909,7 @@
     <div class="page-wrapper">
         <div class="checkout-container">
             <!-- Left Panel -->
-            <div class="order-summary loading" id="order-summary">
+            <div class="order-summary is-loading" id="order-summary">
                 <!-- Skeleton Content (shown while loading) -->
                 <div class="order-summary-skeleton-content">
                     <div class="logo">
@@ -2056,7 +2056,7 @@
                 userCurrency = 'AUD';
                 currencySymbol = 'A$';
                 // Still show the left panel with AUD prices
-                document.getElementById('order-summary').classList.remove('loading');
+                document.getElementById('order-summary').classList.remove('is-loading');
             }
         }
         
@@ -2076,7 +2076,7 @@
             updateTotals();
             
             // Show the left panel content now that prices are ready
-            document.getElementById('order-summary').classList.remove('loading');
+            document.getElementById('order-summary').classList.remove('is-loading');
         }
         
         function convertShipping(audAmount) {
