@@ -854,6 +854,12 @@
                 object-fit: cover;
                 margin-bottom: 12px;
             }
+
+            .skeleton-image {
+                width: 33.33vw !important;
+                height: 33.33vw !important;
+                margin-bottom: 12px;
+            }
             
             .item-details {
                 display: flex;
@@ -889,7 +895,7 @@
             
             #payment-request-button {
                 min-height: 65px;
-                border-radius: 6px;
+                border-radius: 10px;
             }
             
             .divider {
@@ -918,7 +924,7 @@
                     <div class="merchant-name">Buy: A Superb Fairywren</div>
                     <div class="total-amount desktop-only"><div class="skeleton" style="width: 140px; height: 37px; display: inline-block; border-radius: 4px;"></div></div>
                     <div class="order-item">
-                        <div class="skeleton" style="width: 64px; height: 64px; border-radius: 8px; flex-shrink: 0;"></div>
+                        <div class="skeleton skeleton-image" style="width: 64px; height: 64px; border-radius: 8px; flex-shrink: 0;"></div>
                         <div class="item-details" style="flex: 1;">
                             <div class="item-name">A Superb Fairywren (Paperback)</div>
                             <div class="total-amount mobile-only"><div class="skeleton" style="width: 120px; height: 32px; margin: 0 auto; border-radius: 4px;"></div></div>
@@ -2286,8 +2292,7 @@ elements = stripe.elements({ appearance });
                 paymentRequest,
                 style: {
                     paymentRequestButton: {
-                        height: '55px',
-                        borderRadius: '6px'
+                        height: '55px'
                     }
                 }
             });
