@@ -2105,6 +2105,9 @@
         initialize();
         
         async function initialize() {
+            // Fetch currency first
+                await initializeCurrency();
+    
             // Render addons
             renderAddon();
             
@@ -2570,7 +2573,6 @@ clientSecret = data.client_secret;
         
 // Auto-select Card payment method on page load
 document.addEventListener('DOMContentLoaded', function() {
-    initializeCurrency();
     const cardOption = document.querySelector('.payment-option[data-method="card"]');
     if (cardOption) {
         cardOption.classList.add('active');
