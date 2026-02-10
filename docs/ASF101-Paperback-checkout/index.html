@@ -2189,7 +2189,8 @@ elements = stripe.elements({ appearance });
                 const country = ev.shippingAddress.country;
                 const currentQty = parseInt(document.getElementById('quantity-select').value);
                 const rates = shippingRates[country] || shippingRates['AU'];
-                const shippingAmount = rates[currentQty] || rates[3];
+                const audShipping = rates[currentQty] || rates[3];
+                const shippingAmount = convertShipping(audShipping);
                 
                 // Calculate totals with this shipping
                 const subtotal = bookPrice * currentQty;
