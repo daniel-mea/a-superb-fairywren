@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>A Superb Fairywren - YOLO</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&family=Fraunces:wght@500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/Fairywren_stamp_icon-CIRCLE_Small.png">
+<style>
+/* base reset */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Fraunces', serif;
+  background-color: #000000;
+}
+
+/* bg-layer uses the real viewport height via CSS var --vh */
+.bg-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
+  background-image: url('https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/SmileSmoke_Small2.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* layout above bg */
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ensure controls are above the bg */
+.header, .footer, .main-content {
+  position: relative;
+  z-index: 2;
+  color: #FFE555;
+}
+
+/* header */
+.header {
+  padding-top: 15px;
+  text-align: center;
+}
+.header img {
+  width: 60px;
+  border-radius: 50%;
+  transition: width 0.3s ease;
+  display: block;
+  margin: 0 auto;
+}
+
+.header h1 {
+  color: #FFE555;
+  font-weight: 500;
+  text-decoration: line-through;
+  text-transform: uppercase;
+  margin: 10px 0 10px 0;
+  font-size: 1.5em;
+}
+
+/* menu row */
+.menu-row { display:flex; justify-content:center; gap:60px; margin-top:17.5px; }
+.menu-link { position: relative; font-weight:700; font-style:italic; font-size:32px; color:#FFE555; text-decoration:none; transition: color .33s; }
+.menu-link.daniel { transform: translateX(-7px); color:white; }
+.menu-link.tala   { transform: translateX(5px); }
+.menu-link .underline { position:absolute; bottom:-1px; left:0; width:0; height:0; background:#FFE555; transition: width .33s; }
+.menu-link:hover { color:white; }
+.menu-link:hover .underline { width:100%; }
+
+/* social */
+.social { display:flex; justify-content:center; gap:15px; margin-top:20px; }
+.social a img { width:33px; vertical-align:middle; }
+
+/* footer */
+.footer {
+  padding-bottom: 15px;
+}
+
+/* responsive tweaks */
+@media (orientation: portrait) {
+  .header img { width:50px; }
+  .social a img { width:25px; }
+}
+
+/* --- mobile small screens --- */
+@media (max-width: 480px) {
+  .menu-link.daniel { transform: translateX(-7px); }
+  .menu-link.tala { transform: translateX(5px); }
+}
+
+/* --- landscape adjustments --- */
+@media (orientation: landscape) {
+  .social a img { width:22px; }
+}
+
+@media (max-width: 1000px) and (max-height: 500px) and (orientation: landscape) {
+  .header {
+    display: grid;
+    place-items: center;
+    padding-top: 15px;
+  }
+
+  .header a:first-child,
+  .header a:nth-child(2) {
+    grid-area: 1 / 1;
+  }
+
+  .header a:nth-child(2) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header h1 {
+    margin: 0;
+  }
+
+  .header img {
+    display: block;
+    margin: 0 auto;
+    width: 50px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-layer" aria-hidden="true"></div>
+
+<div class="header">
+  <a href="/home/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/main/docs/website_assets/site_logo-small.jpg" alt="Site Logo"></a>
+  <a href="/home/" style="text-decoration:none;"><h1>A SUPERB FAIRYWREN</h1></a>
+  <div class="menu-row">
+    <a href="/danny/" class="menu-link daniel">DANIEL <span class="underline"></span></a>
+    <a href="/tala/" class="menu-link tala">TALA <span class="underline"></span></a>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="social">
+    <a href="https://instagram.com/danny__mea" target="_blank"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_ig.svg" alt="Instagram"></a>
+    <a href="/contact/"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/2978373eaeac2a4b537306bf46ebce49d3b812c6/docs/website_assets/icon_email.svg" alt="Email"></a>
+    <a href="https://www.youtube.com/@DannyMEA" target="_blank"><img src="https://raw.githubusercontent.com/daniel-mea/a-superb-fairywren/711861aec693b89accf4e2ce56490d1f945656f4/docs/website_assets/icon_yt.svg" alt="YouTube"></a>
+  </div>
+</div>
+
+<script>
+/* Set CSS variable --vh to the real viewport height */
+(function() {
+  const setVh = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', vh + 'px');
+  };
+
+  setVh();
+
+  let tid = null;
+  const debouncedSet = () => {
+    clearTimeout(tid);
+    tid = setTimeout(setVh, 80);
+  };
+
+  window.addEventListener('resize', debouncedSet);
+  window.addEventListener('orientationchange', debouncedSet);
+})();
+</script>
+
+</body>
+</html>
